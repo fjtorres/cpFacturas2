@@ -1,0 +1,74 @@
+{
+  "app": {
+    "title": "C&P Facturas"
+  },
+  "lang": {
+    "title": "Idiomas",
+    "selector": "Selector de idiomas",
+    "spanish": "Español",
+    "english": "Ingles"
+  },
+  "buttons": {
+    "back": "Volver",
+    "clear": "Limpiar",
+    "save": "Guardar"
+  },
+  "menu": {
+    "invoice": {
+      "title": "Facturas",
+      "create": "Nueva",
+      "list": "Listado",
+      "lastMonthReport" : "Facturación del último mes"
+    },
+    "customer": {
+      "title": "Particulares",
+      "create": "Nuevo",
+      "list": "Listado"
+    },
+    "company": {
+      "title": "Empresas",
+      "create": "Nueva",
+      "list": "Listado"
+    },
+    "vehicle": {
+      "title": "Vehiculos",
+      "create": "Nuevo",
+      "list": "Listado"
+    }
+  },
+  "customers": {
+    "view": {
+      "list": "Listado de clientes",
+      "create": "Nuevo cliente",
+      "update": "Modificación datos del cliente"
+    },
+    "field": {
+      "code": "Código",
+      "code.placeholder": "Introduzca el código",
+      "firstName": "Nombre",
+      "firstName.placeholder": "Introduzca el nombre",
+      "lastName": "Apellidos",
+      "lastName.placeholder": "Introduzca los apellidos",
+      "email": "Correo electrónico",
+      "email.placeholder": "Introduzca el email",
+      "phonenumber": "Teléfono",
+      "phonenumber.placeholder": "Introduzca el número de teléfono"
+    }
+  },
+  "companies": {
+    "view": {
+      "list": "Listado de empresas",
+      "create": "Nueva empresa",
+      "update": "Modificación datos de la empresa"
+    },
+    "field": {}
+  },
+  "vehicles": {
+    "view": {
+      "list": "Listado de vehiculos",
+      "create": "Nuevo vehiculo",
+      "update": "Modificación datos del vehiculo"
+    },
+    "field": {}
+  }
+}

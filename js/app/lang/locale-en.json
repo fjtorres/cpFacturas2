@@ -1,0 +1,75 @@
+{
+  "app": {
+    "title": "C&P Invoices"
+  },
+  "lang": {
+    "title": "Languages",
+    "selector": "Languages selector",
+    "spanish": "Spanish",
+    "english": "English"
+  },
+  "buttons": {
+    "back": "Back",
+    "clear": "Clear",
+    "save": "Save"
+  },
+  "menu": {
+    "invoice": {
+      "title": "Invoices",
+      "create": "New",
+      "update": "Update",
+      "list": "List",
+      "lastMonthReport" : "Invoicing for the last month"
+    },
+    "customer": {
+      "title": "Private customers",
+      "create": "New",
+      "list": "List"
+    },
+    "company": {
+      "title": "Business clients",
+      "create": "New",
+      "list": "List"
+    },
+    "vehicle": {
+      "title": "Vehicles",
+      "create": "New",
+      "list": "List"
+    }
+  },
+  "customers": {
+    "view": {
+      "list": "Private customers list",
+      "create": "New private customer",
+      "update": "Update private customer data"
+    },
+    "field": {
+      "code": "Code",
+      "code.placeholder": "Enter the code",
+      "firstName": "First name",
+      "firstName.placeholder": "Enter the first name",
+      "lastName": "Last name",
+      "lastName.placeholder": "Enter the last name",
+      "email": "E-mail",
+      "email.placeholder": "Enter the e-mail",
+      "phonenumber": "Phone",
+      "phonenumber.placeholder": "Enter the phone number"
+    }
+  },
+  "companies": {
+    "view": {
+      "list": "Business clients list",
+      "create": "New business client",
+      "update": "Update business client data"
+    },
+    "field": {}
+  },
+  "vehicles": {
+    "view": {
+      "list": "Vehicles list",
+      "create": "New vehicle",
+      "update": "Update vehicle data"
+    },
+    "field": {}
+  }
+}

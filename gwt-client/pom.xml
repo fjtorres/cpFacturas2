@@ -2,8 +2,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>es.fjtorres</groupId>
-		<artifactId>cpFacturas</artifactId>
+		<groupId>es.fjtorres.cpFacturas</groupId>
+		<artifactId>cpFacturas-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>gwt-client</artifactId>
@@ -11,19 +11,34 @@
 
 
 	<properties>
-		<webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
-		<gwt.version>2.6.0</gwt.version>
+		<webappDirectory>war</webappDirectory>
+		<gwt.version>2.6.1</gwt.version>
 		<gwtp.version>1.0.3</gwtp.version>
 		<gin.version>2.1.2</gin.version>
 		<gwtBootstrap.version>0.9-SNAPSHOT</gwtBootstrap.version>
+
+		<jersey.version>2.14</jersey.version>
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>es.fjtorres.cpFacturas</groupId>
+			<artifactId>common</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
 			<version>${gwt.version}</version>
 			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-servlet</artifactId>
+			<version>${gwt.version}</version>
+			<scope>runtime</scope>
 		</dependency>
 
 		<dependency>
@@ -47,14 +62,34 @@
 		</dependency>
 
 		<dependency>
+			<groupId>com.google.inject.extensions</groupId>
+			<artifactId>guice-servlet</artifactId>
+			<version>3.0</version>
+		</dependency>
+
+		<dependency>
 			<groupId>com.gwtplatform</groupId>
 			<artifactId>gwtp-mvp-client</artifactId>
 			<version>${gwtp.version}</version>
 			<scope>provided</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.glassfish.jersey.core</groupId>
+			<artifactId>jersey-client</artifactId>
+			<version>${jersey.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-json-jackson</artifactId>
+			<version>${jersey.version}</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
+
 		<outputDirectory>${webappDirectory}/WEB-INF/classes</outputDirectory>
 
 		<pluginManagement>
@@ -66,6 +101,7 @@
 					<executions>
 						<execution>
 							<goals>
+								<goal>i18n</goal>
 								<goal>compile</goal>
 								<goal>test</goal>
 								<goal>resources</goal>
@@ -113,14 +149,26 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>gwt-maven-plugin</artifactId>
 				<configuration>
-					<runTarget>cpFacturas.html</runTarget>
-					<hostedWebapp>${webappDirectory}</hostedWebapp>
+					<runTarget>es.fjtorres.cpFacturas.gwtClient.cpFacturas/cpFacturas.html</runTarget>
 					<generateDirectory>src/main/gen</generateDirectory>
 					<i18nMessagesBundles>
 						<i18nConstantsBundle>es.fjtorres.cpFacturas.gwtClient.client.i18n.Messages</i18nConstantsBundle>
 					</i18nMessagesBundles>
+					<compileSourcesArtifacts>
+						<artifact>es.fjtorres.cpFacturas:Common</artifact>
+					</compileSourcesArtifacts>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.0.2</version>
+				<configuration>
+					<warSourceDirectory>war</warSourceDirectory>
+					<webXml>src/main/webapp/WEB-INF/web.xml</webXml>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
+
 </project>

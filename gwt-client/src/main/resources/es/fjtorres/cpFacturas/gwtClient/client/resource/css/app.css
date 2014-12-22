@@ -1,0 +1,16 @@
+.fa-2 { font-size: 2em; }
+.fa-3 { font-size: 4em; }
+.fa-4 { font-size: 7em; }
+.fa-5 { font-size: 12em; }
+.fa-6 { font-size: 20em; }
+
+.push {padding-top: 70px;}
+
+.shortcut-item { padding: 0.5em; }
+.shortcut-item h5 { font-weight: bold; }
+.shortcut-item p { font-style: italic; }
+.shortcut-item a {color: inherit;}
+
+.btn-toolbar { margin-top: 5px; margin-bottom: 5px; }
+
+.table-big>thead>tr>th, .table-big>tbody>tr>td { padding: 15px; }

@@ -1,5 +1,6 @@
 <module rename-to="cpFacturas">
 
+	<inherits name="com.google.gwt.user.User" />
 	<inherits name="com.google.gwt.uibinder.UiBinder" />
 	<inherits name="com.google.gwt.inject.Inject" />
 	<inherits name="com.google.gwt.i18n.I18N"/>
@@ -18,7 +19,10 @@
 	<inherits name="org.gwtbootstrap3.extras.animate.Animate" />
 	<inherits name="org.gwtbootstrap3.extras.fullcalendar.FullCalendar" /> -->
 	<inherits name='com.gwtplatform.mvp.MvpWithEntryPoint' />
-
+	
+	<inherits name="com.google.common.base.Base" />
+	<inherits name="es.fjtorres.cpFacturas.Common" />
+	
 	<!-- For SDM -->
     <add-linker name="xsiframe"/>
     <set-configuration-property name="devModeRedirectEnabled" value="true"/>
@@ -27,10 +31,14 @@
     <!-- Specify the paths for translatable code -->
     <source path="client"/>
 
+	<set-property name="user.agent" value="safari" />
+
 	 <!-- GWT Modules -->
     <set-configuration-property name="gin.ginjector.modules"
                                 value="es.fjtorres.cpFacturas.gwtClient.client.gin.CpFacturasModule"/>
 
 	 <inherits name="es.fjtorres.cpFacturas.gwtClient.client.Resources"/>
+	 
+	 <entry-point class="es.fjtorres.cpFacturas.gwtClient.client.CpFacturasEntryPoint"/>
 
 </module>

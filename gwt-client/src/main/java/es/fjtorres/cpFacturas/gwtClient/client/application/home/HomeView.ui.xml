@@ -1,0 +1,89 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:b="urn:import:org.gwtbootstrap3.client.ui" xmlns:b.html="urn:import:org.gwtbootstrap3.client.ui.html"
+	xmlns:b.gwt="urn:import:org.gwtbootstrap3.client.ui.gwt" xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:app.html="urn:import:es.fjtorres.cpFacturas.gwtClient.client.ui.html">
+
+	<ui:with type="es.fjtorres.cpFacturas.gwtClient.client.i18n.Messages"
+		field="messages" />
+
+	<b:Row>
+		<b:Column size="SM_12">
+			<b.html:Div styleName="text-center">
+				<b:PageHeader text="{messages.app_title}" />
+			</b.html:Div>
+		</b:Column>
+		
+		<b:Column size="SM_4">
+			<b.html:Div styleName="text-center">
+				<b.html:Div styleName="shortcut-item">
+					<b:Anchor ui:field="shortcutNewInvoice">
+						<i class="fa fa-file fa-3"></i>
+					</b:Anchor>
+					<app.html:H5 text="{messages.app_shorcut_newInvoice}"/>
+					<b.html:Paragraph text="{messages.app_shorcut_newInvoice_description}"/>
+				</b.html:Div>
+			</b.html:Div>
+		</b:Column>
+		
+		<b:Column size="SM_4">
+			<b.html:Div styleName="text-center">
+				<b.html:Div styleName="shortcut-item">
+					<b:Anchor ui:field="shortcutInvoices">
+						<i class="fa fa-file-text fa-3"></i>
+					</b:Anchor>
+					<app.html:H5 text="{messages.app_shorcut_invoices}"/>
+					<b.html:Paragraph text="{messages.app_shorcut_invoices_description}"/>
+				</b.html:Div>
+			</b.html:Div>
+		</b:Column>
+
+		<b:Column size="SM_4">
+			<b.html:Div styleName="text-center">
+				<b.html:Div styleName="shortcut-item">
+					<b:Anchor ui:field="shortcutCustomers">
+						<i class="fa fa-users fa-3"></i>
+					</b:Anchor>
+					<app.html:H5 text="{messages.app_shorcut_customers}"/>
+					<b.html:Paragraph text="{messages.app_shorcut_customers_description}"/>
+				</b.html:Div>
+			</b.html:Div>
+		</b:Column>
+		
+		<b:Column size="SM_4">
+			<b.html:Div styleName="text-center">
+				<b.html:Div styleName="shortcut-item">
+					<b:Anchor ui:field="shortcutInsurers">
+						<i class="fa fa-institution fa-3"></i>
+					</b:Anchor>
+					<app.html:H5 text="{messages.app_shorcut_insurers}"/>
+					<b.html:Paragraph text="{messages.app_shorcut_insurers_description}"/>
+				</b.html:Div>
+			</b.html:Div>
+		</b:Column>
+		
+		<b:Column size="SM_4">
+			<b.html:Div styleName="text-center">
+				<b.html:Div styleName="shortcut-item">
+					<b:Anchor ui:field="shortcutVehicles">
+						<i class="fa fa-car fa-3"></i>
+					</b:Anchor>
+					<app.html:H5 text="{messages.app_shorcut_vehicles}"/>
+					<b.html:Paragraph text="{messages.app_shorcut_vehicles_description}"/>
+				</b.html:Div>
+			</b.html:Div>
+		</b:Column>
+		
+		<b:Column size="SM_4">
+			<b.html:Div styleName="text-center">
+				<b.html:Div styleName="shortcut-item">
+					<b:Anchor ui:field="shortcutConfiguration">
+						<i class="fa fa-gear fa-3"></i>
+					</b:Anchor>
+					<app.html:H5 text="{messages.app_shorcut_configuration}"/>
+					<b.html:Paragraph text="{messages.app_shorcut_configuration_description}"/>
+				</b.html:Div>
+			</b.html:Div>
+		</b:Column>
+	</b:Row>
+</ui:UiBinder> 

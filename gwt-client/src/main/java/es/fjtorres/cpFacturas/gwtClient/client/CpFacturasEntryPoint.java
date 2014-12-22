@@ -1,4 +1,4 @@
-package es.fjtorres.cpFacturas.gwtClient;
+package es.fjtorres.cpFacturas.gwtClient.client;
 
 import com.google.gwt.core.client.EntryPoint;
 

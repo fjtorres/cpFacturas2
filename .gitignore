@@ -38,3 +38,7 @@ local.properties
 .classpath
 .project
 .settings
+
+war/
+gwt-unitCache/
+.gwt/

@@ -19,6 +19,7 @@ public class CpFacturasModule extends AbstractPresenterModule {
         bindConstant().annotatedWith(DefaultPlace.class).to(NameTokens.HOME);
         bindConstant().annotatedWith(ErrorPlace.class).to(NameTokens.HOME);
         bindConstant().annotatedWith(UnauthorizedPlace.class).to(NameTokens.HOME);
+        
     }
 
 }

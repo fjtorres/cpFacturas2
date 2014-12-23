@@ -7,4 +7,12 @@
 
 	<context:component-scan base-package="es.fjtorres.cpFacturas.server" />
 
+	<!-- Dozer configuration -->
+
+	<bean id="dozerCustomFieldMapper" class="es.fjtorres.cpFacturas.server.dozer.CustomFieldMapper" />
+
+	<bean class="org.dozer.spring.DozerBeanMapperFactoryBean">
+		<property name="mappingFiles" value="classpath*:/dozer/*mapping.xml" />
+		<property name="customFieldMapper" ref="dozerCustomFieldMapper" />
+	</bean>
 </beans>

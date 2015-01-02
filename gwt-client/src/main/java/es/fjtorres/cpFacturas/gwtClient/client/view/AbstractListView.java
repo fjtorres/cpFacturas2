@@ -1,17 +1,22 @@
 package es.fjtorres.cpFacturas.gwtClient.client.view;
 
-import java.io.Serializable;
-
 import org.gwtbootstrap3.client.ui.Pagination;
 import org.gwtbootstrap3.client.ui.gwt.DataGrid;
 
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.view.client.AbstractDataProvider;
+import com.google.gwt.view.client.AsyncDataProvider;
+import com.google.gwt.view.client.HasData;
+import com.google.gwt.view.client.Range;
 import com.google.gwt.view.client.RangeChangeEvent;
-import com.gwtplatform.mvp.client.ViewImpl;
+import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
-public abstract class AbstractListView<T extends Serializable> extends ViewImpl {
+import es.fjtorres.cpFacturas.common.dto.AbstractDto;
+import es.fjtorres.cpFacturas.common.pagination.Page;
+
+public abstract class AbstractListView<T extends AbstractDto<?>, H extends ListUiHandlers> extends
+        ViewWithUiHandlers<H> implements ListView<T, H> {
 
     @UiField(provided = true)
     public DataGrid<T> dataGrid = new DataGrid<T>();
@@ -21,7 +26,7 @@ public abstract class AbstractListView<T extends Serializable> extends ViewImpl 
 
     private SimplePager dataGridPager = new SimplePager();
 
-    private AbstractDataProvider<T> dataGridProvider;
+    protected AsyncDataProvider<T> dataGridProvider;
 
     private boolean init = false;
 
@@ -34,7 +39,6 @@ public abstract class AbstractListView<T extends Serializable> extends ViewImpl 
     protected void initGrid() {
         if (!init) {
             dataGrid.setPageSize(pageSize);
-            dataGridProvider = createProvider();
             createGridColumns();
 
             dataGrid.addRangeChangeHandler(new RangeChangeEvent.Handler() {
@@ -47,7 +51,7 @@ public abstract class AbstractListView<T extends Serializable> extends ViewImpl 
 
             dataGridPager.setDisplay(dataGrid);
             dataGridPagination.clear();
-            dataGridProvider.addDataDisplay(dataGrid);
+
             rebuildPagination();
 
             init = true;
@@ -56,12 +60,30 @@ public abstract class AbstractListView<T extends Serializable> extends ViewImpl 
 
     public abstract void createGridColumns();
 
-    public abstract <P extends AbstractDataProvider<T>> P createProvider();
+    @Override
+    public void initDataProvider() {
+        dataGridProvider = new AsyncDataProvider<T>() {
+            @Override
+            protected void onRangeChanged(HasData<T> display) {
+                Range range = display.getVisibleRange();
+                getUiHandlers().fetchData(range.getStart(), range.getLength());
+            }
+        };
 
-    protected void rebuildPagination () {
-        getDataGridPagination().rebuild(getDataGridPager());
+        dataGridProvider.addDataDisplay(getDataGrid());
+    }
+
+    @Override
+    public void displayData(int pOffset, final Page<T> page) {
+        dataGridProvider.updateRowData(pOffset, page.getList());
+        dataGridProvider.updateRowCount(page.getTotal(), true);
+        rebuildPagination();
     }
     
+    protected void rebuildPagination() {
+        getDataGridPagination().rebuild(getDataGridPager());
+    }
+
     public DataGrid<T> getDataGrid() {
         return dataGrid;
     }
@@ -90,7 +112,7 @@ public abstract class AbstractListView<T extends Serializable> extends ViewImpl 
         return dataGridProvider;
     }
 
-    public void setDataGridProvider(AbstractDataProvider<T> pDataGridProvider) {
+    public void setDataGridProvider(AsyncDataProvider<T> pDataGridProvider) {
         dataGridProvider = pDataGridProvider;
     }
 

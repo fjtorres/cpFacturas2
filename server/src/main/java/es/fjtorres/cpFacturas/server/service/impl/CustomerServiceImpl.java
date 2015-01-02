@@ -1,114 +1,107 @@
 package es.fjtorres.cpFacturas.server.service.impl;
 
-import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.ws.rs.BadRequestException;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
+
+import org.springframework.transaction.annotation.Transactional;
 
 import es.fjtorres.cpFacturas.common.dto.CustomerDto;
-import es.fjtorres.cpFacturas.common.pagination.Page;
-import es.fjtorres.cpFacturas.common.pagination.PageFilter;
+import es.fjtorres.cpFacturas.common.dto.CustomerPageDto;
+import es.fjtorres.cpFacturas.common.pagination.OrderBy;
+import es.fjtorres.cpFacturas.server.api.impl.AbstractResource;
 import es.fjtorres.cpFacturas.server.dozer.service.IDozerService;
 import es.fjtorres.cpFacturas.server.model.Customer;
 import es.fjtorres.cpFacturas.server.service.ICustomerService;
+import es.fjtorres.cpFacturas.server.service.IPersistenceService;
 
 @Named
-@Path("/api/customers")
-public class CustomerServiceImpl implements ICustomerService {
+@Transactional(readOnly = true)
+public class CustomerServiceImpl extends AbstractResource implements ICustomerService {
 
-   private static List<Customer> MOCK_DATA;
+    private final IDozerService dozerService;
 
-   static {
-      MOCK_DATA = new ArrayList<Customer>();
+    private final IPersistenceService<Long, Customer> persistenceService;
 
-      for (int i = 0; i < 25; i++) {
-         Customer element = new Customer();
-         element.setId(new Long(i));
-         element.setCode("Code: " + i);
-         element.setFirstName("First name: " + i);
-         element.setLastName("Last name: " + i);
-         MOCK_DATA.add(element);
-      }
-   }
+    @Inject
+    public CustomerServiceImpl(final IDozerService pDozerService,
+            final IPersistenceService<Long, Customer> pPersistenceService) {
+        this.dozerService = pDozerService;
+        this.persistenceService = pPersistenceService;
+    }
 
-   private final IDozerService dozerService;
+    public IDozerService getDozerService() {
+        return dozerService;
+    }
 
-   @Inject
-   public CustomerServiceImpl(final IDozerService pDozerService) {
-      this.dozerService = pDozerService;
-   }
+    public IPersistenceService<Long, Customer> getPersistenceService() {
+        return persistenceService;
+    }
 
-   @Override
-   @POST
-   @Consumes(MediaType.APPLICATION_JSON)
-   @Produces(MediaType.APPLICATION_JSON)
-   public Page<CustomerDto> findCustomers(final PageFilter pFilter) {
+    @Override
+    public CustomerPageDto find(int page, int pageSize, String sortField, String sortDirection) {
 
-      if (pFilter.getPageSize() == 0) {
-         badRequest("page size can not be zero");
-      }
+        if (pageSize == 0) {
+            badRequest("page size can not be zero");
+        }
 
-      List<CustomerDto> dtos = Collections.emptyList();
+        OrderBy order = null;
+        try {
+            order = OrderBy.valueOf(sortDirection);
+        } catch (final IllegalArgumentException iae) {
+            badRequest("sort direction isn't valid. Only ASC or DESC.");
+        }
 
-      final Long total = countCustomers();
+        List<CustomerDto> dtos = Collections.emptyList();
 
-      if (total > 0) {
+        final Long total = getPersistenceService().count(Customer.class);
 
-         int maxPages = (int) (total / pFilter.getPageSize());
+        if (total > 0) {
 
-         if (pFilter.getPage() > maxPages) {
-            badRequest("the page can not be greater than: {0}", maxPages);
-         }
+            int maxPages = (int) (total / pageSize);
 
-         final List<Customer> entities = MOCK_DATA;
+            if (page > maxPages) {
+                badRequest("the page can not be greater than: {0}", maxPages);
+            }
 
-         dtos = getDozerService().convert(entities, CustomerDto.class);
-      }
+            final int startPosition = page == 0 ? page : (page * pageSize) - 1;
 
-      final Page<CustomerDto> page = new Page<CustomerDto>();
-      page.setList(dtos);
-      page.setTotal(dtos.size());
-      return page;
-   }
+            final List<Customer> entities = getPersistenceService().find(startPosition, pageSize,
+                    sortField, order, Customer.class);
 
-   private Long countCustomers() {
-      return new Long(MOCK_DATA.size());
-   }
+            dtos = getDozerService().convert(entities, CustomerDto.class);
+        }
 
-   private void badRequest(final String message, final Object... parameters) {
-      if (message == null || message.trim().isEmpty()) {
-         throw new BadRequestException();
-      } else {
-         badRequest(MessageFormat.format(message, parameters));
-      }
-   }
+        final CustomerPageDto pageWrapper = new CustomerPageDto();
+        pageWrapper.setList(dtos);
+        pageWrapper.setTotal(dtos.size());
+        return pageWrapper;
+    }
 
-   private void badRequest(final String... messages) {
-      if (messages == null || messages.length == 0) {
-         throw new BadRequestException();
-      } else {
-         final Map<String, String[]> error = new HashMap<>();
-         error.put("errors", messages);
-         throw new BadRequestException(Response.status(Status.BAD_REQUEST)
-               .entity(error).build());
-      }
-   }
+    @Override
+    public CustomerDto find(final Long pId) {
+        final Customer entity = getPersistenceService().findById(pId, Customer.class);
+        return getDozerService().convert(entity, CustomerDto.class);
+    }
 
-   public IDozerService getDozerService() {
-      return dozerService;
-   }
+    @Override
+    @Transactional
+    public void add(final CustomerDto pDto) {
+        getPersistenceService().persist(getDozerService().convert(pDto, Customer.class));
+    }
+
+    @Override
+    @Transactional
+    public void update(final CustomerDto pDto) {
+        getPersistenceService().update(getDozerService().convert(pDto, Customer.class));
+    }
+
+    @Override
+    @Transactional
+    public void delete(final Long pId) {
+        getPersistenceService().delete(pId, Customer.class);
+    }
 
 }

@@ -9,6 +9,13 @@
 		<b:Column size="SM_12">
 			<b:PageHeader text="{messages.customer_list_title}"/>
 		</b:Column>
+		
+		<b:Column size="SM_12">
+				<b:ButtonGroup addStyleNames="pull-right btn-toolbar">
+					<b:Button type="DEFAULT" size="SMALL" icon="PLUS" ui:field="btnAddCustomer"/>
+				</b:ButtonGroup>
+		</b:Column>
+		
 		<b:Column size="SM_12">
 			<b.gwt:DataGrid bordered="true" condensed="true" striped="true" hover="true" 
 				height="300px" width="100%" ui:field="dataGrid"/>

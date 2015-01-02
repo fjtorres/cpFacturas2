@@ -6,7 +6,9 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewImpl;
 
-public class InvoiceListView extends ViewImpl implements InvoiceListPresenter.MyView {
+import es.fjtorres.cpFacturas.gwtClient.client.application.invoice.InvoiceListPresenter.MyView;
+
+public class InvoiceListView extends ViewImpl implements MyView {
 
     interface Binder extends UiBinder<Widget, InvoiceListView> {
     }

@@ -1,16 +1,27 @@
 package es.fjtorres.cpFacturas.common.dto;
 
 import java.util.Objects;
+import java.util.Set;
 
-public class CustomerDto extends AbstractDto {
+public class CustomerDto extends AbstractDto<Long> {
 
     private static final long serialVersionUID = 4003447769673727730L;
+
+    private Long id;
 
     private String code;
 
     private String firstName;
 
     private String lastName;
+
+    private ContactDataDto contactData;
+
+    private Set<VehicleDto> vehicles;
+    
+    public CustomerDto() {
+        this.contactData = new ContactDataDto();
+    }
 
     @Override
     public boolean equals(Object pObj) {
@@ -54,6 +65,30 @@ public class CustomerDto extends AbstractDto {
 
     public void setLastName(String pLastName) {
         lastName = pLastName;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long pId) {
+        id = pId;
+    }
+
+    public ContactDataDto getContactData() {
+        return contactData;
+    }
+
+    public void setContactData(ContactDataDto pContactData) {
+        contactData = pContactData;
+    }
+
+    public Set<VehicleDto> getVehicles() {
+        return vehicles;
+    }
+
+    public void setVehicles(Set<VehicleDto> pVehicles) {
+        vehicles = pVehicles;
     }
 
 }

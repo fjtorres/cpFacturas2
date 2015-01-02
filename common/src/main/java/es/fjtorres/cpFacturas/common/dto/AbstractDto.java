@@ -1,18 +1,22 @@
 package es.fjtorres.cpFacturas.common.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
 import com.google.common.base.MoreObjects;
 
-public abstract class AbstractDto implements Serializable {
+public abstract class AbstractDto<Id extends Serializable> implements Serializable {
 
     private static final long serialVersionUID = -3429267552152098675L;
 
-    private Long id;
-
     private long version;
 
+    private Date creationDate;
+
+    private Date lastUpdateDate;
+    
+    @SuppressWarnings("unchecked")
     @Override
     public boolean equals(Object pObj) {
         boolean isEquals = false;
@@ -22,7 +26,7 @@ public abstract class AbstractDto implements Serializable {
         } else if (pObj == null) {
             isEquals = false;
         } else if (pObj instanceof AbstractDto) {
-            final AbstractDto other = (AbstractDto) pObj;
+            final AbstractDto<Id> other = (AbstractDto<Id>) pObj;
             isEquals = Objects.equals(getId(), other.getId());
         }
         return isEquals;
@@ -38,13 +42,9 @@ public abstract class AbstractDto implements Serializable {
         return MoreObjects.toStringHelper(this).toString();
     }
 
-    public Long getId() {
-        return id;
-    }
+    public abstract Id getId();
 
-    public void setId(Long pId) {
-        id = pId;
-    }
+    public abstract void setId(Id id);
 
     public long getVersion() {
         return version;
@@ -52,5 +52,21 @@ public abstract class AbstractDto implements Serializable {
 
     public void setVersion(long pVersion) {
         version = pVersion;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date pCreationDate) {
+        creationDate = pCreationDate;
+    }
+
+    public Date getLastUpdateDate() {
+        return lastUpdateDate;
+    }
+
+    public void setLastUpdateDate(Date pLastUpdateDate) {
+        lastUpdateDate = pLastUpdateDate;
     }
 }

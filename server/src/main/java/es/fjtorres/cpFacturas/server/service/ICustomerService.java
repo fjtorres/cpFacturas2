@@ -1,12 +1,19 @@
 package es.fjtorres.cpFacturas.server.service;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import es.fjtorres.cpFacturas.common.dto.CustomerDto;
-import es.fjtorres.cpFacturas.common.pagination.Page;
-import es.fjtorres.cpFacturas.common.pagination.PageFilter;
+import es.fjtorres.cpFacturas.common.dto.CustomerPageDto;
 
 public interface ICustomerService {
-   Page<CustomerDto> findCustomers(@NotNull @Valid PageFilter filter);
+
+    CustomerPageDto find(int page, int pageSize, String sortField, String sortDirection);
+
+    CustomerDto find(@NotNull Long id);
+
+    void add(@NotNull CustomerDto dto);
+
+    void update(@NotNull CustomerDto dto);
+
+    void delete(@NotNull Long id);
 }

@@ -151,9 +151,14 @@
 				<configuration>
 					<runTarget>es.fjtorres.cpFacturas.gwtClient.cpFacturas/cpFacturas.html</runTarget>
 					<generateDirectory>src/main/gen</generateDirectory>
+					<servicePattern>es/fjtorres/cpFacturas/gwtClient/client/rpc/*Rpc.java</servicePattern>
 					<i18nMessagesBundles>
 						<i18nConstantsBundle>es.fjtorres.cpFacturas.gwtClient.client.i18n.Messages</i18nConstantsBundle>
+						<i18nConstantsBundle>es.fjtorres.cpFacturas.gwtClient.client.i18n.Customers</i18nConstantsBundle>
 					</i18nMessagesBundles>
+					<i18nConstantsWithLookupBundles>
+						<i18nConstantsBundle>es.fjtorres.cpFacturas.gwtClient.client.i18n.Enums</i18nConstantsBundle>					
+					</i18nConstantsWithLookupBundles>
 					<compileSourcesArtifacts>
 						<artifact>es.fjtorres.cpFacturas:Common</artifact>
 					</compileSourcesArtifacts>

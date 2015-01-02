@@ -5,30 +5,13 @@ import java.util.List;
 
 import es.fjtorres.cpFacturas.common.dto.AbstractDto;
 
-public class Page<T extends AbstractDto> implements Serializable {
+public interface Page<T extends AbstractDto<?>> extends Serializable {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = -8970644777517722234L;
-    
-    private long total;
-    
-    private List<T> list;
+    int getTotal();
 
-    public long getTotal() {
-        return total;
-    }
+    void setTotal(int total);
 
-    public void setTotal(long pTotal) {
-        total = pTotal;
-    }
+    List<T> getList();
 
-    public List<T> getList() {
-        return list;
-    }
-
-    public void setList(List<T> pList) {
-        list = pList;
-    }
+    void setList(List<T> pList);
 }

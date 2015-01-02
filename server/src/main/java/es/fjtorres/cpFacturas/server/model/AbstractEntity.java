@@ -4,8 +4,19 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+import javax.persistence.Column;
+import javax.persistence.EntityListeners;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Version;
+
 import com.google.common.base.MoreObjects;
 
+@MappedSuperclass
+@EntityListeners({
+    AuditEntityListener.class
+})
 public abstract class AbstractEntity<Id extends Serializable> implements Serializable {
 
     /**
@@ -13,10 +24,15 @@ public abstract class AbstractEntity<Id extends Serializable> implements Seriali
      */
     private static final long serialVersionUID = -2201504423816671630L;
 
+    @Version
     private long version;
 
+    @Column(name = "AUDIT_CREATION_DATE")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
 
+    @Column(name = "AUDIT_LAST_UPDATE_DATE")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date lastUpdateDate;
 
     public abstract Id getId();
@@ -45,7 +61,7 @@ public abstract class AbstractEntity<Id extends Serializable> implements Seriali
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this).toString();
+        return MoreObjects.toStringHelper(this).add("ID", getId()).toString();
     }
 
     public long getVersion() {

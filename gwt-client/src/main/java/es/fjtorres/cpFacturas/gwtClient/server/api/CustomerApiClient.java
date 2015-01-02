@@ -1,35 +1,57 @@
 package es.fjtorres.cpFacturas.gwtClient.server.api;
 
-import java.util.List;
-
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.glassfish.jersey.client.ClientConfig;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
 import es.fjtorres.cpFacturas.common.dto.CustomerDto;
-import es.fjtorres.cpFacturas.common.pagination.PageFilter;
+import es.fjtorres.cpFacturas.common.dto.CustomerPageDto;
+import es.fjtorres.cpFacturas.common.exception.AppException;
 
 public class CustomerApiClient {
 
-   private static final GenericType<List<CustomerDto>> LIST_TYPE = new GenericType<List<CustomerDto>>() {
-   };
+    public CustomerPageDto find(final int pPage, final int pPageSize) {
+        final WebTarget target = getTarget("/customers").queryParam("page", pPage).queryParam(
+                "pageSize", pPageSize);
+        return target.request(MediaType.APPLICATION_JSON).get(CustomerPageDto.class);
+    }
 
-   public List<CustomerDto> findCustomers(final int pPage, final int pPageSize) {
-      Client client = ClientBuilder.newClient(new ClientConfig(
-            JacksonJsonProvider.class));
-      WebTarget target = client.target("http://localhost:8080/server/api")
-            .path("/customers");
-      final PageFilter filter = new PageFilter();
-      filter.setPage(pPage);
-      filter.setPageSize(pPageSize);
-      return target.request(MediaType.APPLICATION_JSON).post(
-            Entity.entity(filter, MediaType.APPLICATION_JSON), LIST_TYPE);
-   }
+    public void save(final CustomerDto pDto) throws AppException {
+        final WebTarget target = getTarget("/customers");
+
+        Response response = null;
+        if (pDto.getId() == null) {
+            response = target.request().post(Entity.entity(pDto, MediaType.APPLICATION_JSON));
+        } else {
+            response = target.request().put(Entity.entity(pDto, MediaType.APPLICATION_JSON));
+        }
+
+        if (response != null) {
+            if (Response.Status.OK.getStatusCode() != response.getStatus()) {
+                switch (response.getStatus()) {
+                case 400:
+                    System.out.println(response.getEntity());
+                    break;
+                default:
+                    throw new AppException("Exception when call REST api.");
+                }
+            }
+        }
+    }
+
+    private Client getClient() {
+        return ClientBuilder.newClient(new ClientConfig(JacksonJsonProvider.class));
+    }
+
+    private WebTarget getTarget(final String pPath) {
+        final WebTarget target = getClient().target("http://localhost:8080/server/api").path(pPath);
+        return target;
+    }
 }

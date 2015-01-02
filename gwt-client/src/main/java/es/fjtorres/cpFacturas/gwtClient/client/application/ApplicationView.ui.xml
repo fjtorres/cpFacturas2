@@ -29,9 +29,13 @@
 				</b:Container>
 			</b:Navbar>
 
-			<!-- Container Content -->
-			<g:SimplePanel addStyleNames="push" ui:field="contentContainer" />
 
+			<g:FlowPanel addStyleNames="push">
+				<g:SimplePanel ui:field="messagesContainer" />
+	
+				<!-- Container Content -->
+				<g:SimplePanel ui:field="contentContainer" />
+			</g:FlowPanel>
 		</b:Container>
 	</g:ScrollPanel>
 </ui:UiBinder> 

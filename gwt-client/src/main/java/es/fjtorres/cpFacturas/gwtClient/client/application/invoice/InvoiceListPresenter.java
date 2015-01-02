@@ -27,6 +27,6 @@ public class InvoiceListPresenter extends
    
     @Inject
     public InvoiceListPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy) {
-        super(eventBus, view, proxy, ApplicationPresenter.TYPE_SetMainContent);
+        super(eventBus, view, proxy, ApplicationPresenter.SLOT_MAIN_CONTENT);
     }
 }

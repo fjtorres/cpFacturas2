@@ -6,7 +6,9 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewImpl;
 
-public class VehicleListView extends ViewImpl implements VehicleListPresenter.MyView {
+import es.fjtorres.cpFacturas.gwtClient.client.application.vehicle.VehicleListPresenter.MyView;
+
+public class VehicleListView extends ViewImpl implements MyView {
 
     interface Binder extends UiBinder<Widget, VehicleListView> {
     }

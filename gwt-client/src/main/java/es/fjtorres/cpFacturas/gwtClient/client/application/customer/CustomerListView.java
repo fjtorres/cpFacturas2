@@ -1,102 +1,79 @@
 package es.fjtorres.cpFacturas.gwtClient.client.application.customer;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
+import org.gwtbootstrap3.client.ui.Button;
+
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.view.client.AsyncDataProvider;
-import com.google.gwt.view.client.HasData;
 
 import es.fjtorres.cpFacturas.common.dto.CustomerDto;
-import es.fjtorres.cpFacturas.gwtClient.client.rpc.DefaultCallback;
-import es.fjtorres.cpFacturas.gwtClient.client.rpc.ICustomerRpcAsync;
+import es.fjtorres.cpFacturas.gwtClient.client.application.customer.CustomerListPresenter.MyView;
+import es.fjtorres.cpFacturas.gwtClient.client.i18n.Customers;
 import es.fjtorres.cpFacturas.gwtClient.client.view.AbstractListView;
 
-public class CustomerListView extends AbstractListView<CustomerDto> implements
-      CustomerListPresenter.MyView {
+public class CustomerListView extends AbstractListView<CustomerDto, CustomerListUiHandlers>
+        implements MyView {
 
-   interface Binder extends UiBinder<Widget, CustomerListView> {
-   }
+    interface Binder extends UiBinder<Widget, CustomerListView> {
+    }
 
-   private final ICustomerRpcAsync rpc;
+    @UiField
+    protected Button btnAddCustomer;
 
-   @Inject
-   public CustomerListView(final Binder uiBinder, final ICustomerRpcAsync pRpc) {
-      super(10);
+    private final Customers i18nCustomers;
 
-      this.rpc = pRpc;
+    @Inject
+    public CustomerListView(final Binder uiBinder, Customers pI18nCustomers) {
+        super(10);
 
-      initWidget(uiBinder.createAndBindUi(this));
+        this.i18nCustomers = pI18nCustomers;
 
-      initGrid();
-   }
+        initWidget(uiBinder.createAndBindUi(this));
 
-   @Override
-   public void createGridColumns() {
-      final TextColumn<CustomerDto> codeColumn = new TextColumn<CustomerDto>() {
+        initGrid();
+    }
 
-         @Override
-         public String getValue(final CustomerDto pObject) {
-            return pObject.getCode();
-         }
-      };
+    @Override
+    public void createGridColumns() {
+        final TextColumn<CustomerDto> codeColumn = new TextColumn<CustomerDto>() {
 
-      dataGrid.addColumn(codeColumn, "Code");
+            @Override
+            public String getValue(final CustomerDto pObject) {
+                return pObject.getCode();
+            }
+        };
 
-      final TextColumn<CustomerDto> firstNameColumn = new TextColumn<CustomerDto>() {
+        dataGrid.addColumn(codeColumn, i18nCustomers.field_code());
 
-         @Override
-         public String getValue(final CustomerDto pObject) {
-            return pObject.getFirstName();
-         }
-      };
+        final TextColumn<CustomerDto> firstNameColumn = new TextColumn<CustomerDto>() {
 
-      dataGrid.addColumn(firstNameColumn, "First name");
+            @Override
+            public String getValue(final CustomerDto pObject) {
+                return pObject.getFirstName();
+            }
+        };
 
-      final TextColumn<CustomerDto> lastNameColumn = new TextColumn<CustomerDto>() {
+        dataGrid.addColumn(firstNameColumn, i18nCustomers.field_firstName());
 
-         @Override
-         public String getValue(final CustomerDto pObject) {
-            return pObject.getLastName();
-         }
-      };
+        final TextColumn<CustomerDto> lastNameColumn = new TextColumn<CustomerDto>() {
 
-      dataGrid.addColumn(lastNameColumn, "Last name");
-   }
+            @Override
+            public String getValue(final CustomerDto pObject) {
+                return pObject.getLastName();
+            }
+        };
 
-   @Override
-   @SuppressWarnings("unchecked")
-   public AsyncDataProvider<CustomerDto> createProvider() {
-      return new AsyncDataProvider<CustomerDto>() {
+        dataGrid.addColumn(lastNameColumn, i18nCustomers.field_lastName());
+    }
 
-         @Override
-         protected void onRangeChanged(final HasData<CustomerDto> pDisplay) {
-            final int start = pDisplay.getVisibleRange().getStart();
-
-            rpc.findCustomers(start / getPageSize(), getPageSize(),
-                  new DefaultCallback<List<CustomerDto>>() {
-
-                     @Override
-                     public void onSuccess(final List<CustomerDto> pResult) {
-                        int end = start
-                              + pDisplay.getVisibleRange().getLength();
-
-                        end = end >= pResult.size() ? pResult.size() : end;
-
-                        updateRowData(start, pResult.subList(start, end));
-                        updateRowCount(pResult.size(), true);
-
-                        rebuildPagination();
-                     }
-
-                  });
-
-         }
-
-      };
-   }
+    @UiHandler("btnAddCustomer")
+    void onClickBtnAddCustomer(final ClickEvent event) {
+        getUiHandlers().revealAddCustomer();
+    }
 
 }

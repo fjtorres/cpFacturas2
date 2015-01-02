@@ -3,6 +3,7 @@ package es.fjtorres.cpFacturas.gwtClient.client.place;
 public final class NameTokens {
 
     public static final String CUSTOMERS = "customers";
+    public static final String CUSTOMER_NEW = "newCustomer";
     public static final String HOME = "home";
     public static final String INSURERS = "insurers";
     public static final String INVOICES = "invoices";
@@ -31,5 +32,9 @@ public final class NameTokens {
 
     public static String getVehicles() {
         return VEHICLES;
+    }
+
+    public static String getCustomerNew() {
+        return CUSTOMER_NEW;
     }
 }

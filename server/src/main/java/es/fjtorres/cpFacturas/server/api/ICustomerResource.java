@@ -9,7 +9,7 @@ public interface ICustomerResource {
 
     Response find(int page, int pageSize, String sortField, String sortDirection);
 
-    Response find(@NotNull Long id);
+    Response findById(@NotNull Long id);
 
     Response add(@NotNull CustomerDto dto);
 

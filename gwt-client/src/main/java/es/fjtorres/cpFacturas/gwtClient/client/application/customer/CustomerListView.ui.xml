@@ -4,6 +4,7 @@
 	xmlns:b.gwt="urn:import:org.gwtbootstrap3.client.ui.gwt" xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	
 	<ui:with type="es.fjtorres.cpFacturas.gwtClient.client.i18n.Messages" field="messages" />
+	<ui:with type="es.fjtorres.cpFacturas.gwtClient.client.i18n.Customers" field="customers" />
 	
 	<b:Row>
 		<b:Column size="SM_12">
@@ -12,13 +13,15 @@
 		
 		<b:Column size="SM_12">
 				<b:ButtonGroup addStyleNames="pull-right btn-toolbar">
-					<b:Button type="DEFAULT" size="SMALL" icon="PLUS" ui:field="btnAddCustomer"/>
+					<b:Button type="DEFAULT" size="SMALL" icon="PLUS" ui:field="btnAdd" title="{customers.btn_add_title}"/>
+					<b:Button type="DEFAULT" size="SMALL" icon="PENCIL" ui:field="btnEdit" title="{customers.btn_edit_title}"/>
+					<b:Button type="DEFAULT" size="SMALL" icon="REMOVE" ui:field="btnDelete" title="{customers.btn_remove_title}"/>
 				</b:ButtonGroup>
 		</b:Column>
 		
 		<b:Column size="SM_12">
 			<b.gwt:DataGrid bordered="true" condensed="true" striped="true" hover="true" 
-				height="300px" width="100%" ui:field="dataGrid"/>
+				height="345px" width="100%" ui:field="dataGrid"/>
 			<b:Pagination ui:field="dataGridPagination"/>
 		</b:Column>
 	</b:Row>

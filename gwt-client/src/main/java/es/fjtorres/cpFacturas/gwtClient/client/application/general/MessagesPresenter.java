@@ -4,14 +4,18 @@ import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
+import com.gwtplatform.mvp.client.annotations.ProxyEvent;
+import com.gwtplatform.mvp.client.proxy.NavigationEvent;
+import com.gwtplatform.mvp.client.proxy.NavigationHandler;
 
 import es.fjtorres.cpFacturas.gwtClient.client.application.event.DisplayMessageEvent;
 
 public class MessagesPresenter extends PresenterWidget<MessagesPresenter.MyView> implements
-        DisplayMessageEvent.DisplayMessageHandler {
+        DisplayMessageEvent.DisplayMessageHandler, NavigationHandler {
     
     public interface MyView extends View {
         void addMessage(Message message);
+        void clearMessage();
     }
 
     @Inject
@@ -27,5 +31,11 @@ public class MessagesPresenter extends PresenterWidget<MessagesPresenter.MyView>
     @Override
     protected void onBind() {
         addRegisteredHandler(DisplayMessageEvent.getType(), this);
+    }
+    
+    @ProxyEvent
+    @Override
+    public void onNavigation(NavigationEvent pNavigationEvent) {
+        
     }
 }

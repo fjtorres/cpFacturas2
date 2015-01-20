@@ -1,19 +1,29 @@
 package es.fjtorres.cpFacturas.server.service;
 
-import javax.validation.constraints.NotNull;
-
 import es.fjtorres.cpFacturas.common.dto.CustomerDto;
 import es.fjtorres.cpFacturas.common.dto.CustomerPageDto;
+import es.fjtorres.cpFacturas.common.exception.ValidationException;
 
 public interface ICustomerService {
 
-    CustomerPageDto find(int page, int pageSize, String sortField, String sortDirection);
+    /**
+     * 
+     * @param page
+     * @param pageSize
+     * @param sortField
+     * @param sortDirection
+     * @return
+     * @throws IllegalArgumentException
+     *             If any parameter are invalid.
+     */
+    CustomerPageDto find(int page, int pageSize, String sortField, String sortDirection)
+            throws IllegalArgumentException;
 
-    CustomerDto find(@NotNull Long id);
+    CustomerDto findById(Long id);
 
-    void add(@NotNull CustomerDto dto);
+    void add(CustomerDto dto) throws ValidationException;
 
-    void update(@NotNull CustomerDto dto);
+    void update(CustomerDto dto) throws ValidationException;
 
-    void delete(@NotNull Long id);
+    void delete(Long id);
 }

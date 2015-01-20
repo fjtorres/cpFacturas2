@@ -28,7 +28,7 @@
 				<b:FormGroup addStyleNames="form-group-sm">
 					<b:FormLabel text="{customers.field_code}" addStyleNames="col-sm-3" />
 					<g:FlowPanel addStyleNames="col-sm-9">
-						<b:TextBox b:id="txtCode" ui:field="code" placeholder="{customers.field_code_placeholder}" maxLength="100" />
+						<b:TextBox b:id="txtCode" ui:field="txtCode" placeholder="{customers.field_code_placeholder}" maxLength="100" />
 					</g:FlowPanel>
 				</b:FormGroup>
 			</b:Column>
@@ -37,7 +37,7 @@
 				<b:FormGroup addStyleNames="form-group-sm">
 					<b:FormLabel text="{customers.field_firstName}" addStyleNames="col-sm-3" />
 					<g:FlowPanel addStyleNames="col-sm-9">
-						<b:TextBox b:id="txtFirstName" ui:field="firstName" placeholder="{customers.field_firstName_placeholder}" maxLength="100" />
+						<b:TextBox b:id="txtFirstName" ui:field="txtFirstName" placeholder="{customers.field_firstName_placeholder}" maxLength="100" />
 					</g:FlowPanel>
 				</b:FormGroup>
 			</b:Column>
@@ -46,7 +46,7 @@
 				<b:FormGroup addStyleNames="form-group-sm" ui:field="fgLastName">
 					<b:FormLabel text="{customers.field_lastName}" addStyleNames="col-sm-3" />
 					<g:FlowPanel addStyleNames="col-sm-9">
-						<b:TextBox b:id="txtLastName" ui:field="lastName" placeholder="{customers.field_lastName_placeholder}" maxLength="100" />
+						<b:TextBox b:id="txtLastName" ui:field="txtLastName" placeholder="{customers.field_lastName_placeholder}" maxLength="100" />
 					</g:FlowPanel>
 				</b:FormGroup>
 			</b:Column>
@@ -57,7 +57,7 @@
 				<b:FormGroup addStyleNames="form-group-sm">
 					<b:FormLabel text="{customers.field_primaryPhoneNumber}" addStyleNames="col-sm-3" />
 					<g:FlowPanel addStyleNames="col-sm-9">
-						<b:TextBox b:id="txtPrimaryPhone" ui:field="primaryPhone" placeholder="{customers.field_primaryPhoneNumber_placeholder}" maxLength="25" />
+						<b:TextBox b:id="txtPrimaryPhone" ui:field="txtPrimaryPhone" placeholder="{customers.field_primaryPhoneNumber_placeholder}" maxLength="25" />
 					</g:FlowPanel>
 				</b:FormGroup>
 			</b:Column>
@@ -66,7 +66,7 @@
 				<b:FormGroup addStyleNames="form-group-sm">
 					<b:FormLabel text="{customers.field_secondaryPhoneNumber}" addStyleNames="col-sm-3" />
 					<g:FlowPanel addStyleNames="col-sm-9">
-						<b:TextBox b:id="txtSecondaryPhone" ui:field="secondaryPhone" placeholder="{customers.field_secondaryPhoneNumber_placeholder}" maxLength="25" />
+						<b:TextBox b:id="txtSecondaryPhone" ui:field="txtSecondaryPhone" placeholder="{customers.field_secondaryPhoneNumber_placeholder}" maxLength="25" />
 					</g:FlowPanel>
 				</b:FormGroup>
 			</b:Column>
@@ -75,7 +75,7 @@
 				<b:FormGroup addStyleNames="form-group-sm">
 					<b:FormLabel text="{customers.field_fax}" addStyleNames="col-sm-3" />
 					<g:FlowPanel addStyleNames="col-sm-9">
-						<b:TextBox b:id="txtFax" ui:field="fax" placeholder="{customers.field_fax}" maxLength="25" />
+						<b:TextBox b:id="txtFax" ui:field="txtFax" placeholder="{customers.field_fax}" maxLength="25" />
 					</g:FlowPanel>
 				</b:FormGroup>
 			</b:Column>
@@ -84,7 +84,7 @@
 				<b:FormGroup addStyleNames="form-group-sm">
 					<b:FormLabel text="{customers.field_email}" addStyleNames="col-sm-3" />
 					<g:FlowPanel addStyleNames="col-sm-9">
-						<b:TextBox b:id="txtEmail" ui:field="email" placeholder="{customers.field_email_placeholder}" maxLength="25" />
+						<b:TextBox b:id="txtEmail" ui:field="txtEmail" placeholder="{customers.field_email_placeholder}" maxLength="25" />
 					</g:FlowPanel>
 				</b:FormGroup>
 			</b:Column>
@@ -93,7 +93,7 @@
 				<b:FormGroup addStyleNames="form-group-sm">
 					<b:FormLabel text="{customers.field_address}" addStyleNames="col-sm-3" />
 					<g:FlowPanel addStyleNames="col-sm-9">
-						<b:TextArea b:id="txtAddress" ui:field="address" placeholder="{customers.field_address_placeholder}" maxLength="250" />
+						<b:TextArea b:id="txtAddress" ui:field="txtAddress" placeholder="{customers.field_address_placeholder}" maxLength="250" />
 					</g:FlowPanel>
 				</b:FormGroup>
 			</b:Column>

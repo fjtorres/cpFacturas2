@@ -32,6 +32,12 @@
     <source path="client"/>
 
 	<set-property name="user.agent" value="safari" />
+	
+	<!-- Locale -->
+	<extend-property name="locale" values="en"/>
+	<extend-property name="locale" values="es"/>
+	<set-property-fallback name="locale" value="es"/>
+	
 
 	 <!-- GWT Modules -->
     <set-configuration-property name="gin.ginjector.modules"

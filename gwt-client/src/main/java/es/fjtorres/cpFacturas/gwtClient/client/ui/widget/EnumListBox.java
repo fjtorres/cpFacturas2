@@ -1,5 +1,6 @@
 package es.fjtorres.cpFacturas.gwtClient.client.ui.widget;
 
+import com.google.gwt.editor.client.LeafValueEditor;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -8,16 +9,18 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.user.client.ui.HasValue;
 
-public class EnumListBox<T extends Enum<T>> extends org.gwtbootstrap3.client.ui.ListBox implements HasValue<T> {
+public class EnumListBox<T extends Enum<T>> extends org.gwtbootstrap3.client.ui.ListBox implements HasValue<T>, LeafValueEditor<T> {
 
     private final Class<T> clazzOfEnum;
     private boolean valueChangeHandlerInitialized;
+    private T defaultValue;
 
-    public EnumListBox(final Class<T> clazzOfEnum, final ConstantsWithLookup constants) {
+    public EnumListBox(final Class<T> clazzOfEnum, final ConstantsWithLookup constants, final T pDefaultValue) {
         if (clazzOfEnum == null)
             throw new IllegalArgumentException("Enum class cannot be null");
 
         this.clazzOfEnum = clazzOfEnum;
+        this.defaultValue = pDefaultValue;
         EnumTranslator enumTranslator = new EnumTranslator(constants);
 
         T[] values = clazzOfEnum.getEnumConstants();
@@ -43,6 +46,9 @@ public class EnumListBox<T extends Enum<T>> extends org.gwtbootstrap3.client.ui.
     }
 
     public void setSelectedValue(T value) {
+        if (value == null) {
+            value = defaultValue;
+        }
         T[] values = clazzOfEnum.getEnumConstants();
         for (int i = 0; i < values.length; i++) {
             if (values[i] == value) {

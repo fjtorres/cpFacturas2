@@ -9,7 +9,7 @@ public class CustomerPageDto implements Page<CustomerDto> {
 
     private static final long serialVersionUID = -673352284354903958L;
 
-    private int total;
+    private long total;
 
     private List<CustomerDto> list;
 
@@ -22,17 +22,17 @@ public class CustomerPageDto implements Page<CustomerDto> {
      * @param pTotal
      * @param pList
      */
-    public CustomerPageDto(int pTotal, List<CustomerDto> pList) {
+    public CustomerPageDto(long pTotal, List<CustomerDto> pList) {
         super();
         total = pTotal;
         list = pList;
     }
 
-    public int getTotal() {
+    public long getTotal() {
         return total;
     }
 
-    public void setTotal(int pTotal) {
+    public void setTotal(long pTotal) {
         total = pTotal;
     }
 

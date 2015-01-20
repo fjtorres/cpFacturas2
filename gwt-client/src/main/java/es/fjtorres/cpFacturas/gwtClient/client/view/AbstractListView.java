@@ -10,6 +10,8 @@ import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.Range;
 import com.google.gwt.view.client.RangeChangeEvent;
+import com.google.gwt.view.client.SelectionChangeEvent;
+import com.google.gwt.view.client.SingleSelectionModel;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 
 import es.fjtorres.cpFacturas.common.dto.AbstractDto;
@@ -32,6 +34,8 @@ public abstract class AbstractListView<T extends AbstractDto<?>, H extends ListU
 
     private final int pageSize;
 
+    private T selectedItem;
+
     public AbstractListView(final int pPageSize) {
         this.pageSize = pPageSize;
     }
@@ -39,6 +43,16 @@ public abstract class AbstractListView<T extends AbstractDto<?>, H extends ListU
     protected void initGrid() {
         if (!init) {
             dataGrid.setPageSize(pageSize);
+            final SingleSelectionModel<T> selectionModel = new SingleSelectionModel<T>();
+            dataGrid.setSelectionModel(selectionModel);
+            dataGrid.getSelectionModel().addSelectionChangeHandler(
+                    new SelectionChangeEvent.Handler() {
+                        @Override
+                        public void onSelectionChange(SelectionChangeEvent pEvent) {
+                            selectedItem = selectionModel.getSelectedObject();
+                        }
+                    });
+
             createGridColumns();
 
             dataGrid.addRangeChangeHandler(new RangeChangeEvent.Handler() {
@@ -76,10 +90,10 @@ public abstract class AbstractListView<T extends AbstractDto<?>, H extends ListU
     @Override
     public void displayData(int pOffset, final Page<T> page) {
         dataGridProvider.updateRowData(pOffset, page.getList());
-        dataGridProvider.updateRowCount(page.getTotal(), true);
+        dataGridProvider.updateRowCount((int)page.getTotal(), true);
         rebuildPagination();
     }
-    
+
     protected void rebuildPagination() {
         getDataGridPagination().rebuild(getDataGridPager());
     }
@@ -118,6 +132,14 @@ public abstract class AbstractListView<T extends AbstractDto<?>, H extends ListU
 
     public int getPageSize() {
         return pageSize;
+    }
+
+    public T getSelectedItem() {
+        return selectedItem;
+    }
+
+    public boolean isActiveSelection() {
+        return selectedItem != null;
     }
 
 }

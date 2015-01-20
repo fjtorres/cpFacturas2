@@ -2,6 +2,7 @@ package es.fjtorres.cpFacturas.server.api.impl;
 
 import java.text.MessageFormat;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.BadRequestException;
@@ -25,6 +26,12 @@ public abstract class AbstractResource {
             final Map<String, String[]> error = new HashMap<>();
             error.put("errors", messages);
             throw new BadRequestException(Response.status(Status.BAD_REQUEST).entity(error).build());
+        }
+    }
+
+    protected void badRequest(final List<String> messages) {
+        if (messages != null && !messages.isEmpty()) {
+            badRequest(messages.toArray(new String[] {}));
         }
     }
 }

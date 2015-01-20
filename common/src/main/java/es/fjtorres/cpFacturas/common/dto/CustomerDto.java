@@ -3,11 +3,15 @@ package es.fjtorres.cpFacturas.common.dto;
 import java.util.Objects;
 import java.util.Set;
 
+import es.fjtorres.cpFacturas.common.CustomerType;
+
 public class CustomerDto extends AbstractDto<Long> {
 
     private static final long serialVersionUID = 4003447769673727730L;
 
     private Long id;
+
+    private CustomerType type;
 
     private String code;
 
@@ -18,7 +22,7 @@ public class CustomerDto extends AbstractDto<Long> {
     private ContactDataDto contactData;
 
     private Set<VehicleDto> vehicles;
-    
+
     public CustomerDto() {
         this.contactData = new ContactDataDto();
     }
@@ -89,6 +93,14 @@ public class CustomerDto extends AbstractDto<Long> {
 
     public void setVehicles(Set<VehicleDto> pVehicles) {
         vehicles = pVehicles;
+    }
+
+    public CustomerType getType() {
+        return type;
+    }
+
+    public void setType(CustomerType pType) {
+        type = pType;
     }
 
 }

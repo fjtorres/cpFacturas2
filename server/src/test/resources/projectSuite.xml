@@ -1,0 +1,16 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="ServiceSuite" verbose="1">
+	<test name="Service">
+		<classes>
+			<class name="es.fjtorres.cpFacturas.server.service.impl.CustomerServiceImplTest" />
+			<class name="es.fjtorres.cpFacturas.server.service.impl.ValidationServiceImplTest" />
+			<class name="es.fjtorres.cpFacturas.server.service.impl.JpaPersistenceServiceImplTest" />
+		</classes>
+	</test>
+	
+	<test name="Dozer">
+		<classes>
+			<class name="es.fjtorres.cpFacturas.server.dozer.service.impl.DozerServiceImplTest" />
+		</classes>
+	</test>
+</suite>

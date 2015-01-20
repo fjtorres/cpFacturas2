@@ -42,3 +42,5 @@ local.properties
 war/
 gwt-unitCache/
 .gwt/
+test-output/
+*/test-output/**

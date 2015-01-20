@@ -46,4 +46,9 @@ public class MessagesView extends ViewImpl implements MessagesPresenter.MyView {
         }
     }
 
+    @Override
+    public void clearMessage() {
+        messagesPanel.clear();
+    }
+
 }

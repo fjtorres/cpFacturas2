@@ -15,6 +15,10 @@ import es.fjtorres.cpFacturas.common.dto.CustomerPageDto;
 import es.fjtorres.cpFacturas.gwtClient.client.application.ApplicationPresenter;
 import es.fjtorres.cpFacturas.gwtClient.client.application.customer.event.CustomerAddEvent;
 import es.fjtorres.cpFacturas.gwtClient.client.application.customer.event.CustomerAddEvent.CustomerAddHandler;
+import es.fjtorres.cpFacturas.gwtClient.client.application.event.DisplayMessageEvent;
+import es.fjtorres.cpFacturas.gwtClient.client.application.general.Message;
+import es.fjtorres.cpFacturas.gwtClient.client.application.general.MessageStatus;
+import es.fjtorres.cpFacturas.gwtClient.client.i18n.Customers;
 import es.fjtorres.cpFacturas.gwtClient.client.place.NameTokens;
 import es.fjtorres.cpFacturas.gwtClient.client.rpc.AbstractDefaultCallback;
 import es.fjtorres.cpFacturas.gwtClient.client.rpc.ICustomerRpcAsync;
@@ -38,24 +42,18 @@ public class CustomerListPresenter extends
 
     private final ICustomerRpcAsync rpc;
 
+    private final Customers i18nCustomers;
+
     @Inject
     public CustomerListPresenter(final EventBus eventBus, final PlaceManager pPlaceManager,
-            final MyView view, final MyProxy proxy, final ICustomerRpcAsync pRpc) {
+            final MyView view, final MyProxy proxy, final ICustomerRpcAsync pRpc,
+            Customers pI18nCustomers) {
         super(eventBus, view, proxy, ApplicationPresenter.SLOT_MAIN_CONTENT);
         this.placeManager = pPlaceManager;
         this.rpc = pRpc;
+        this.i18nCustomers = pI18nCustomers;
 
         view.setUiHandlers(this);
-    }
-
-    @Override
-    public void revealAddCustomer() {
-        placeManager.revealPlace(new Builder().nameToken(NameTokens.CUSTOMER_NEW).build());
-    }
-
-    @Override
-    public void onAdd(CustomerAddEvent pEvent) {
-
     }
 
     @Override
@@ -68,7 +66,7 @@ public class CustomerListPresenter extends
             }
 
             @Override
-            public void failure() {
+            public void afterFailure(final Throwable pCaught) {
                 getView().displayData(0, new CustomerPageDto());
             }
 
@@ -78,5 +76,36 @@ public class CustomerListPresenter extends
     @Override
     protected void onReset() {
         getView().initDataProvider();
+    }
+
+    @Override
+    public void onAdd(CustomerAddEvent pEvent) {
+        String code = "";
+        if (pEvent != null && pEvent.getDto() != null && pEvent.getDto().getCode() != null) {
+            code = pEvent.getDto().getCode();
+        }
+        DisplayMessageEvent.fire(this, new Message(i18nCustomers.msg_add_ok(code),
+                MessageStatus.INFO));
+    }
+
+    @Override
+    public void onAdd() {
+        placeManager.revealPlace(new Builder().nameToken(NameTokens.CUSTOMER_NEW).build());
+    }
+
+    @Override
+    public void onEdit(final CustomerDto pSelectedItem) {
+
+    }
+
+    @Override
+    public void onDelete(final CustomerDto pSelectedItem) {
+
+    }
+
+    @Override
+    public void onSelectionError() {
+        DisplayMessageEvent.fire(this, new Message(i18nCustomers.msg_error_selected(),
+                MessageStatus.ERROR));
     }
 }

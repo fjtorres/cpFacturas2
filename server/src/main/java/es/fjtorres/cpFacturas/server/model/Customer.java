@@ -15,13 +15,17 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.google.common.base.MoreObjects;
 
 import es.fjtorres.cpFacturas.common.CustomerType;
 
 @Entity
-@Table(name = "CUSTOMER")
+@Table(name = "CUSTOMERS")
 public class Customer extends AbstractEntity<Long> {
 
     private static final long serialVersionUID = -854986097302149903L;
@@ -31,14 +35,17 @@ public class Customer extends AbstractEntity<Long> {
     @SequenceGenerator(name = "CUSTOMER_SEQ", sequenceName = "CUSTOMER_SEQ", allocationSize = 1)
     private Long id;
 
+    @NotNull(message="{customer.type.required}")
     @Enumerated(EnumType.STRING)
     @Column(name = "TYPE", length = 25, nullable = false)
-    private CustomerType type = CustomerType.PERSON;
+    private CustomerType type;
 
+    @NotEmpty(message="{customer.code.required}")
     @Column(name = "CODE", length = 100, nullable = false, unique = true)
     private String code;
 
     // If type is "company" this field store the "company name"
+    @NotEmpty(message="{customer.firstName.required}")
     @Column(name = "FIRST_NAME", length = 100, nullable = false)
     private String firstName;
 
@@ -47,6 +54,8 @@ public class Customer extends AbstractEntity<Long> {
     private String lastName;
 
     @Embedded
+    @Valid
+    @NotNull(message="{customer.contactData.required}")
     private ContactData contactData;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")

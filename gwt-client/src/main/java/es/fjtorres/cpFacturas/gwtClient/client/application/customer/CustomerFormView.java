@@ -33,54 +33,56 @@ public class CustomerFormView extends ViewWithUiHandlers<CustomerFormUiHandlers>
 
     }
 
-    @UiField
-    protected Form frmCustomer;
+    private static final CustomerType DEFAULT_TYPE = CustomerType.PERSON;
 
+    @Path("type")
     @UiField(provided = true)
     protected EnumListBox<CustomerType> comboType;
 
+    @Path("code")
     @UiField
-    protected TextBox code;
+    protected TextBox txtCode;
 
+    @Path("firstName")
     @UiField
-    protected TextBox firstName;
+    protected TextBox txtFirstName;
 
+    @Path("lastName")
     @UiField
-    protected TextBox lastName;
+    protected TextBox txtLastName;
 
     @Path("contactData.primaryPhoneNumber")
     @UiField
-    protected TextBox primaryPhone;
+    protected TextBox txtPrimaryPhone;
 
     @Path("contactData.secundayPhoneNumber")
     @UiField
-    protected TextBox secondaryPhone;
+    protected TextBox txtSecondaryPhone;
 
     @Path("contactData.email")
     @UiField
-    protected TextBox email;
+    protected TextBox txtEmail;
 
     @Path("contactData.fax")
     @UiField
-    protected TextBox fax;
+    protected TextBox txtFax;
 
     @Path("contactData.address")
     @UiField
-    protected TextArea address;
+    protected TextArea txtAddress;
 
-    @Ignore
+    @UiField
+    protected Form frmCustomer;
+
     @UiField
     protected FormGroup fgLastName;
 
-    @Ignore
     @UiField
     protected Button btnSave;
 
-    @Ignore
     @UiField
     protected Button btnClear;
 
-    @Ignore
     @UiField
     protected Button btnBack;
 
@@ -90,11 +92,10 @@ public class CustomerFormView extends ViewWithUiHandlers<CustomerFormUiHandlers>
     public CustomerFormView(final Binder uiBinder, final Driver pDriver, Enums constants) {
         this.driver = pDriver;
 
-        comboType = new EnumListBox<CustomerType>(CustomerType.class, constants);
-        comboType.setValue(CustomerType.PERSON);
+        comboType = new EnumListBox<CustomerType>(CustomerType.class, constants, DEFAULT_TYPE);
 
         initWidget(uiBinder.createAndBindUi(this));
-        
+
         driver.initialize(this);
         driver.edit(new CustomerDto());
     }
@@ -117,7 +118,7 @@ public class CustomerFormView extends ViewWithUiHandlers<CustomerFormUiHandlers>
     @UiHandler("btnClear")
     public void onClickBtnClear(final ClickEvent event) {
         event.preventDefault();
-        frmCustomer.reset();
+        reset();
     }
 
     @UiHandler("btnBack")
@@ -129,6 +130,12 @@ public class CustomerFormView extends ViewWithUiHandlers<CustomerFormUiHandlers>
     @Override
     public void edit(CustomerDto pDto) {
         driver.edit(pDto);
+    }
+
+    @Override
+    public void reset() {
+        frmCustomer.reset();
+        comboType.setValue(DEFAULT_TYPE);
     }
 
 }

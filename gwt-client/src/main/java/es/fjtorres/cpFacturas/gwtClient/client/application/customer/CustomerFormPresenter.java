@@ -25,6 +25,7 @@ public class CustomerFormPresenter extends
 
     public interface MyView extends View, HasUiHandlers<CustomerFormUiHandlers> {
         void edit(CustomerDto dto);
+        void reset();
     }
 
     @NameToken(NameTokens.CUSTOMER_NEW)
@@ -64,5 +65,11 @@ public class CustomerFormPresenter extends
     @Override
     public void onBack() {
         placeManager.revealPlace(new Builder().nameToken(NameTokens.CUSTOMERS).build());
+    }
+
+    @Override
+    protected void onReveal() {
+        super.onReveal();
+        getView().reset();
     }
 }

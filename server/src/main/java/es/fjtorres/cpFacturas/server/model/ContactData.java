@@ -5,17 +5,22 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
 @Embeddable
 public class ContactData implements Serializable {
 
     private static final long serialVersionUID = -4754107930809784781L;
 
+    @NotEmpty(message="{customer.primaryPhone.required}")
     @Column(name = "PHONE_1", length = 25, nullable = false)
     private String primaryPhoneNumber;
 
     @Column(name = "PHONE_2", length = 25)
     private String secundayPhoneNumber;
 
+    @Email(message="{customer.email.format}")
     @Column(name = "EMAIL", length = 250)
     private String email;
 

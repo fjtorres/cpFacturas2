@@ -7,9 +7,9 @@ import es.fjtorres.cpFacturas.common.dto.AbstractDto;
 
 public interface Page<T extends AbstractDto<?>> extends Serializable {
 
-    int getTotal();
+    long getTotal();
 
-    void setTotal(int total);
+    void setTotal(long total);
 
     List<T> getList();
 

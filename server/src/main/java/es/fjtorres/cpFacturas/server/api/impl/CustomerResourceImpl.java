@@ -16,6 +16,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import es.fjtorres.cpFacturas.common.dto.CustomerDto;
+import es.fjtorres.cpFacturas.common.exception.ValidationException;
+import es.fjtorres.cpFacturas.common.pagination.Page;
 import es.fjtorres.cpFacturas.server.api.ICustomerResource;
 import es.fjtorres.cpFacturas.server.service.ICustomerService;
 
@@ -37,23 +39,33 @@ public class CustomerResourceImpl extends AbstractResource implements ICustomerR
             @DefaultValue("10") @QueryParam("pageSize") int pageSize,
             @QueryParam("sortField") String sortField,
             @DefaultValue("ASC") @QueryParam("sortDirection") String sortDirection) {
-
-        return Response.ok(getService().find(page, pageSize, sortField, sortDirection)).build();
+        Page<CustomerDto> wrapper = null;
+        try {
+            wrapper = getService().find(page, pageSize, sortField, sortDirection);
+        } catch (final IllegalArgumentException iae) {
+            badRequest(iae.getMessage());
+        }
+        return Response.ok(wrapper).build();
     }
 
     @Override
     @Path("{id}")
     @GET
-    public Response find(@PathParam("id")
+    public Response findById(@PathParam("id")
     final Long pId) {
-        return Response.ok(getService().find(pId)).build();
+        return Response.ok(getService().findById(pId)).build();
     }
 
     @Override
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response add(final CustomerDto pDto) {
-        getService().add(pDto);
+        try {
+            getService().add(pDto);
+        } catch (final ValidationException ve) {
+            badRequest(ve.getErrors());
+        }
+
         return Response.ok().build();
     }
 
@@ -61,7 +73,11 @@ public class CustomerResourceImpl extends AbstractResource implements ICustomerR
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public Response update(final CustomerDto pDto) {
-        getService().update(pDto);
+        try {
+            getService().update(pDto);
+        } catch (final ValidationException ve) {
+            badRequest(ve.getErrors());
+        }
         return Response.ok().build();
     }
 

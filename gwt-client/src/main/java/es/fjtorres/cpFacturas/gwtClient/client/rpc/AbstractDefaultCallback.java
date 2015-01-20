@@ -7,6 +7,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.StatusCodeException;
 
 import es.fjtorres.cpFacturas.common.exception.AppException;
+import es.fjtorres.cpFacturas.common.exception.ValidationException;
 import es.fjtorres.cpFacturas.gwtClient.client.application.event.DisplayMessageEvent;
 import es.fjtorres.cpFacturas.gwtClient.client.application.general.Message;
 import es.fjtorres.cpFacturas.gwtClient.client.application.general.MessageStatus;
@@ -18,37 +19,52 @@ public abstract class AbstractDefaultCallback<T> implements AsyncCallback<T> {
 
     private final HasHandlers hashHandlers;
 
+    private boolean showMessages;
+
     /**
      * @param pHashHandlers
      */
     public AbstractDefaultCallback(final HasHandlers pHashHandlers) {
+        this(pHashHandlers, true);
+    }
+
+    /**
+     * @param pHashHandlers
+     */
+    public AbstractDefaultCallback(final HasHandlers pHashHandlers, final boolean pShowMessages) {
         hashHandlers = pHashHandlers;
+        this.showMessages = pShowMessages;
     }
 
     @Override
     public void onFailure(final Throwable pCaught) {
-        String message = MESSAGES.error_default();
+        if (showMessages) {
+            String message = MESSAGES.error_default();
 
-        if (pCaught instanceof AppException) {
-            message = pCaught.getMessage();
-        } else if (pCaught instanceof StatusCodeException) {
-            final StatusCodeException sce = (StatusCodeException) pCaught;
-            switch (sce.getStatusCode()) {
-            case Response.SC_INTERNAL_SERVER_ERROR:
-                message = MESSAGES.error_remoteCall();
-                break;
-            default:
-                message = sce.getStatusText();
-                break;
+            if (pCaught instanceof ValidationException) {
+                // FIXME Lanzar multiples mensajes
+                message = ((ValidationException)pCaught).getErrors().get(0);
+            } else if (pCaught instanceof AppException) {
+                message = pCaught.getMessage();
+            } else if (pCaught instanceof StatusCodeException) {
+                final StatusCodeException sce = (StatusCodeException) pCaught;
+                switch (sce.getStatusCode()) {
+                case Response.SC_INTERNAL_SERVER_ERROR:
+                    message = MESSAGES.error_remoteCall();
+                    break;
+                default:
+                    message = sce.getStatusText();
+                    break;
+                }
             }
-        }
-        
-        DisplayMessageEvent.fire(hashHandlers, new Message(message, MessageStatus.ERROR));
 
-        failure();
+            DisplayMessageEvent.fire(hashHandlers, new Message(message, MessageStatus.ERROR));
+        }
+
+        afterFailure(pCaught);
     }
 
-    public void failure() {
+    public void afterFailure(final Throwable pCaught) {
 
     }
 

@@ -100,7 +100,8 @@ public class CustomerListPresenter extends
 
    @Override
    public void onEdit(final CustomerDto pSelectedItem) {
-
+       placeManager.revealPlace(new PlaceRequest.Builder().nameToken(
+               NameTokens.CUSTOMERS_EDIT).with("code", pSelectedItem.getCode()).build());
    }
 
    @Override

@@ -15,57 +15,68 @@ import es.fjtorres.cpFacturas.gwtClient.client.i18n.Messages;
 
 public abstract class AbstractDefaultCallback<T> implements AsyncCallback<T> {
 
-    private static final Messages MESSAGES = GWT.create(Messages.class);
+   private static final Messages MESSAGES = GWT.create(Messages.class);
 
-    private final HasHandlers hashHandlers;
+   private final HasHandlers hashHandlers;
 
-    private boolean showMessages;
+   private boolean showMessages;
 
-    /**
-     * @param pHashHandlers
-     */
-    public AbstractDefaultCallback(final HasHandlers pHashHandlers) {
-        this(pHashHandlers, true);
-    }
+   /**
+    * @param pHashHandlers
+    */
+   public AbstractDefaultCallback(final HasHandlers pHashHandlers) {
+      this(pHashHandlers, true);
+   }
 
-    /**
-     * @param pHashHandlers
-     */
-    public AbstractDefaultCallback(final HasHandlers pHashHandlers, final boolean pShowMessages) {
-        hashHandlers = pHashHandlers;
-        this.showMessages = pShowMessages;
-    }
+   /**
+    * @param pHashHandlers
+    */
+   public AbstractDefaultCallback(final HasHandlers pHashHandlers,
+         final boolean pShowMessages) {
+      hashHandlers = pHashHandlers;
+      this.showMessages = pShowMessages;
+   }
 
-    @Override
-    public void onFailure(final Throwable pCaught) {
-        if (showMessages) {
-            String message = MESSAGES.error_default();
+   @Override
+   public void onFailure(final Throwable pCaught) {
+      if (showMessages) {
+         String message = MESSAGES.error_default();
+         String[] messages = null;
 
-            if (pCaught instanceof ValidationException) {
-                // FIXME Lanzar multiples mensajes
-                message = ((ValidationException)pCaught).getErrors().get(0);
-            } else if (pCaught instanceof AppException) {
-                message = pCaught.getMessage();
-            } else if (pCaught instanceof StatusCodeException) {
-                final StatusCodeException sce = (StatusCodeException) pCaught;
-                switch (sce.getStatusCode()) {
-                case Response.SC_INTERNAL_SERVER_ERROR:
-                    message = MESSAGES.error_remoteCall();
-                    break;
-                default:
-                    message = sce.getStatusText();
-                    break;
-                }
+         if (pCaught instanceof ValidationException) {
+            messages = ((ValidationException) pCaught).getErrors().toArray(
+                  new String[] {
+
+                  });
+         } else if (pCaught instanceof AppException) {
+            message = pCaught.getMessage();
+         } else if (pCaught instanceof StatusCodeException) {
+            final StatusCodeException sce = (StatusCodeException) pCaught;
+            switch (sce.getStatusCode()) {
+               case Response.SC_INTERNAL_SERVER_ERROR:
+                  message = MESSAGES.error_remoteCall();
+                  break;
+               default:
+                  message = sce.getStatusText();
+                  break;
             }
+         }
 
-            DisplayMessageEvent.fire(hashHandlers, new Message(message, MessageStatus.ERROR));
-        }
+         if (messages == null || messages.length == 0) {
+            DisplayMessageEvent.fire(hashHandlers, new Message(
+                  MessageStatus.ERROR, message));
+         } else {
+            DisplayMessageEvent.fire(hashHandlers, new Message(
+                  MessageStatus.ERROR, messages));
+         }
 
-        afterFailure(pCaught);
-    }
+      }
 
-    public void afterFailure(final Throwable pCaught) {
+      afterFailure(pCaught);
+   }
 
-    }
+   public void afterFailure(final Throwable pCaught) {
+
+   }
 
 }

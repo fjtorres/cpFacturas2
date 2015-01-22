@@ -5,56 +5,63 @@ import java.util.Objects;
 
 public class Message implements Serializable {
 
-    private static final long serialVersionUID = 8288614049783366029L;
+   private static final long serialVersionUID = 8288614049783366029L;
 
-    private String text;
+   private String[] messages;
 
-    private MessageStatus status;
+   private MessageStatus status;
 
-    public Message() {
+   public Message() {
 
-    }
+   }
 
-    public Message(String pText, MessageStatus pStatus) {
-        text = pText;
-        status = pStatus;
-    }
+   public Message(final MessageStatus pStatus, final String pMessage) {
+      messages = new String[] {
+         pMessage
+      };
+      status = pStatus;
+   }
 
-    public String getText() {
-        return text;
-    }
+   public Message(final MessageStatus pStatus, final String... pMessages) {
+      messages = pMessages;
+      status = pStatus;
+   }
 
-    public void setText(String pText) {
-        text = pText;
-    }
+   public MessageStatus getStatus() {
+      return status;
+   }
 
-    public MessageStatus getStatus() {
-        return status;
-    }
+   public void setStatus(final MessageStatus pStatus) {
+      status = pStatus;
+   }
 
-    public void setStatus(MessageStatus pStatus) {
-        status = pStatus;
-    }
+   @Override
+   public boolean equals(final Object pObj) {
+      boolean isEquals = false;
 
-    @Override
-    public boolean equals(Object pObj) {
-        boolean isEquals = false;
+      if (this == pObj) {
+         isEquals = true;
+      } else if (pObj == null) {
+         isEquals = false;
+      } else if (pObj instanceof Message) {
+         final Message other = (Message) pObj;
+         isEquals = Objects.equals(getStatus(), other.getStatus())
+               && Objects.equals(getMessages(), other.getMessages());
+      }
+      return isEquals;
+   }
 
-        if (this == pObj) {
-            isEquals = true;
-        } else if (pObj == null) {
-            isEquals = false;
-        } else if (pObj instanceof Message) {
-            final Message other = (Message) pObj;
-            isEquals = Objects.equals(getStatus(), other.getStatus())
-                    && Objects.equals(getText(), other.getText());
-        }
-        return isEquals;
-    }
+   @Override
+   public int hashCode() {
+      return Objects.hash(getStatus(), getMessages());
+   }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getStatus(), getText());
-    }
+   public String[] getMessages() {
+      return messages;
+   }
+
+   public void setMessages(final String[] messages) {
+      this.messages = messages;
+   }
 
 }

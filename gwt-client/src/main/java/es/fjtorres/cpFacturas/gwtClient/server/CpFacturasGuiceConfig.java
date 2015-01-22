@@ -9,10 +9,9 @@ import com.google.inject.servlet.GuiceServletContextListener;
 @WebListener
 public class CpFacturasGuiceConfig extends GuiceServletContextListener {
 
-    @Override
-    protected Injector getInjector() {
-        // TODO Auto-generated method stub
-        return Guice.createInjector(new CpFacturasServletModule());
-    }
+   @Override
+   protected Injector getInjector() {
+      return Guice.createInjector(new CpFacturasServletModule());
+   }
 
 }

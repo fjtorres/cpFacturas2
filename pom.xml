@@ -9,6 +9,7 @@
 		<module>gwt-client</module>
 		<module>common</module>
 		<module>server</module>
+		<module>api</module>
 	</modules>
 
 	<properties>

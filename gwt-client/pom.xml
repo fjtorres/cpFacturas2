@@ -12,8 +12,8 @@
 
 	<properties>
 		<webappDirectory>war</webappDirectory>
-		<gwt.version>2.6.1</gwt.version>
-		<gwtp.version>1.0.3</gwtp.version>
+		<gwt.version>2.7.0</gwt.version>
+		<gwtp.version>1.4</gwtp.version>
 		<gin.version>2.1.2</gin.version>
 		<gwtBootstrap.version>0.9-SNAPSHOT</gwtBootstrap.version>
 
@@ -23,7 +23,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>es.fjtorres.cpFacturas</groupId>
-			<artifactId>common</artifactId>
+			<artifactId>api</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 

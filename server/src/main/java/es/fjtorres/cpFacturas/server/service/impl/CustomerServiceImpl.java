@@ -1,14 +1,11 @@
 package es.fjtorres.cpFacturas.server.service.impl;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.validation.ConstraintViolation;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,25 +23,17 @@ import es.fjtorres.cpFacturas.server.service.IValidationService;
 
 @Named
 @Transactional(readOnly = true)
-public class CustomerServiceImpl implements ICustomerService {
-
-   private final IDozerService dozerService;
+public class CustomerServiceImpl extends AbstractEntityService implements
+      ICustomerService {
 
    private final IPersistenceService<Long, Customer> persistenceService;
-
-   private final IValidationService validationService;
 
    @Inject
    public CustomerServiceImpl(final IDozerService pDozerService,
          final IPersistenceService<Long, Customer> pPersistenceService,
          final IValidationService pValidationService) {
-      this.dozerService = pDozerService;
+      super(pDozerService, pValidationService);
       this.persistenceService = pPersistenceService;
-      this.validationService = pValidationService;
-   }
-
-   public IDozerService getDozerService() {
-      return dozerService;
    }
 
    public IPersistenceService<Long, Customer> getPersistenceService() {
@@ -59,13 +48,7 @@ public class CustomerServiceImpl implements ICustomerService {
          ExceptionUtils.throwIllegalArgument("page size cannon't be zero");
       }
 
-      OrderBy order = null;
-      try {
-         order = OrderBy.valueOf(sortDirection);
-      } catch (final IllegalArgumentException iae) {
-         ExceptionUtils
-               .throwIllegalArgument("sort direction isn't valid. Only ASC or DESC.");
-      }
+      final OrderBy order = OrderBy.fromString(sortDirection);
 
       List<CustomerDto> dtos = Collections.emptyList();
 
@@ -83,14 +66,14 @@ public class CustomerServiceImpl implements ICustomerService {
          final int startPosition = page == 0 ? page : (page * pageSize);
 
          final List<Customer> entities = getPersistenceService().find(
-               startPosition, pageSize, sortField, order, Customer.class);
+               startPosition, pageSize, sortField, order, getEntityClass());
 
-         dtos = getDozerService().convert(entities, CustomerDto.class);
+         dtos = convert(entities, getDtoClass());
       }
 
       final CustomerPageDto pageWrapper = new CustomerPageDto();
       pageWrapper.setList(dtos);
-      pageWrapper.setTotal(getPersistenceService().count(Customer.class));
+      pageWrapper.setTotal(getPersistenceService().count(getEntityClass()));
       return pageWrapper;
    }
 
@@ -100,7 +83,7 @@ public class CustomerServiceImpl implements ICustomerService {
 
       final Customer entity = getPersistenceService().findById(pId,
             Customer.class);
-      return getDozerService().convert(entity, CustomerDto.class);
+      return convert(entity, getDtoClass());
    }
 
    @Override
@@ -108,13 +91,9 @@ public class CustomerServiceImpl implements ICustomerService {
    public void add(final CustomerDto pDto) throws ValidationException {
       Objects.requireNonNull(pDto, "DTO cannon't be null");
 
-      final Customer entity = getDozerService().convert(pDto, Customer.class);
-      final Set<ConstraintViolation<Customer>> errors = getValidationService()
-            .validate(entity);
-      if (errors == null || errors.isEmpty()) {
+      final Customer entity = convert(pDto, getEntityClass());
+      if (validate(entity)) {
          getPersistenceService().persist(entity);
-      } else {
-         processValidationErrors(errors);
       }
    }
 
@@ -123,13 +102,9 @@ public class CustomerServiceImpl implements ICustomerService {
    public void update(final CustomerDto pDto) throws ValidationException {
       Objects.requireNonNull(pDto, "DTO cannon't be null");
 
-      final Customer entity = getDozerService().convert(pDto, Customer.class);
-      final Set<ConstraintViolation<Customer>> errors = getValidationService()
-            .validate(entity);
-      if (errors == null || errors.isEmpty()) {
+      final Customer entity = convert(pDto, getEntityClass());
+      if (validate(entity)) {
          getPersistenceService().update(entity);
-      } else {
-         processValidationErrors(errors);
       }
    }
 
@@ -138,32 +113,29 @@ public class CustomerServiceImpl implements ICustomerService {
    public void delete(final Long pId) {
       Objects.requireNonNull(pId, "ID cannon't be null");
 
-      getPersistenceService().delete(pId, Customer.class);
-   }
-
-   public IValidationService getValidationService() {
-      return validationService;
-   }
-
-   private <T> void processValidationErrors(
-         final Set<ConstraintViolation<T>> errors) throws ValidationException {
-      List<String> errorsMsg = new ArrayList<String>(errors.size());
-      for (ConstraintViolation<T> error : errors) {
-         errorsMsg.add(error.getMessage());
-      }
-
-      throw new ValidationException(errorsMsg);
+      getPersistenceService().delete(pId, getEntityClass());
    }
 
    @Override
    public CustomerDto findByCode(final String pCode) {
       Objects.requireNonNull(pCode, "Code cannon't be null");
       if (StringUtils.isBlank(pCode)) {
-         ExceptionUtils.throwIllegalArgument("code cannon't be empty");
+         ExceptionUtils.throwIllegalArgument("Code cannon't be empty");
       }
 
-      // FIXME Create query search
+      final Customer entity = getPersistenceService().findByUniqueField("code",
+            pCode, getEntityClass());
 
-      return null;
+      return convert(entity, getDtoClass());
+   }
+
+   @Override
+   public Class<Customer> getEntityClass() {
+      return Customer.class;
+   }
+
+   @Override
+   public Class<CustomerDto> getDtoClass() {
+      return CustomerDto.class;
    }
 }

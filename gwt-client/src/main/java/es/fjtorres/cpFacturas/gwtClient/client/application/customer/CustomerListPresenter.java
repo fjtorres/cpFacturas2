@@ -11,7 +11,7 @@ import com.gwtplatform.mvp.client.proxy.ProxyPlace;
 import com.gwtplatform.mvp.shared.proxy.PlaceRequest;
 
 import es.fjtorres.cpFacturas.common.dto.CustomerDto;
-import es.fjtorres.cpFacturas.common.dto.CustomerPageDto;
+import es.fjtorres.cpFacturas.common.dto.pagination.CustomerPageDto;
 import es.fjtorres.cpFacturas.gwtClient.client.application.ApplicationPresenter;
 import es.fjtorres.cpFacturas.gwtClient.client.application.customer.event.CustomerAddEvent;
 import es.fjtorres.cpFacturas.gwtClient.client.application.customer.event.CustomerAddEvent.CustomerAddHandler;

@@ -6,6 +6,12 @@ public final class NameTokens {
 
    public static final String CUSTOMERS_PATH = API_PATH + "/customers";
 
+   public static final String INSURERS_PATH = API_PATH + "/insurers";
+
+   public static final String INVOICES_PATH = API_PATH + "/invoices";
+
+   public static final String VEHICLES_PATH = API_PATH + "/vehicles";
+
    public static final String PAGE_NUMBER = "page";
    public static final String PAGE_SIZE = "pageSize";
    public static final String PAGE_SORT_FIELD = "sortField";

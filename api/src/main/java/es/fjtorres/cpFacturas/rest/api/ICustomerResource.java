@@ -8,8 +8,6 @@ public interface ICustomerResource {
 
    Response find(int page, int pageSize, String sortField, String sortDirection);
 
-   Response findById(Long id);
-
    Response add(CustomerDto dto);
 
    Response update(CustomerDto dto);

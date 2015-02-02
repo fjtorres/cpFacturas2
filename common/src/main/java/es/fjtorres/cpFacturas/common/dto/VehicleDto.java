@@ -2,36 +2,48 @@ package es.fjtorres.cpFacturas.common.dto;
 
 public class VehicleDto extends AbstractDto<Long> {
 
-    private static final long serialVersionUID = 5179390791312041743L;
+   private static final long serialVersionUID = 5179390791312041743L;
 
-    private Long id;
+   private Long id;
 
-    private String registration;
+   private String registration;
 
-    private CustomerDto customer;
+   private CustomerDto customer;
 
-    public Long getId() {
-        return id;
-    }
+   private VehicleModelDto model;
 
-    public void setId(Long pId) {
-        id = pId;
-    }
+   @Override
+   public Long getId() {
+      return id;
+   }
 
-    public String getRegistration() {
-        return registration;
-    }
+   @Override
+   public void setId(final Long pId) {
+      id = pId;
+   }
 
-    public void setRegistration(String pRegistration) {
-        registration = pRegistration;
-    }
+   public String getRegistration() {
+      return registration;
+   }
 
-    public CustomerDto getCustomer() {
-        return customer;
-    }
+   public void setRegistration(final String pRegistration) {
+      registration = pRegistration;
+   }
 
-    public void setCustomer(CustomerDto pCustomer) {
-        customer = pCustomer;
-    }
+   public CustomerDto getCustomer() {
+      return customer;
+   }
+
+   public void setCustomer(final CustomerDto pCustomer) {
+      customer = pCustomer;
+   }
+
+   public VehicleModelDto getModel() {
+      return model;
+   }
+
+   public void setModel(final VehicleModelDto model) {
+      this.model = model;
+   }
 
 }

@@ -9,7 +9,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 
 import es.fjtorres.cpFacturas.common.dto.CustomerDto;
-import es.fjtorres.cpFacturas.common.dto.CustomerPageDto;
+import es.fjtorres.cpFacturas.common.dto.pagination.CustomerPageDto;
 import es.fjtorres.cpFacturas.common.exception.AppException;
 import es.fjtorres.cpFacturas.common.exception.EntityNotFoundException;
 import es.fjtorres.cpFacturas.gwtClient.server.api.ICustomerClient;

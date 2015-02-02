@@ -1,10 +1,10 @@
 package es.fjtorres.cpFacturas.server.api.impl;
 
-import static es.fjtorres.cpFacturas.rest.api.NameTokens.CUSTOMERS_PATH;
 import static es.fjtorres.cpFacturas.rest.api.NameTokens.PAGE_NUMBER;
 import static es.fjtorres.cpFacturas.rest.api.NameTokens.PAGE_SIZE;
 import static es.fjtorres.cpFacturas.rest.api.NameTokens.PAGE_SORT_DIRECTION;
 import static es.fjtorres.cpFacturas.rest.api.NameTokens.PAGE_SORT_FIELD;
+import static es.fjtorres.cpFacturas.rest.api.NameTokens.VEHICLES_PATH;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -21,31 +21,31 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import es.fjtorres.cpFacturas.common.dto.CustomerDto;
+import es.fjtorres.cpFacturas.common.dto.VehicleDto;
 import es.fjtorres.cpFacturas.common.exception.ValidationException;
 import es.fjtorres.cpFacturas.common.pagination.Page;
-import es.fjtorres.cpFacturas.rest.api.ICustomerResource;
-import es.fjtorres.cpFacturas.server.service.ICustomerService;
+import es.fjtorres.cpFacturas.rest.api.IVehicleResource;
+import es.fjtorres.cpFacturas.server.service.IVehicleService;
 
 @Named
-@Path(CUSTOMERS_PATH)
+@Path(VEHICLES_PATH)
 @Produces(MediaType.APPLICATION_JSON)
-public class CustomerResourceImpl extends AbstractResource implements
-      ICustomerResource {
+public class VehicleResourceImpl extends AbstractResource implements
+      IVehicleResource {
 
    /**
     * 
     */
-   private static final long serialVersionUID = -7823405472844739241L;
+   private static final long serialVersionUID = -155895991984122841L;
 
-   private final ICustomerService service;
+   private final IVehicleService service;
 
    @Inject
-   public CustomerResourceImpl(final ICustomerService pService) {
+   public VehicleResourceImpl(final IVehicleService pService) {
       this.service = pService;
    }
 
-   public ICustomerService getService() {
+   public IVehicleService getService() {
       return service;
    }
 
@@ -56,19 +56,20 @@ public class CustomerResourceImpl extends AbstractResource implements
          @DefaultValue("10") @QueryParam(PAGE_SIZE) final int pageSize,
          @QueryParam(PAGE_SORT_FIELD) final String sortField,
          @DefaultValue("ASC") @QueryParam(PAGE_SORT_DIRECTION) final String sortDirection) {
-      Page<CustomerDto> wrapper = null;
+      Page<VehicleDto> wrapper = null;
       try {
          wrapper = getService().find(page, pageSize, sortField, sortDirection);
       } catch (final IllegalArgumentException iae) {
          badRequest(iae.getMessage());
       }
       return Response.ok(wrapper).build();
+
    }
 
    @Override
    @POST
    @Consumes(MediaType.APPLICATION_JSON)
-   public Response add(final CustomerDto pDto) {
+   public Response add(final VehicleDto pDto) {
       try {
          getService().add(pDto);
       } catch (final ValidationException ve) {
@@ -81,7 +82,7 @@ public class CustomerResourceImpl extends AbstractResource implements
    @Override
    @PUT
    @Consumes(MediaType.APPLICATION_JSON)
-   public Response update(final CustomerDto pDto) {
+   public Response update(final VehicleDto pDto) {
       try {
          getService().update(pDto);
       } catch (final ValidationException ve) {
@@ -97,12 +98,4 @@ public class CustomerResourceImpl extends AbstractResource implements
       getService().delete(pId);
       return Response.ok().build();
    }
-
-   @Override
-   @GET
-   @Path("{code}")
-   public Response findByCode(final String code) {
-      return null;
-   }
-
 }

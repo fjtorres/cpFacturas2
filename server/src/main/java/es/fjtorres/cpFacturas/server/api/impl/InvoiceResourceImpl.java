@@ -1,6 +1,6 @@
 package es.fjtorres.cpFacturas.server.api.impl;
 
-import static es.fjtorres.cpFacturas.rest.api.NameTokens.CUSTOMERS_PATH;
+import static es.fjtorres.cpFacturas.rest.api.NameTokens.INVOICES_PATH;
 import static es.fjtorres.cpFacturas.rest.api.NameTokens.PAGE_NUMBER;
 import static es.fjtorres.cpFacturas.rest.api.NameTokens.PAGE_SIZE;
 import static es.fjtorres.cpFacturas.rest.api.NameTokens.PAGE_SORT_DIRECTION;
@@ -21,31 +21,31 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import es.fjtorres.cpFacturas.common.dto.CustomerDto;
+import es.fjtorres.cpFacturas.common.dto.InvoiceDto;
 import es.fjtorres.cpFacturas.common.exception.ValidationException;
 import es.fjtorres.cpFacturas.common.pagination.Page;
-import es.fjtorres.cpFacturas.rest.api.ICustomerResource;
-import es.fjtorres.cpFacturas.server.service.ICustomerService;
+import es.fjtorres.cpFacturas.rest.api.IInvoiceResource;
+import es.fjtorres.cpFacturas.server.service.IInvoiceService;
 
 @Named
-@Path(CUSTOMERS_PATH)
+@Path(INVOICES_PATH)
 @Produces(MediaType.APPLICATION_JSON)
-public class CustomerResourceImpl extends AbstractResource implements
-      ICustomerResource {
+public class InvoiceResourceImpl extends AbstractResource implements
+      IInvoiceResource {
 
    /**
     * 
     */
-   private static final long serialVersionUID = -7823405472844739241L;
+   private static final long serialVersionUID = 3086471833764495390L;
 
-   private final ICustomerService service;
+   private final IInvoiceService service;
 
    @Inject
-   public CustomerResourceImpl(final ICustomerService pService) {
+   public InvoiceResourceImpl(final IInvoiceService pService) {
       this.service = pService;
    }
 
-   public ICustomerService getService() {
+   public IInvoiceService getService() {
       return service;
    }
 
@@ -56,7 +56,7 @@ public class CustomerResourceImpl extends AbstractResource implements
          @DefaultValue("10") @QueryParam(PAGE_SIZE) final int pageSize,
          @QueryParam(PAGE_SORT_FIELD) final String sortField,
          @DefaultValue("ASC") @QueryParam(PAGE_SORT_DIRECTION) final String sortDirection) {
-      Page<CustomerDto> wrapper = null;
+      Page<InvoiceDto> wrapper = null;
       try {
          wrapper = getService().find(page, pageSize, sortField, sortDirection);
       } catch (final IllegalArgumentException iae) {
@@ -68,7 +68,7 @@ public class CustomerResourceImpl extends AbstractResource implements
    @Override
    @POST
    @Consumes(MediaType.APPLICATION_JSON)
-   public Response add(final CustomerDto pDto) {
+   public Response add(final InvoiceDto pDto) {
       try {
          getService().add(pDto);
       } catch (final ValidationException ve) {
@@ -81,7 +81,7 @@ public class CustomerResourceImpl extends AbstractResource implements
    @Override
    @PUT
    @Consumes(MediaType.APPLICATION_JSON)
-   public Response update(final CustomerDto pDto) {
+   public Response update(final InvoiceDto pDto) {
       try {
          getService().update(pDto);
       } catch (final ValidationException ve) {
@@ -97,12 +97,4 @@ public class CustomerResourceImpl extends AbstractResource implements
       getService().delete(pId);
       return Response.ok().build();
    }
-
-   @Override
-   @GET
-   @Path("{code}")
-   public Response findByCode(final String code) {
-      return null;
-   }
-
 }

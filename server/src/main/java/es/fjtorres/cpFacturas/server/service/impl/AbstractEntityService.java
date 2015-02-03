@@ -1,69 +1,64 @@
 package es.fjtorres.cpFacturas.server.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.io.Serializable;
+import java.util.Objects;
 
-import javax.validation.ConstraintViolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import es.fjtorres.cpFacturas.common.exception.ValidationException;
-import es.fjtorres.cpFacturas.server.dozer.service.IDozerService;
-import es.fjtorres.cpFacturas.server.service.IValidationService;
+import es.fjtorres.cpFacturas.server.model.AbstractEntity;
+import es.fjtorres.cpFacturas.server.service.IBasicService;
+import es.fjtorres.cpFacturas.server.service.IEntityService;
+import es.fjtorres.cpFacturas.server.service.IPersistenceService;
 
-public abstract class AbstractEntityService {
+public abstract class AbstractEntityService<E extends AbstractEntity<Id>, D, Id extends Serializable>
+      implements IEntityService<E, D, Id> {
 
-   private final IDozerService dozerService;
+   private final IPersistenceService<Id, E> persistenceService;
 
-   private final IValidationService validationService;
+   private final IBasicService basicService;
 
-   public AbstractEntityService(final IDozerService pDozerService,
-         final IValidationService pValidationService) {
-      this.dozerService = pDozerService;
-      this.validationService = pValidationService;
+   public AbstractEntityService(final IBasicService pBasicService,
+         final IPersistenceService<Id, E> pPersistenceService) {
+      this.basicService = pBasicService;
+      this.persistenceService = pPersistenceService;
    }
 
-   protected <O, T> T convert(final O origin, final Class<T> destinationClass) {
-      return getDozerService().convert(origin, destinationClass);
+   public IBasicService getBasicService() {
+      return basicService;
    }
 
-   protected <O, T> List<T> convert(final List<O> origin,
-         final Class<T> destinationClass) {
-      return getDozerService().convert(origin, destinationClass);
+   public IPersistenceService<Id, E> getPersistenceService() {
+      return persistenceService;
    }
 
-   /**
-    * Validate objectToValidate and throw exception if has errors.
-    * 
-    * @return Always true, except when an exception occurs.
-    * @throws ValidationException
-    *            If objectToValidate has errors.
-    */
-   protected <T> boolean validate(final T objectToValidate)
-         throws ValidationException {
-      final Set<ConstraintViolation<T>> errors = getValidationService()
-            .validate(objectToValidate);
-      if (errors != null && !errors.isEmpty()) {
-         processValidationErrors(errors);
+   @Override
+   @Transactional
+   public void add(final D pDto) throws ValidationException {
+      Objects.requireNonNull(pDto, "DTO cannon't be null");
+
+      final E entity = getBasicService().convert(pDto, getEntityClass());
+      if (getBasicService().validate(entity)) {
+         getPersistenceService().persist(entity);
       }
-
-      return true;
    }
 
-   protected <T> void processValidationErrors(
-         final Set<ConstraintViolation<T>> errors) throws ValidationException {
-      List<String> errorsMsg = new ArrayList<String>(errors.size());
-      for (ConstraintViolation<T> error : errors) {
-         errorsMsg.add(error.getMessage());
+   @Override
+   @Transactional
+   public void update(final D pDto) throws ValidationException {
+      Objects.requireNonNull(pDto, "DTO cannon't be null");
+
+      final E entity = getBasicService().convert(pDto, getEntityClass());
+      if (getBasicService().validate(entity)) {
+         getPersistenceService().update(entity);
       }
-
-      throw new ValidationException(errorsMsg);
    }
 
-   public IDozerService getDozerService() {
-      return dozerService;
+   @Override
+   @Transactional
+   public void delete(final Id pId) {
+      Objects.requireNonNull(pId, "ID cannon't be null");
+      getPersistenceService().delete(pId, getEntityClass());
    }
 
-   public IValidationService getValidationService() {
-      return validationService;
-   }
 }

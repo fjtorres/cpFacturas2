@@ -21,77 +21,89 @@ import com.google.common.base.MoreObjects;
 @Table(name = "VEHICLES")
 public class Vehicle extends AbstractEntity<Long> {
 
-    private static final long serialVersionUID = 6547753823781206040L;
+   private static final long serialVersionUID = 6547753823781206040L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VEHICLE_SEQ")
-    @SequenceGenerator(name = "VEHICLE_SEQ", sequenceName = "VEHICLE_SEQ", allocationSize = 1)
-    private Long id;
+   @Id
+   @GeneratedValue(
+         strategy = GenerationType.SEQUENCE,
+         generator = "VEHICLE_SEQ")
+   @SequenceGenerator(
+         name = "VEHICLE_SEQ",
+         sequenceName = "VEHICLE_SEQ",
+         allocationSize = 1)
+   private Long id;
 
-    @Column(name = "REGISTRATION", length = 25, nullable = false, unique = true)
-    private String registration;
+   @Column(name = "REGISTRATION", length = 25, nullable = false, unique = true)
+   private String registration;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CUSTOMER_ID", nullable = false)
-    private Customer customer;
+   @ManyToOne(fetch = FetchType.LAZY)
+   @JoinColumn(name = "CUSTOMER_ID", nullable = false)
+   private Customer customer;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "vehicle")
-    private Set<Invoice> invoices;
+   @ManyToOne(fetch = FetchType.LAZY)
+   @JoinColumn(name = "MODEL_ID", nullable = false)
+   private VehicleModel model;
 
-    @Override
-    public boolean equals(Object pObj) {
-        boolean isEquals = false;
+   @OneToMany(fetch = FetchType.LAZY, mappedBy = "vehicle")
+   private Set<Invoice> invoices;
 
-        if (this == pObj) {
-            isEquals = true;
-        } else if (pObj == null) {
-            isEquals = false;
-        } else if (pObj instanceof Vehicle) {
-            final Vehicle other = (Vehicle) pObj;
-            isEquals = Objects.equals(getRegistration(), other.getRegistration());
-        }
-        return isEquals;
-    }
+   @Override
+   public boolean equals(final Object pObj) {
+      boolean isEquals = false;
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getRegistration());
-    }
+      if (this == pObj) {
+         isEquals = true;
+      } else if (pObj == null) {
+         isEquals = false;
+      } else if (pObj instanceof Vehicle) {
+         final Vehicle other = (Vehicle) pObj;
+         isEquals = Objects.equals(getRegistration(), other.getRegistration());
+      }
+      return isEquals;
+   }
 
-    public Long getId() {
-        return id;
-    }
+   @Override
+   public int hashCode() {
+      return Objects.hash(getRegistration());
+   }
 
-    public void setId(Long pId) {
-        id = pId;
-    }
+   @Override
+   public Long getId() {
+      return id;
+   }
 
-    public Customer getCustomer() {
-        return customer;
-    }
+   @Override
+   public void setId(final Long pId) {
+      id = pId;
+   }
 
-    public void setCustomer(Customer pCustomer) {
-        customer = pCustomer;
-    }
+   public Customer getCustomer() {
+      return customer;
+   }
 
-    public String getRegistration() {
-        return registration;
-    }
+   public void setCustomer(final Customer pCustomer) {
+      customer = pCustomer;
+   }
 
-    public void setRegistration(String pRegistration) {
-        registration = pRegistration;
-    }
+   public String getRegistration() {
+      return registration;
+   }
 
-    public Set<Invoice> getInvoices() {
-        return invoices;
-    }
+   public void setRegistration(final String pRegistration) {
+      registration = pRegistration;
+   }
 
-    public void setInvoices(Set<Invoice> pInvoices) {
-        invoices = pInvoices;
-    }
+   public Set<Invoice> getInvoices() {
+      return invoices;
+   }
 
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this).add("Registration", getRegistration()).toString();
-    }
+   public void setInvoices(final Set<Invoice> pInvoices) {
+      invoices = pInvoices;
+   }
+
+   @Override
+   public String toString() {
+      return MoreObjects.toStringHelper(this).add("Registration",
+            getRegistration()).toString();
+   }
 }

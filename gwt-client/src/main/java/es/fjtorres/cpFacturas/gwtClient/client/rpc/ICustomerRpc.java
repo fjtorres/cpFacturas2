@@ -4,7 +4,7 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import es.fjtorres.cpFacturas.common.dto.CustomerDto;
-import es.fjtorres.cpFacturas.common.dto.CustomerPageDto;
+import es.fjtorres.cpFacturas.common.dto.pagination.CustomerPageDto;
 import es.fjtorres.cpFacturas.common.exception.AppException;
 
 @RemoteServiceRelativePath("services/customer")

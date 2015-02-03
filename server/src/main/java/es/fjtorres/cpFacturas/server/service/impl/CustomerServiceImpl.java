@@ -11,33 +11,35 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.fjtorres.cpFacturas.common.dto.CustomerDto;
-import es.fjtorres.cpFacturas.common.dto.CustomerPageDto;
+import es.fjtorres.cpFacturas.common.dto.pagination.CustomerPageDto;
 import es.fjtorres.cpFacturas.common.exception.ExceptionUtils;
 import es.fjtorres.cpFacturas.common.exception.ValidationException;
 import es.fjtorres.cpFacturas.common.pagination.OrderBy;
-import es.fjtorres.cpFacturas.server.dozer.service.IDozerService;
 import es.fjtorres.cpFacturas.server.model.Customer;
+import es.fjtorres.cpFacturas.server.service.IBasicService;
 import es.fjtorres.cpFacturas.server.service.ICustomerService;
 import es.fjtorres.cpFacturas.server.service.IPersistenceService;
-import es.fjtorres.cpFacturas.server.service.IValidationService;
 
 @Named
 @Transactional(readOnly = true)
-public class CustomerServiceImpl extends AbstractEntityService implements
+public class CustomerServiceImpl extends
+      AbstractEntityService<Customer, CustomerDto, Long> implements
       ICustomerService {
 
-   private final IPersistenceService<Long, Customer> persistenceService;
-
    @Inject
-   public CustomerServiceImpl(final IDozerService pDozerService,
-         final IPersistenceService<Long, Customer> pPersistenceService,
-         final IValidationService pValidationService) {
-      super(pDozerService, pValidationService);
-      this.persistenceService = pPersistenceService;
+   public CustomerServiceImpl(final IBasicService pBasicService,
+         final IPersistenceService<Long, Customer> pPersistenceService) {
+      super(pBasicService, pPersistenceService);
    }
 
-   public IPersistenceService<Long, Customer> getPersistenceService() {
-      return persistenceService;
+   @Override
+   public Class<Customer> getEntityClass() {
+      return Customer.class;
+   }
+
+   @Override
+   public Class<CustomerDto> getDtoClass() {
+      return CustomerDto.class;
    }
 
    @Override
@@ -52,7 +54,7 @@ public class CustomerServiceImpl extends AbstractEntityService implements
 
       List<CustomerDto> dtos = Collections.emptyList();
 
-      final Long total = getPersistenceService().count(Customer.class);
+      final Long total = getPersistenceService().count(getEntityClass());
 
       if (total > 0) {
 
@@ -68,12 +70,12 @@ public class CustomerServiceImpl extends AbstractEntityService implements
          final List<Customer> entities = getPersistenceService().find(
                startPosition, pageSize, sortField, order, getEntityClass());
 
-         dtos = convert(entities, getDtoClass());
+         dtos = getBasicService().convert(entities, getDtoClass());
       }
 
       final CustomerPageDto pageWrapper = new CustomerPageDto();
       pageWrapper.setList(dtos);
-      pageWrapper.setTotal(getPersistenceService().count(getEntityClass()));
+      pageWrapper.setTotal(total);
       return pageWrapper;
    }
 
@@ -83,37 +85,14 @@ public class CustomerServiceImpl extends AbstractEntityService implements
 
       final Customer entity = getPersistenceService().findById(pId,
             Customer.class);
-      return convert(entity, getDtoClass());
+      return getBasicService().convert(entity, getDtoClass());
    }
 
    @Override
    @Transactional
    public void add(final CustomerDto pDto) throws ValidationException {
-      Objects.requireNonNull(pDto, "DTO cannon't be null");
-
-      final Customer entity = convert(pDto, getEntityClass());
-      if (validate(entity)) {
-         getPersistenceService().persist(entity);
-      }
-   }
-
-   @Override
-   @Transactional
-   public void update(final CustomerDto pDto) throws ValidationException {
-      Objects.requireNonNull(pDto, "DTO cannon't be null");
-
-      final Customer entity = convert(pDto, getEntityClass());
-      if (validate(entity)) {
-         getPersistenceService().update(entity);
-      }
-   }
-
-   @Override
-   @Transactional
-   public void delete(final Long pId) {
-      Objects.requireNonNull(pId, "ID cannon't be null");
-
-      getPersistenceService().delete(pId, getEntityClass());
+      // FIXME Add unique constraint check (Code)
+      super.add(pDto);
    }
 
    @Override
@@ -126,16 +105,7 @@ public class CustomerServiceImpl extends AbstractEntityService implements
       final Customer entity = getPersistenceService().findByUniqueField("code",
             pCode, getEntityClass());
 
-      return convert(entity, getDtoClass());
+      return getBasicService().convert(entity, getDtoClass());
    }
 
-   @Override
-   public Class<Customer> getEntityClass() {
-      return Customer.class;
-   }
-
-   @Override
-   public Class<CustomerDto> getDtoClass() {
-      return CustomerDto.class;
-   }
 }

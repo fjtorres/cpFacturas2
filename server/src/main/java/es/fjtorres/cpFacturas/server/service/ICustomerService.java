@@ -1,11 +1,11 @@
 package es.fjtorres.cpFacturas.server.service;
 
 import es.fjtorres.cpFacturas.common.dto.CustomerDto;
-import es.fjtorres.cpFacturas.common.dto.CustomerPageDto;
-import es.fjtorres.cpFacturas.common.exception.ValidationException;
+import es.fjtorres.cpFacturas.common.dto.pagination.CustomerPageDto;
 import es.fjtorres.cpFacturas.server.model.Customer;
 
-public interface ICustomerService extends IEntityService<Customer, CustomerDto> {
+public interface ICustomerService extends
+      IEntityService<Customer, CustomerDto, Long> {
 
    /**
     * 
@@ -21,12 +21,6 @@ public interface ICustomerService extends IEntityService<Customer, CustomerDto> 
          String sortDirection) throws IllegalArgumentException;
 
    CustomerDto findById(Long id);
-
-   void add(CustomerDto dto) throws ValidationException;
-
-   void update(CustomerDto dto) throws ValidationException;
-
-   void delete(Long id);
 
    CustomerDto findByCode(String code);
 }

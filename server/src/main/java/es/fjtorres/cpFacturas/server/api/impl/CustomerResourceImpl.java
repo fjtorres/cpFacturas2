@@ -32,7 +32,12 @@ import es.fjtorres.cpFacturas.server.service.ICustomerService;
 @Produces(MediaType.APPLICATION_JSON)
 public class CustomerResourceImpl extends AbstractResource implements ICustomerResource {
 
-    private final ICustomerService service;
+   /**
+    * 
+    */
+   private static final long serialVersionUID = -7823405472844739241L;
+
+   private final ICustomerService service;
 
     @Inject
     public CustomerResourceImpl(final ICustomerService pService) {

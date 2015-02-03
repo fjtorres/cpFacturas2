@@ -3,18 +3,15 @@ package es.fjtorres.cpFacturas.gwtClient.server.rpc.impl;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-
 import es.fjtorres.cpFacturas.common.dto.CustomerDto;
-import es.fjtorres.cpFacturas.common.dto.CustomerPageDto;
+import es.fjtorres.cpFacturas.common.dto.pagination.CustomerPageDto;
 import es.fjtorres.cpFacturas.common.exception.AppException;
 import es.fjtorres.cpFacturas.gwtClient.client.rpc.ICustomerRpc;
 import es.fjtorres.cpFacturas.gwtClient.server.api.ICustomerClient;
 import es.fjtorres.cpFacturas.gwtClient.server.api.impl.CustomerApiClient;
 
 @Singleton
-public class CustomerRpcImpl extends RemoteServiceServlet implements
-      ICustomerRpc {
+public class CustomerRpcImpl extends AbstractEntityRpc implements ICustomerRpc {
 
    private static final long serialVersionUID = -8827064477531767934L;
 

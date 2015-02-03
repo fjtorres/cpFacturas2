@@ -2,6 +2,7 @@ package es.fjtorres.cpFacturas.gwtClient.client.place;
 
 public final class NameTokens {
 
+   public static final String CONFIGURATION = "/configuration";
    public static final String CUSTOMERS = "/customers";
    public static final String CUSTOMERS_EDIT = "/customers/edit/{code}";
    public static final String CUSTOMERS_NEW = "/customers/edit";
@@ -45,7 +46,11 @@ public final class NameTokens {
    }
 
 public static String getLogin() {
-    return LOGIN;
+	return LOGIN;
 }
+
+   public static String getConfiguration() {
+      return CONFIGURATION;
+   }
 
 }

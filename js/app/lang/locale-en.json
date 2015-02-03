@@ -10,8 +10,16 @@
   },
   "buttons": {
     "back": "Back",
+    "cancel": "Cancel",
     "clear": "Clear",
-    "save": "Save"
+    "no" : "No",
+    "save": "Save",
+    "yes" : "Yes"
+  },
+  "messages" : {
+    "confirmation" : {
+      "title" : "Operation confirmation"
+    }
   },
   "menu": {
     "invoice": {
@@ -54,6 +62,11 @@
       "email.placeholder": "Enter the e-mail",
       "phonenumber": "Phone",
       "phonenumber.placeholder": "Enter the phone number"
+    },
+    "messages" : {
+      "delete": {
+        "confirmation" : "Are you sure remove selected customer?"
+      }
     }
   },
   "companies": {

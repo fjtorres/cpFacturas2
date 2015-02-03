@@ -10,8 +10,16 @@
   },
   "buttons": {
     "back": "Volver",
+    "cancel": "Cancelar",
     "clear": "Limpiar",
-    "save": "Guardar"
+    "no" : "No",
+    "save": "Guardar",
+    "yes" : "Si"
+  },
+  "messages" : {
+    "confirmation" : {
+      "title" : "Confirmar operación"
+    }
   },
   "menu": {
     "invoice": {
@@ -53,6 +61,11 @@
       "email.placeholder": "Introduzca el email",
       "phonenumber": "Teléfono",
       "phonenumber.placeholder": "Introduzca el número de teléfono"
+    },
+    "messages" : {
+      "delete": {
+        "confirmation" : "¿Esta seguro de eliminar el cliente seleccionado?"
+      }
     }
   },
   "companies": {

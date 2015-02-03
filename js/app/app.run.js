@@ -23,7 +23,6 @@ angular.module('cpFacturasApp').run(['$rootScope', '$location', '$translate', 'a
     $rootScope.appVersion = appVersion;
 
     $rootScope.$on("$routeChangeStart", function (event, next, current){
-        console.log($rootScope.loggedInUser);
         if ($rootScope.loggedInUser == null) {
             if (next.originalPath != "/login") {
                 $location.path("/login");

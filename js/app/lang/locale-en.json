@@ -9,9 +9,11 @@
     "english": "English"
   },
   "buttons": {
+    "access": "Access",
     "back": "Back",
     "cancel": "Cancel",
     "clear": "Clear",
+    "logout": "Salir",
     "no" : "No",
     "save": "Save",
     "yes" : "Yes"
@@ -20,6 +22,11 @@
     "confirmation" : {
       "title" : "Operation confirmation"
     }
+  },
+  "login" : {
+    "title" : "Log in",
+    "username" : "Enter the username",
+    "password" : "Enter password"
   },
   "menu": {
     "invoice": {
@@ -43,7 +50,9 @@
       "title": "Vehicles",
       "create": "New",
       "list": "List"
-    }
+    },
+    "logout" : "System logout",
+    "username" : "User" 
   },
   "customers": {
     "view": {

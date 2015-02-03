@@ -12,5 +12,40 @@
 .btn-toolbar { margin-top: 5px; margin-bottom: 5px; }
 .table-big>thead>tr>th, .table-big>tbody>tr>td { padding: 15px; }
 
-div.title h1 {margin-bottom: 0px;}
-div.title hr {margin-top:5px;}
+/* Login page */
+.login-title {
+	margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+.input-login {
+	margin-bottom: 15px;
+}
+
+.password-login {
+	padding-left: 14px;
+}
+
+/* Menu */
+.navbar-text a {
+	text-decoration: none;
+	color: #777;
+}
+
+.navbar-text a:hover {
+	color: #333;
+}
+
+.navbar-user {
+	margin-right: 5px;
+}
+
+
+/* Override bootstrap styles */
+.table {
+	margin-bottom: 0px;
+}
+
+.page-header {
+	margin: 20px 0 5px;
+}

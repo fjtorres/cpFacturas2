@@ -9,9 +9,11 @@
     "english": "Ingles"
   },
   "buttons": {
+    "access": "Acceder",
     "back": "Volver",
     "cancel": "Cancelar",
     "clear": "Limpiar",
+    "logout": "Salir",
     "no" : "No",
     "save": "Guardar",
     "yes" : "Si"
@@ -20,6 +22,11 @@
     "confirmation" : {
       "title" : "Confirmar operación"
     }
+  },
+  "login" : {
+    "title" : "Acceder al sistema",
+    "username" : "Introduzca el nombre de usuario",
+    "password" : "Introduzca la contraseña"
   },
   "menu": {
     "invoice": {
@@ -42,7 +49,9 @@
       "title": "Vehiculos",
       "create": "Nuevo",
       "list": "Listado"
-    }
+    },
+    "logout" : "Salir del sistema",
+    "username" : "Usuario" 
   },
   "customers": {
     "view": {

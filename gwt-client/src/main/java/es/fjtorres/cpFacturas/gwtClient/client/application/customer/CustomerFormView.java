@@ -97,7 +97,6 @@ public class CustomerFormView extends ViewWithUiHandlers<CustomerFormUiHandlers>
         initWidget(uiBinder.createAndBindUi(this));
 
         driver.initialize(this);
-        driver.edit(new CustomerDto());
     }
 
     @UiHandler("comboType")
@@ -130,12 +129,19 @@ public class CustomerFormView extends ViewWithUiHandlers<CustomerFormUiHandlers>
     @Override
     public void edit(CustomerDto pDto) {
         driver.edit(pDto);
+        btnClear.setVisible(false);
     }
 
     @Override
     public void reset() {
         frmCustomer.reset();
         comboType.setValue(DEFAULT_TYPE);
+    }
+
+    @Override
+    public void create() {
+        driver.edit(new CustomerDto());
+        btnClear.setVisible(true);
     }
 
 }

@@ -20,80 +20,82 @@ import es.fjtorres.cpFacturas.gwtClient.client.rpc.AbstractDefaultCallback;
 import es.fjtorres.cpFacturas.gwtClient.client.rpc.ICustomerRpcAsync;
 
 public class CustomerFormPresenter extends
-      Presenter<CustomerFormPresenter.MyView, CustomerFormPresenter.MyProxy>
-      implements CustomerFormUiHandlers {
+        Presenter<CustomerFormPresenter.MyView, CustomerFormPresenter.MyProxy> implements
+        CustomerFormUiHandlers {
 
-   public interface MyView extends View, HasUiHandlers<CustomerFormUiHandlers> {
-      void edit(CustomerDto dto);
+    public interface MyView extends View, HasUiHandlers<CustomerFormUiHandlers> {
+        void edit(CustomerDto dto);
 
-      void reset();
-   }
+        void create();
 
-   @NameToken({
-         NameTokens.CUSTOMERS_NEW, NameTokens.CUSTOMERS_EDIT
-   })
-   @ProxyCodeSplit
-   public interface MyProxy extends ProxyPlace<CustomerFormPresenter> {
+        void reset();
+    }
 
-   }
+    @NameToken({
+            NameTokens.CUSTOMERS_NEW, NameTokens.CUSTOMERS_EDIT
+    })
+    @ProxyCodeSplit
+    public interface MyProxy extends ProxyPlace<CustomerFormPresenter> {
 
-   private final PlaceManager placeManager;
+    }
 
-   private final ICustomerRpcAsync rpc;
+    private final PlaceManager placeManager;
 
-   @Inject
-   public CustomerFormPresenter(final EventBus eventBus, final MyView view,
-         final MyProxy proxy, final ICustomerRpcAsync pRpc,
-         final PlaceManager pPlaceManager) {
-      super(eventBus, view, proxy, ApplicationPresenter.SLOT_MAIN_CONTENT);
+    private final ICustomerRpcAsync rpc;
 
-      this.rpc = pRpc;
-      this.placeManager = pPlaceManager;
+    @Inject
+    public CustomerFormPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy,
+            final ICustomerRpcAsync pRpc, final PlaceManager pPlaceManager) {
+        super(eventBus, view, proxy, ApplicationPresenter.SLOT_MAIN_CONTENT);
 
-      view.setUiHandlers(this);
-   }
+        this.rpc = pRpc;
+        this.placeManager = pPlaceManager;
 
-   @Override
-   public void prepareFromRequest(final PlaceRequest pRequest) {
-      super.prepareFromRequest(pRequest);
+        view.setUiHandlers(this);
+    }
 
-      final String code = pRequest.getParameter("code", "");
+    @Override
+    public void prepareFromRequest(final PlaceRequest pRequest) {
+        super.prepareFromRequest(pRequest);
 
-      if (!code.isEmpty()) {
-         rpc.findByCode(code, new AbstractDefaultCallback<CustomerDto>(this) {
+        final String code = pRequest.getParameter("code", "");
+
+        if (code.isEmpty()) {
+            getView().create();
+        } else {
+            rpc.findByCode(code, new AbstractDefaultCallback<CustomerDto>(this) {
+
+                @Override
+                public void onSuccess(final CustomerDto result) {
+                    getView().edit(result);
+                }
+
+            });
+        }
+    }
+
+    @Override
+    public void onSave(final CustomerDto pDto) {
+        rpc.save(pDto, new AbstractDefaultCallback<Void>(this) {
 
             @Override
-            public void onSuccess(final CustomerDto result) {
-               getView().edit(result);
+            public void onSuccess(final Void pResult) {
+                CustomerAddEvent.fire(CustomerFormPresenter.this, pDto, pDto.getId() == null);
+                onBack();
             }
 
-         });
-      }
-   }
+        });
+    }
 
-   @Override
-   public void onSave(final CustomerDto pDto) {
-      rpc.save(pDto, new AbstractDefaultCallback<Void>(this) {
+    @Override
+    public void onBack() {
+        placeManager
+                .revealPlace(new PlaceRequest.Builder().nameToken(NameTokens.CUSTOMERS).build());
+    }
 
-         @Override
-         public void onSuccess(final Void pResult) {
-            CustomerAddEvent.fire(CustomerFormPresenter.this, pDto, pDto
-                  .getId() == null);
-            onBack();
-         }
-
-      });
-   }
-
-   @Override
-   public void onBack() {
-      placeManager.revealPlace(new PlaceRequest.Builder().nameToken(
-            NameTokens.CUSTOMERS).build());
-   }
-
-   @Override
-   protected void onReveal() {
-      super.onReveal();
-      getView().reset();
-   }
+    @Override
+    protected void onReveal() {
+        super.onReveal();
+        getView().reset();
+    }
 }

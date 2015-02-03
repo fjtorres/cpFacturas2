@@ -6,7 +6,6 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import es.fjtorres.cpFacturas.common.dto.CustomerDto;
 import es.fjtorres.cpFacturas.common.dto.CustomerPageDto;
 import es.fjtorres.cpFacturas.common.exception.AppException;
-import es.fjtorres.cpFacturas.common.exception.EntityNotFoundException;
 
 @RemoteServiceRelativePath("services/customer")
 public interface ICustomerRpc extends RemoteService {
@@ -15,5 +14,5 @@ public interface ICustomerRpc extends RemoteService {
 
    void save(CustomerDto dto) throws AppException;
 
-   CustomerDto findByCode(final String code) throws EntityNotFoundException;
+   CustomerDto findByCode(final String code) throws AppException;
 }

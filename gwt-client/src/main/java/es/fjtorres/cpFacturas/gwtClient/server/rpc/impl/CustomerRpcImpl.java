@@ -1,5 +1,6 @@
 package es.fjtorres.cpFacturas.gwtClient.server.rpc.impl;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -7,7 +8,6 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import es.fjtorres.cpFacturas.common.dto.CustomerDto;
 import es.fjtorres.cpFacturas.common.dto.CustomerPageDto;
 import es.fjtorres.cpFacturas.common.exception.AppException;
-import es.fjtorres.cpFacturas.common.exception.EntityNotFoundException;
 import es.fjtorres.cpFacturas.gwtClient.client.rpc.ICustomerRpc;
 import es.fjtorres.cpFacturas.gwtClient.server.api.ICustomerClient;
 import es.fjtorres.cpFacturas.gwtClient.server.api.impl.CustomerApiClient;
@@ -21,6 +21,11 @@ public class CustomerRpcImpl extends RemoteServiceServlet implements
    private ICustomerClient client = new CustomerApiClient(
          "http://localhost:8080/server");
 
+   @Inject
+   public CustomerRpcImpl () {
+       
+   }
+   
    @Override
    public CustomerPageDto find(final int page, final int pageSize) {
       return client.find(page, pageSize);
@@ -32,10 +37,9 @@ public class CustomerRpcImpl extends RemoteServiceServlet implements
    }
 
    @Override
-   public CustomerDto findByCode(final String code)
-         throws EntityNotFoundException {
-      // TODO Auto-generated method stub
-      return null;
+   public CustomerDto findByCode(final String pCode)
+         throws AppException {
+      return client.findByCode(pCode);
    }
 
 }

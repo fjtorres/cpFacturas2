@@ -10,6 +10,7 @@ import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.proxy.Proxy;
 import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 
+import es.fjtorres.cpFacturas.gwtClient.client.application.general.MenuPresenter;
 import es.fjtorres.cpFacturas.gwtClient.client.application.general.MessagesPresenter;
 
 public class ApplicationPresenter extends
@@ -31,19 +32,24 @@ public class ApplicationPresenter extends
     public static final GwtEvent.Type<RevealContentHandler<?>> SLOT_MAIN_CONTENT = new GwtEvent.Type<RevealContentHandler<?>>();
     
     public static final Object SLOT_MESSAGES_CONTENT = new Object();
+    public static final Object SLOT_MENU_CONTENT = new Object();
 
     private final MessagesPresenter messagesPresenter;
+    
+    private final MenuPresenter menuPresenter;
 
     @Inject
     public ApplicationPresenter(final EventBus eventBus, final MyView view, final MyProxy proxy,
-            final MessagesPresenter pMessagesPresenter) {
+            final MessagesPresenter pMessagesPresenter, final MenuPresenter pMenuPresenter) {
         super(eventBus, view, proxy, RevealType.RootLayout);
 
         this.messagesPresenter = pMessagesPresenter;
+        this.menuPresenter = pMenuPresenter;
     }
     
     @Override
     protected void onBind() {
         setInSlot(SLOT_MESSAGES_CONTENT, messagesPresenter);
+        setInSlot(SLOT_MENU_CONTENT, menuPresenter);
     }
 }

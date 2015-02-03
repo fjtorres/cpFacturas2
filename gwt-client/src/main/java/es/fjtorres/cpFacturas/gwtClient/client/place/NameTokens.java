@@ -8,6 +8,7 @@ public final class NameTokens {
    public static final String HOME = "/home";
    public static final String INSURERS = "/insurers";
    public static final String INVOICES = "/invoices";
+   public static final String LOGIN = "/login";
    public static final String USERS = "/users";
    public static final String VEHICLES = "/vehicles";
 
@@ -42,5 +43,9 @@ public final class NameTokens {
    public static String getVehicles() {
       return VEHICLES;
    }
+
+public static String getLogin() {
+    return LOGIN;
+}
 
 }

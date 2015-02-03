@@ -14,39 +14,43 @@ import es.fjtorres.cpFacturas.common.exception.AppException;
 import es.fjtorres.cpFacturas.common.exception.EntityNotFoundException;
 import es.fjtorres.cpFacturas.gwtClient.server.api.ICustomerClient;
 
-public class CustomerApiClient extends AbstractApiClient implements
-      ICustomerClient {
+public class CustomerApiClient extends AbstractApiClient implements ICustomerClient {
 
-   public CustomerApiClient(final String pBaseUrl) {
-      super(pBaseUrl);
-   }
+    public CustomerApiClient(final String pBaseUrl) {
+        super(pBaseUrl);
+    }
 
-   @Override
-   public CustomerPageDto find(final int pPage, final int pPageSize) {
-      final WebTarget target = getTarget(CUSTOMERS_PATH).queryParam(
-            PAGE_NUMBER, pPage).queryParam(PAGE_SIZE, pPageSize);
-      return target.request(DEFAULT_MEDIA).get(CustomerPageDto.class);
-   }
+    @Override
+    public CustomerPageDto find(final int pPage, final int pPageSize) {
+        final WebTarget target = getTarget(CUSTOMERS_PATH).queryParam(PAGE_NUMBER, pPage)
+                .queryParam(PAGE_SIZE, pPageSize);
+        return target.request(DEFAULT_MEDIA).get(CustomerPageDto.class);
+    }
 
-   @Override
-   public void save(final CustomerDto pDto) throws AppException {
-      final WebTarget target = getTarget(CUSTOMERS_PATH);
+    @Override
+    public void save(final CustomerDto pDto) throws AppException {
+        final WebTarget target = getTarget(CUSTOMERS_PATH);
 
-      Response response = null;
-      final Entity<CustomerDto> entity = parseEntity(pDto);
-      if (pDto.getId() == null) {
-         response = target.request().post(entity);
-      } else {
-         response = target.request().put(entity);
-      }
+        Response response = null;
+        final Entity<CustomerDto> entity = parseEntity(pDto);
+        if (pDto.getId() == null) {
+            response = target.request().post(entity);
+        } else {
+            response = target.request().put(entity);
+        }
 
-      checkResponseStatus(response);
-   }
+        checkResponseStatus(response);
+    }
 
-   @Override
-   public CustomerDto findByCode(final String code)
-         throws EntityNotFoundException {
-      return getTarget(CUSTOMERS_PATH).path(code).request(DEFAULT_MEDIA).get(
-            CustomerDto.class);
-   }
+    @Override
+    public CustomerDto findByCode(final String code) throws AppException {
+        return getTarget(CUSTOMERS_PATH).path(code).request(DEFAULT_MEDIA).get(CustomerDto.class);
+    }
+
+    @Override
+    public void delete(Long pId) throws AppException {
+        final Response response = getTarget(CUSTOMERS_PATH).path(String.valueOf(pId))
+                .request(DEFAULT_MEDIA).delete();
+        checkResponseStatus(response);
+    }
 }

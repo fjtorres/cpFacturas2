@@ -1,0 +1,27 @@
+<div class="row">
+    <div class="col-sm-4 col-sm-offset-4">
+        <form role="form" class="form-horizontal" novalidate>
+
+            <div class="panel panel-default">
+              <div class="panel-heading">xxxx</div>
+              <div class="panel-body">
+                
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user" /></span>
+                    <input type="text" class="form-control" placeholder="" ng-model="credentials.username" required/>
+                </div>
+
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-lock" /></span>
+                    <input type="password" class="form-control" ng-model="credentials.password" required/>
+                </div>
+
+              </div>
+              <div class="panel-footer">
+                  <button class="btn btn-success" title="" tabindex="6" ng-click="login()">{{'buttons.save' | translate}}</button>
+              </div>
+            </div>
+
+        </form>
+    </div>
+</div>

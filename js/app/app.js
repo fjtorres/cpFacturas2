@@ -7,6 +7,10 @@ angular.module('cpFacturasApp', ['ngRoute', 'ngResource', 'pascalprecht.translat
             templateUrl: 'js/app/main/main.tpl.html',
             controller: 'mainController'
         })
+        .when('/login', {
+            templateUrl: 'js/app/admin/login.tpl.html',
+            controller: 'loginController'
+        })
         .otherwise({
             redirectTo: '/'
         });

@@ -9,18 +9,44 @@
 	
 	<b:Navbar position="FIXED_TOP">
 		<b:Container fluid="true">
+
 			<b:NavbarHeader>
 				<b:NavbarBrand targetHistoryToken="{nameTokens.getHome}" ui:field="brand"><ui:text from="{messages.app_title}"/></b:NavbarBrand>
 				<b:NavbarCollapseButton dataTarget="#navbar-collapse" />
 			</b:NavbarHeader>
+					
 			<b:NavbarCollapse b:id="navbar-collapse">
+					
 				<b:NavbarNav>
-					<b:AnchorListItem text="{messages.app_menu_users}" targetHistoryToken="{nameTokens.getUsers}" />
+					<b:AnchorListItem text="{messages.app_menu_customers}" targetHistoryToken="{nameTokens.getCustomers}" icon="USERS" />
 				</b:NavbarNav>
+				
+				<b:NavbarNav>
+					<b:AnchorListItem text="{messages.app_menu_insurers}" targetHistoryToken="{nameTokens.getInsurers}" icon="INSTITUTION" />
+				</b:NavbarNav>
+				
+				<b:NavbarNav>
+					<b:AnchorListItem text="{messages.app_menu_invoices}" targetHistoryToken="{nameTokens.getInvoices}" icon="FILE_TEXT" />
+				</b:NavbarNav>
+				
+				<b:NavbarNav>
+					<b:AnchorListItem text="{messages.app_menu_vehicles}" targetHistoryToken="{nameTokens.getVehicles}" icon="CAR"/>
+				</b:NavbarNav>
+				
+				<b:NavbarNav>
+					<b:AnchorListItem text="{messages.app_menu_configuration}" targetHistoryToken="{nameTokens.getConfiguration}" icon="GEAR" />
+				</b:NavbarNav>
+				
 				<b:NavbarNav>
 					<b:AnchorListItem text="LOGIN!!!" targetHistoryToken="{nameTokens.getLogin}" />
 				</b:NavbarNav>
+					
+				<b:NavbarText pull="RIGHT">
+			      <b.html:Text text="yyyy:" />
+			      <b:NavbarLink>xxxxx</b:NavbarLink>
+			    </b:NavbarText>
 			</b:NavbarCollapse>
+			
 		</b:Container>
 	</b:Navbar>
 

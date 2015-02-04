@@ -10,9 +10,4 @@ function MenuController ($scope, $rootScope, $location) {
     $scope.isActiveGroup = function (viewGroup) { 
         return $location.path().indexOf(viewGroup) > -1 ;
     };
-
-    $scope.logout = function () {
-    	$rootScope.loggedInUser = null;
-		$scope.redirectTo ('/login');
-    };
 }

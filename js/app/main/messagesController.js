@@ -10,7 +10,7 @@ function MessagesController ($scope) {
         ];
     });
 
-    $scope.$on('errorMessage', function (event, args) {
+    $scope.$on('errorMessage', function (event, message) {
         $scope.alerts = [
             {"type": "danger", "msg" : message}
         ];

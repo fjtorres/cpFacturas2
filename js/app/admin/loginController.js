@@ -6,13 +6,17 @@ function LoginController ($scope, $rootScope, authenticationService) {
 
     // Clear scope vars
     $scope.credentials = {};
+    $scope.rememberMe = false;
 
     $scope.login = function () {
-        console.log($scope.credentials);
-        if ($scope.credentials.username != null) {
-            $rootScope.loggedInUser = $scope.credentials.username;
-            $scope.redirectTo("/");
-        }
+        authenticationService.save($.param({username: $scope.credentials.username, password: $scope.credentials.password}), function (authenticationResult) {
+            console.log(authenticationResult);
+
+            authenticationService.get(function(user){
+                $rootScope.user = user;
+                $location.path("/");
+            });
+        });
     };
 
 }

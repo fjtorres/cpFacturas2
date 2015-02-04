@@ -4,6 +4,9 @@ public final class NameTokens {
 
    private static final String API_PATH = "/api";
 
+   public static final String AUTHENTICATION_PATH = API_PATH
+         + "/authentication";
+
    public static final String CUSTOMERS_PATH = API_PATH + "/customers";
 
    public static final String INSURERS_PATH = API_PATH + "/insurers";

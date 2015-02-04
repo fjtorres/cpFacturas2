@@ -44,3 +44,4 @@ gwt-unitCache/
 .gwt/
 test-output/
 */test-output/**
+*.log

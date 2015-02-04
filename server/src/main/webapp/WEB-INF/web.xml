@@ -14,28 +14,38 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
-<!-- 	<servlet> -->
-<!-- 		<servlet-name>REST</servlet-name> -->
-<!-- 		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class> -->
-<!-- 		<init-param> -->
-<!-- 			<param-name>jersey.config.server.provider.packages</param-name> -->
-<!-- 			<param-value>es.fjtorres.cpFacturas.server.api.impl;es.fjtorres.cpFacturas.server.config;es.fjtorres.cpFacturas.server.filter</param-value> -->
-<!-- 		</init-param> -->
-<!-- 		<init-param> -->
-<!-- 			<param-name>jersey.config.beanValidation.enableOutputValidationErrorEntity.server</param-name> -->
-<!-- 			<param-value>true</param-value> -->
-<!-- 		</init-param> -->
-<!-- 		<init-param> -->
-<!-- 			<param-name>jersey.config.server.provider.classnames</param-name> -->
-<!-- 			<param-value>org.glassfish.jersey.filter.LoggingFilter</param-value> -->
-<!-- 		</init-param> -->
-<!-- 		<load-on-startup>1</load-on-startup> -->
-<!-- 	</servlet> -->
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- <servlet> -->
+	<!-- <servlet-name>REST</servlet-name> -->
+	<!-- <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class> -->
+	<!-- <init-param> -->
+	<!-- <param-name>jersey.config.server.provider.packages</param-name> -->
+	<!-- <param-value>es.fjtorres.cpFacturas.server.api.impl;es.fjtorres.cpFacturas.server.config;es.fjtorres.cpFacturas.server.filter</param-value> -->
+	<!-- </init-param> -->
+	<!-- <init-param> -->
+	<!-- <param-name>jersey.config.beanValidation.enableOutputValidationErrorEntity.server</param-name> -->
+	<!-- <param-value>true</param-value> -->
+	<!-- </init-param> -->
+	<!-- <init-param> -->
+	<!-- <param-name>jersey.config.server.provider.classnames</param-name> -->
+	<!-- <param-value>org.glassfish.jersey.filter.LoggingFilter</param-value> -->
+	<!-- </init-param> -->
+	<!-- <load-on-startup>1</load-on-startup> -->
+	<!-- </servlet> -->
 
 	<!-- Map /rest/* to Jersey -->
-<!-- 	<servlet-mapping> -->
-<!-- 		<servlet-name>REST</servlet-name> -->
-<!-- 		<url-pattern>/*</url-pattern> -->
-<!-- 	</servlet-mapping> -->
+	<!-- <servlet-mapping> -->
+	<!-- <servlet-name>REST</servlet-name> -->
+	<!-- <url-pattern>/*</url-pattern> -->
+	<!-- </servlet-mapping> -->
 
 </web-app>

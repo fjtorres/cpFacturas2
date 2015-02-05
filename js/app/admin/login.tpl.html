@@ -15,6 +15,10 @@
                     <span class="input-group-addon password-login"><i class="fa fa-lock" /></span>
                     <input type="password" class="form-control" placeholder="{{'login.password' | translate}}" title="{{'login.password' | translate}}" ng-model="credentials.password" required/>
                 </div>
+                
+                <div class="checkbox">
+					<label><input type="checkbox" ng-model="rememberMe"/>&nbsp;{{'login.rememberMe' | translate}}</label>
+			  	</div>
 
               </div>
               <div class="panel-footer">

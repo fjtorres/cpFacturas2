@@ -150,7 +150,7 @@ angular.module('cpFacturasApp', ['ngRoute', 'ngResource', 'ngCookies', 'pascalpr
     $httpProvider.interceptors.push(function ($q, $rootScope, $location) {
         return {
             'request': function(config) {
-                var isRestCall = config.url.indexOf('api') == 0;
+                var isRestCall = config.url.indexOf('/api/') != -1;
                 if (isRestCall && angular.isDefined($rootScope.authToken)) {
                     config.headers['X-Auth-Token'] = $rootScope.authToken;
                 }

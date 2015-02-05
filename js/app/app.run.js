@@ -61,10 +61,11 @@ angular.module('cpFacturasApp').run(['$rootScope', '$location', '$translate', '$
     var authToken = $cookieStore.get('authToken');
     if (authToken !== undefined) {
         $rootScope.authToken = authToken;
-        /*UserService.get(function(user) {
+        authenticationService.get(function(user){
             $rootScope.user = user;
-            $location.path(originalPath);
-        });*/
+            $rootScope.loggedInUser = true;
+            $rootScope.redirectTo("/");
+        });
     }
 
 }]);

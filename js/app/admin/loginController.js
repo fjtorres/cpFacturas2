@@ -1,22 +1,31 @@
 'use strict';
 
-angular.module('cpFacturasApp').controller('loginController', ['$scope', '$rootScope', 'authenticationService', LoginController]);
+angular.module('cpFacturasApp').controller('loginController', ['$scope', '$rootScope', '$cookieStore', 'authenticationService', LoginController]);
 
-function LoginController ($scope, $rootScope, authenticationService) {
+function LoginController ($scope, $rootScope, $cookieStore, authenticationService) {
 
     // Clear scope vars
     $scope.credentials = {};
     $scope.rememberMe = false;
 
     $scope.login = function () {
-        authenticationService.save($.param({username: $scope.credentials.username, password: $scope.credentials.password}), function (authenticationResult) {
-            console.log(authenticationResult);
+        authenticationService.authenticate($.param({username: $scope.credentials.username, password: $scope.credentials.password}), function (authenticationResult) {
+            $rootScope.authToken = authenticationResult.token;
+            
+            if ($scope.rememberMe) {
+            	$cookieStore.put('authToken', $rootScope.authToken);
+            }
 
             authenticationService.get(function(user){
                 $rootScope.user = user;
-                $location.path("/");
+                $rootScope.loggedInUser = true;
+                $scope.redirectTo("/");
             });
         });
+
+//        authenticationService.authenticate($.param({username: $scope.credentials.username, password: $scope.credentials.password}), function (data){
+//            console.log(data);
+//        });
     };
 
 }

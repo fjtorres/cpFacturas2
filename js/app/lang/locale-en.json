@@ -26,7 +26,8 @@
   "login" : {
     "title" : "Log in",
     "username" : "Enter the username",
-    "password" : "Enter password"
+    "password" : "Enter password",
+    "rememberMe": "Remember me in this computer"
   },
   "menu": {
     "invoice": {

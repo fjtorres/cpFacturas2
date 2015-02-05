@@ -26,7 +26,8 @@
   "login" : {
     "title" : "Acceder al sistema",
     "username" : "Introduzca el nombre de usuario",
-    "password" : "Introduzca la contraseña"
+    "password" : "Introduzca la contraseña",
+    "rememberMe": "Recordar mis datos en este ordenador"
   },
   "menu": {
     "invoice": {

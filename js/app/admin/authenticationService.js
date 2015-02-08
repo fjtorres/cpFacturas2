@@ -1,14 +1,14 @@
 'use strict';
 
-angular.module('cpFacturasApp').factory('authenticationService', function($resource, $http, transformRequestAsFormPost) {
+angular.module('cpFacturasApp').factory('authenticationService', function($resource, $http, myConfig) {
 
-    var service = $resource('http://localhost:8081/server/api/authentication', {}, {
+    var service = $resource(myConfig.apiUrl + '/authentication', {}, {
         authenticate: {
             method: 'POST',
             headers : {'Content-Type': 'application/x-www-form-urlencoded'}
         },
         logout: {
-            url: "http://localhost:8081/server/api/authentication/logout",
+            url: myConfig.apiUrl + "/authentication/logout",
             method: 'GET'
         }
     });

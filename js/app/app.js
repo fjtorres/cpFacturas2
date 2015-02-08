@@ -1,6 +1,10 @@
 'use strict';
 
-angular.module('cpFacturasApp', ['ngRoute', 'ngResource', 'ngCookies', 'pascalprecht.translate', 'ui.bootstrap']).config(['$routeProvider', '$translateProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $translateProvider, $locationProvider, $httpProvider) {
+angular.module('cpFacturasApp', ['ngRoute', 'ngResource', 'ngCookies', 'pascalprecht.translate', 'ui.bootstrap'])
+.constant("myConfig", {
+        "apiUrl": "http://localhost:8080/server/api"
+})
+.config(['$routeProvider', '$translateProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $translateProvider, $locationProvider, $httpProvider) {
 
     $routeProvider
         .when('/', {

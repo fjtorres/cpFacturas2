@@ -4,7 +4,7 @@ import es.fjtorres.cpFacturas.common.dto.CustomerDto;
 import es.fjtorres.cpFacturas.common.dto.pagination.CustomerPageDto;
 import es.fjtorres.cpFacturas.common.exception.AppException;
 
-public interface ICustomerClient {
+public interface ICustomerClient extends ISecuredClient {
 
     void save(final CustomerDto pDto) throws AppException;
 

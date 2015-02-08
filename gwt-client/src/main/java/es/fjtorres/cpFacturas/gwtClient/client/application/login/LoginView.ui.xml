@@ -5,36 +5,42 @@
 	
 	<ui:with type="es.fjtorres.cpFacturas.gwtClient.client.i18n.Messages" field="messages" />
 	
-	<b:Container>
-		<b:Row>
-			<b:Column size="MD_6 SM_8" addStyleNames="col-md-offset-3 col-sm-offset-2">
-				<b:Form type="HORIZONTAL">
-					<b:Panel>
-						<b:PanelHeader>
-							<b:Heading size="H3" text="LOGIN!!!"/>
-						</b:PanelHeader>
-						
-						<b:PanelBody>
-								
-								<b:InputGroup addStyleNames="input-login">
-									<b:InputGroupAddon icon="USER" />
-									<b:TextBox ui:field="txtUsername" placeholder="....." maxLength="100"/>
-								</b:InputGroup>
-								
-								<b:InputGroup addStyleNames="input-login">
-									<b:InputGroupAddon icon="LOCK" addStyleNames="password-login"/>
-									<b:Input ui:field="txtPassword" type="PASSWORD" placeholder="....." maxLength="100"/>
-								</b:InputGroup>
-								
-						</b:PanelBody>
-						
-						<b:PanelFooter>
-							<b:Button type="SUCCESS" size="SMALL" text="xxxx" ui:field="btnLogin"/>
-						</b:PanelFooter>
-					</b:Panel>
-				</b:Form>
-			</b:Column>
-		</b:Row>
-	</b:Container>
+	<g:ScrollPanel addStyleNames="content">
+		<b:Container fluid="true">
+			<b:Row>
+				<b:Column size="SM_4" addStyleNames="col-sm-offset-4">
+					<b:Form type="HORIZONTAL">
+						<b:Panel>
+							<b:PanelHeader>
+								<b:Heading size="H3" text="{messages.app_login_title}" addStyleNames="login-title"/>
+							</b:PanelHeader>
+							
+							<b:PanelBody>
+									
+									<b:InputGroup addStyleNames="input-login">
+										<b:InputGroupAddon icon="USER" />
+										<b:TextBox ui:field="txtUsername" placeholder="{messages.app_login_username_placeholder}" maxLength="100"/>
+									</b:InputGroup>
+									
+									<b:InputGroup addStyleNames="input-login">
+										<b:InputGroupAddon icon="LOCK" addStyleNames="password-login"/>
+										<b:Input ui:field="txtPassword" type="PASSWORD" placeholder="{messages.app_login_password_placeholder}" maxLength="100"/>
+									</b:InputGroup>
+									
+									<b.html:Div>
+										<b:CheckBox text="{messages.app_login_rememberMe}"></b:CheckBox>
+									</b.html:Div>
+									
+							</b:PanelBody>
+							
+							<b:PanelFooter>
+								<b:Button type="SUCCESS" size="SMALL" text="{messages.button_access}" ui:field="btnLogin"/>
+							</b:PanelFooter>
+						</b:Panel>
+					</b:Form>
+				</b:Column>
+			</b:Row>
+		</b:Container>
+	</g:ScrollPanel>
 
 </ui:UiBinder>

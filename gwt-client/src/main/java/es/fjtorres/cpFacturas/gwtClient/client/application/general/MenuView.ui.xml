@@ -43,7 +43,7 @@
 					
 				<b:NavbarText pull="RIGHT">
 			      <b.html:Text text="yyyy:" />
-			      <b:NavbarLink>xxxxx</b:NavbarLink>
+			      <b:NavbarLink ui:field="btnLogout">xxxxx</b:NavbarLink>
 			    </b:NavbarText>
 			</b:NavbarCollapse>
 			

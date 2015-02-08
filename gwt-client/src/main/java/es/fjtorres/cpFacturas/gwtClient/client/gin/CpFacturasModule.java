@@ -10,6 +10,7 @@ import com.gwtplatform.mvp.shared.proxy.RouteTokenFormatter;
 
 import es.fjtorres.cpFacturas.gwtClient.client.application.ApplicationModule;
 import es.fjtorres.cpFacturas.gwtClient.client.place.NameTokens;
+import es.fjtorres.cpFacturas.gwtClient.client.security.SecurityModule;
 
 public class CpFacturasModule extends AbstractPresenterModule {
 
@@ -18,11 +19,12 @@ public class CpFacturasModule extends AbstractPresenterModule {
       install(new DefaultModule.Builder().placeManager(
             DefaultPlaceManager.class)
             .tokenFormatter(RouteTokenFormatter.class).build());
+      install(new SecurityModule());
       install(new ApplicationModule());
 
-      bindConstant().annotatedWith(DefaultPlace.class).to(NameTokens.HOME);
+      bindConstant().annotatedWith(DefaultPlace.class).to(NameTokens.LOGIN);
       bindConstant().annotatedWith(ErrorPlace.class).to(NameTokens.HOME);
-      bindConstant().annotatedWith(UnauthorizedPlace.class).to(NameTokens.HOME);
+      bindConstant().annotatedWith(UnauthorizedPlace.class).to(NameTokens.UNAUTHORIZED);
 
    }
 

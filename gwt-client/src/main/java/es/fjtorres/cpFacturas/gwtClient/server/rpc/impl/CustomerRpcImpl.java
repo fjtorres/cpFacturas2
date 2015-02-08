@@ -13,30 +13,31 @@ import es.fjtorres.cpFacturas.gwtClient.server.api.impl.CustomerApiClient;
 @Singleton
 public class CustomerRpcImpl extends AbstractEntityRpc implements ICustomerRpc {
 
-   private static final long serialVersionUID = -8827064477531767934L;
+    private static final long serialVersionUID = -8827064477531767934L;
 
-   private ICustomerClient client = new CustomerApiClient(
-         "http://localhost:8080/server");
+    private ICustomerClient client = new CustomerApiClient("http://localhost:8080/server");
 
-   @Inject
-   public CustomerRpcImpl () {
-       
-   }
-   
-   @Override
-   public CustomerPageDto find(final int page, final int pageSize) {
-      return client.find(page, pageSize);
-   }
+    @Inject
+    public CustomerRpcImpl() {
 
-   @Override
-   public void save(final CustomerDto pDto) throws AppException {
-      client.save(pDto);
-   }
+    }
 
-   @Override
-   public CustomerDto findByCode(final String pCode)
-         throws AppException {
-      return client.findByCode(pCode);
-   }
+    @Override
+    public CustomerPageDto find(final int page, final int pageSize) {
+        client.setAuthToken(getAuthToken());
+        return client.find(page, pageSize);
+    }
+
+    @Override
+    public void save(final CustomerDto pDto) throws AppException {
+        client.setAuthToken(getAuthToken());
+        client.save(pDto);
+    }
+
+    @Override
+    public CustomerDto findByCode(final String pCode) throws AppException {
+        client.setAuthToken(getAuthToken());
+        return client.findByCode(pCode);
+    }
 
 }

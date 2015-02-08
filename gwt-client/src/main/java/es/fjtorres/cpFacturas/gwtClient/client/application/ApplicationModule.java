@@ -36,12 +36,13 @@ public class ApplicationModule extends AbstractPresenterModule {
                 MessagesView.class);
         bindSingletonPresenterWidget(MenuPresenter.class, MenuPresenter.MyView.class,
                 MenuView.class);
-        
-        bindPresenter(HomePresenter.class, HomePresenter.MyView.class, HomeView.class,
-                HomePresenter.MyProxy.class);
-        
         bindPresenter(LoginPresenter.class, LoginPresenter.MyView.class, LoginView.class,
                 LoginPresenter.MyProxy.class);
+        bindPresenter(UnauthorizedPresenter.class, UnauthorizedPresenter.MyView.class,
+                UnauthorizedView.class, UnauthorizedPresenter.MyProxy.class);
+
+        bindPresenter(HomePresenter.class, HomePresenter.MyView.class, HomeView.class,
+                HomePresenter.MyProxy.class);
 
         // FIXME
         bindPresenter(UserListPresenter.class, UserListPresenter.MyView.class, UserListView.class,
@@ -52,15 +53,15 @@ public class ApplicationModule extends AbstractPresenterModule {
                 CustomerListView.class, CustomerListPresenter.MyProxy.class);
         bindPresenter(CustomerFormPresenter.class, CustomerFormPresenter.MyView.class,
                 CustomerFormView.class, CustomerFormPresenter.MyProxy.class);
-        
+
         // Insurers
         bindPresenter(InsurerListPresenter.class, InsurerListPresenter.MyView.class,
                 InsurerListView.class, InsurerListPresenter.MyProxy.class);
-        
+
         // Invoices
         bindPresenter(InvoiceListPresenter.class, InvoiceListPresenter.MyView.class,
                 InvoiceListView.class, InvoiceListPresenter.MyProxy.class);
-        
+
         // Vehicles
         bindPresenter(VehicleListPresenter.class, VehicleListPresenter.MyView.class,
                 VehicleListView.class, VehicleListPresenter.MyProxy.class);

@@ -11,6 +11,7 @@ public final class NameTokens {
    public static final String INVOICES = "/invoices";
    public static final String LOGIN = "/login";
    public static final String USERS = "/users";
+   public static final String UNAUTHORIZED = "/unauthorized";
    public static final String VEHICLES = "/vehicles";
 
    public static String getCustomers() {

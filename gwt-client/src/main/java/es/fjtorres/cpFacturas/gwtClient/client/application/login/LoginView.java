@@ -20,22 +20,27 @@ public class LoginView extends ViewWithUiHandlers<LoginUiHandlers> implements Lo
 
     @UiField
     protected Button btnLogin;
-    
+
     @UiField
     protected TextBox txtUsername;
-    
+
     @UiField
     protected Input txtPassword;
-    
+
     @Inject
     public LoginView(final Binder uiBinder) {
         initWidget(uiBinder.createAndBindUi(this));
     }
-    
+
     @UiHandler("btnLogin")
-    public void onClickBtnLogin (final ClickEvent event) {
+    public void onClickBtnLogin(final ClickEvent event) {
         event.preventDefault();
         getUiHandlers().login(txtUsername.getText(), txtPassword.getText());
+    }
+
+    @Override
+    public void setLoginButtonEnabled(boolean pEnabled) {
+        btnLogin.setEnabled(pEnabled);
     }
 
 }

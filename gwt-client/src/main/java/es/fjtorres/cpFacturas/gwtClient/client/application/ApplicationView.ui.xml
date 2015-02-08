@@ -5,23 +5,17 @@
 			xmlns:b.html="urn:import:org.gwtbootstrap3.client.ui.html"
 			xmlns:g="urn:import:com.google.gwt.user.client.ui">
 
-	<g:FlowPanel ui:field="globalContainer">
-	
-		<g:FlowPanel ui:field="mainContainer">
-			<g:SimplePanel ui:field="menuContainer" />
-	
-			<g:ScrollPanel>
-				<b:Container fluid="true">
-					<g:FlowPanel addStyleNames="push">
-						<g:SimplePanel ui:field="messagesContainer" />
-						<!-- Container Content -->
-						<g:SimplePanel ui:field="contentContainer" />
-					</g:FlowPanel>
-				</b:Container>
-			</g:ScrollPanel>
-		</g:FlowPanel>
-		
-		<g:SimplePanel ui:field="loginContainer"/>
-		
+	<g:FlowPanel ui:field="mainContainer">
+		<g:SimplePanel ui:field="menuContainer" />
+
+		<g:ScrollPanel>
+			<b:Container fluid="true">
+				<g:FlowPanel addStyleNames="content">
+					<g:SimplePanel ui:field="messagesContainer" />
+					<g:SimplePanel ui:field="contentContainer" />
+				</g:FlowPanel>
+			</b:Container>
+		</g:ScrollPanel>
 	</g:FlowPanel>
+		
 </ui:UiBinder> 

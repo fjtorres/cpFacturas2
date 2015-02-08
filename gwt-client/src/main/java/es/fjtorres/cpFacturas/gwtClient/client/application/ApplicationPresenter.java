@@ -6,6 +6,7 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ContentSlot;
+import com.gwtplatform.mvp.client.annotations.NoGatekeeper;
 import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.proxy.Proxy;
 import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
@@ -21,6 +22,7 @@ public class ApplicationPresenter extends
     }
 
     @ProxyStandard
+    @NoGatekeeper
     public interface MyProxy extends Proxy<ApplicationPresenter> {
 
     }

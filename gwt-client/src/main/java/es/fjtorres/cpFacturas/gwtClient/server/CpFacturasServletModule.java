@@ -4,6 +4,7 @@ import javax.inject.Singleton;
 
 import com.google.inject.servlet.ServletModule;
 
+import es.fjtorres.cpFacturas.gwtClient.server.rpc.impl.AuthenticationRpcImpl;
 import es.fjtorres.cpFacturas.gwtClient.server.rpc.impl.CustomerRpcImpl;
 
 public class CpFacturasServletModule extends ServletModule {
@@ -12,6 +13,7 @@ public class CpFacturasServletModule extends ServletModule {
     protected void configureServlets() {
         bind(CustomerRpcImpl.class).in(Singleton.class);
         serve("/cpFacturas/services/customer").with(CustomerRpcImpl.class);
+        serve("/cpFacturas/services/authentication").with(AuthenticationRpcImpl.class);
     }
 
 }

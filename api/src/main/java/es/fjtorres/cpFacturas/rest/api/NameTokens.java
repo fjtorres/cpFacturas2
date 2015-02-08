@@ -6,6 +6,9 @@ public final class NameTokens {
 
    public static final String AUTHENTICATION_PATH = API_PATH
          + "/authentication";
+   
+   public static final String AUTHENTICATION_LOGOUT_PATH = AUTHENTICATION_PATH
+           + "/logout";
 
    public static final String CUSTOMERS_PATH = API_PATH + "/customers";
 

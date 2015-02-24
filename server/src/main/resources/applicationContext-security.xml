@@ -24,6 +24,7 @@
 		authentication-manager-ref="authenticationManager">
 		<security:custom-filter ref="authenticationTokenProcessingFilter"
 			position="FORM_LOGIN_FILTER" />
+		<security:intercept-url pattern="/**" access="permitAll" method="OPTIONS"/>
 		<security:intercept-url pattern="/api/authentication" method="POST" access="permitAll" />
 		<security:intercept-url pattern="/api/authentication" method="GET" access="isAuthenticated()" />
 		<security:intercept-url pattern="/api/*" access="isAuthenticated()" />

@@ -30,7 +30,8 @@ import es.fjtorres.cpFacturas.server.service.ICustomerService;
 @Named
 @Path(CUSTOMERS_PATH)
 @Produces(MediaType.APPLICATION_JSON)
-public class CustomerResourceImpl extends AbstractResource implements ICustomerResource {
+public class CustomerResourceImpl extends AbstractResource implements
+      ICustomerResource {
 
    /**
     * 
@@ -39,74 +40,69 @@ public class CustomerResourceImpl extends AbstractResource implements ICustomerR
 
    private final ICustomerService service;
 
-    @Inject
-    public CustomerResourceImpl(final ICustomerService pService) {
-        this.service = pService;
-    }
+   @Inject
+   public CustomerResourceImpl(final ICustomerService pService) {
+      this.service = pService;
+   }
 
-    public ICustomerService getService() {
-        return service;
-    }
+   public ICustomerService getService() {
+      return service;
+   }
 
-    @Override
-    @GET
-    public Response find(@DefaultValue("0")
-    @QueryParam(PAGE_NUMBER)
-    final int page, @DefaultValue("10")
-    @QueryParam(PAGE_SIZE)
-    final int pageSize, @QueryParam(PAGE_SORT_FIELD)
-    final String sortField, @DefaultValue("ASC")
-    @QueryParam(PAGE_SORT_DIRECTION)
-    final String sortDirection) {
-        Page<CustomerDto> wrapper = null;
-        try {
-            wrapper = getService().find(page, pageSize, sortField, sortDirection);
-        } catch (final IllegalArgumentException iae) {
-            badRequest(iae.getMessage());
-        }
-        return Response.ok(wrapper).build();
-    }
+   @Override
+   @GET
+   public Response find(
+         @DefaultValue("0") @QueryParam(PAGE_NUMBER) final int page,
+         @DefaultValue("10") @QueryParam(PAGE_SIZE) final int pageSize,
+         @QueryParam(PAGE_SORT_FIELD) final String sortField,
+         @DefaultValue("ASC") @QueryParam(PAGE_SORT_DIRECTION) final String sortDirection) {
+      Page<CustomerDto> wrapper = null;
+      try {
+         wrapper = getService().find(page, pageSize, sortField, sortDirection);
+      } catch (final IllegalArgumentException iae) {
+         badRequest(iae.getMessage());
+      }
+      return Response.ok(wrapper).build();
+   }
 
-    @Override
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response add(final CustomerDto pDto) {
-        try {
-            getService().add(pDto);
-        } catch (final ValidationException ve) {
-            badRequest(ve.getErrors());
-        }
+   @Override
+   @POST
+   @Consumes(MediaType.APPLICATION_JSON)
+   public Response add(final CustomerDto pDto) {
+      try {
+         getService().add(pDto);
+      } catch (final ValidationException ve) {
+         badRequest(ve.getErrors());
+      }
 
-        return Response.ok().build();
-    }
+      return Response.ok().build();
+   }
 
-    @Override
-    @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response update(final CustomerDto pDto) {
-        try {
-            getService().update(pDto);
-        } catch (final ValidationException ve) {
-            badRequest(ve.getErrors());
-        }
-        return Response.ok().build();
-    }
+   @Override
+   @PUT
+   @Consumes(MediaType.APPLICATION_JSON)
+   public Response update(final CustomerDto pDto) {
+      try {
+         getService().update(pDto);
+      } catch (final ValidationException ve) {
+         badRequest(ve.getErrors());
+      }
+      return Response.ok().build();
+   }
 
-    @Override
-    @DELETE
-    @Path("{id}")
-    public Response delete(@PathParam("id")
-    final Long pId) {
-        getService().delete(pId);
-        return Response.ok().build();
-    }
+   @Override
+   @DELETE
+   @Path("{id}")
+   public Response delete(@PathParam("id") final Long pId) {
+      getService().delete(pId);
+      return Response.ok().build();
+   }
 
-    @Override
-    @GET
-    @Path("{code}")
-    public Response findByCode(@PathParam("code")
-    final String pCode) {
-        return Response.ok(getService().findByCode(pCode)).build();
-    }
+   @Override
+   @GET
+   @Path("{id}")
+   public Response findById(@PathParam("id") final Long pId) {
+      return Response.ok(getService().findById(pId)).build();
+   }
 
 }

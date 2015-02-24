@@ -2,7 +2,7 @@
 
 angular.module('cpFacturasApp', ['ngRoute', 'ngResource', 'ngCookies', 'pascalprecht.translate', 'ui.bootstrap'])
 .constant("myConfig", {
-        "apiUrl": "http://localhost:8080/server/api"
+        "apiUrl": "http://localhost:8081/server/api"
 })
 .config(['$routeProvider', '$translateProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $translateProvider, $locationProvider, $httpProvider) {
 
@@ -136,9 +136,12 @@ angular.module('cpFacturasApp', ['ngRoute', 'ngResource', 'ngCookies', 'pascalpr
                 var config = rejection.config;
                 var method = config.method;
                 var url = config.url;
+                var data = rejection.data;
       
                 if (status == 401) {
                     $location.path( "/login" );
+                } else if (data && data.errors) {
+                    $rootScope.$broadcast('errorMessage', data.errors[0]);
                 } else {
                     $rootScope.$broadcast('errorMessage', "ERROR!! Show me in bootstrap alert");
                 }

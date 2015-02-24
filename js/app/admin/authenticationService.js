@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('cpFacturasApp').factory('authenticationService', function($resource, $http, myConfig) {
+angular.module('cpFacturasApp').factory('authenticationService', function($resource, myConfig) {
 
     var service = $resource(myConfig.apiUrl + '/authentication', {}, {
         authenticate: {

@@ -1,4 +1,5 @@
 <input type="hidden" ng-model="model.id" />
+<input type="hidden" ng-model="model.type" />
 
 <div class="row">
     
@@ -43,7 +44,7 @@
                 <div class="input-group">
                     <span class="input-group-addon">@</span>
                     <input type="email" class="form-control" id="txtCustomerEmail" placeholder="{{'customers.field.email.placeholder' | translate}}"
-                        maxlenght="100" ng-model="model.email" required tabindex="4" ng-model-options="{ updateOn: 'submit' }"/>
+                        maxlenght="100" ng-model="model.contactData.email" required tabindex="4" ng-model-options="{ updateOn: 'submit' }"/>
                 </div>
             </div>
         </div>
@@ -54,7 +55,7 @@
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
                     <input type="tel" class="form-control" id="txtCustomerPhoneNumber" placeholder="{{'customers.field.phonenumber.placeholder' | translate}}"
-                        maxlenght="12" ng-model="model.phonenumber" required tabindex="5" ng-model-options="{ updateOn: 'submit' }"/>
+                        maxlenght="12" ng-model="model.contactData.primaryPhoneNumber" required tabindex="5" ng-model-options="{ updateOn: 'submit' }"/>
                 </div>
             </div>
         </div>

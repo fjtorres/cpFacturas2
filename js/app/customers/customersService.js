@@ -17,9 +17,11 @@ var IN_MEMORY_DB = [
     {"id": IN_MEMORY_SEQ++, "code": "Code 12", "firstName": "Nombre 12", "lastName": "Apellidos 12", "phonenumber": "", "email": "prueba12@prueba.com"}
 ];
 
-angular.module('cpFacturasApp').factory('customerService', ['$resource', '$filter', function($resource, $filter) {
-  return {
-    "search": function (page, elementsPerPage) {
+angular.module('cpFacturasApp').factory('customerService', ['$resource', '$filter', 'myConfig', function($resource, $filter, myConfig) {
+  /*return {
+    "search": function (page, elementsPerPage, sortField, sortDirection) {
+
+        
         var firstElement = page * elementsPerPage;
         var lastElement = firstElement + elementsPerPage - 1;
         var page = {
@@ -48,5 +50,12 @@ angular.module('cpFacturasApp').factory('customerService', ['$resource', '$filte
     "findById": function (modelId) {
         return $filter('filter')(IN_MEMORY_DB, function(item){return item.id == modelId})[0];
     }
-  };
+  };*/
+
+
+    return $resource(myConfig.apiUrl + '/customers/:key', {key: '@key'}, {
+        search : {method: 'GET'},
+        update: {method: 'PUT'}
+    });
+
 }]);

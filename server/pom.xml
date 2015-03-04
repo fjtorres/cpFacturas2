@@ -108,13 +108,13 @@
 			<artifactId>spring-core</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-beans</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
@@ -132,19 +132,19 @@
 			<artifactId>spring-orm</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-		
+
 		<!-- Spring security -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
 			<version>${spring.security.version}</version>
 		</dependency>
-		
+
 		<dependency>
-        	<groupId>org.springframework.security</groupId>
-        	<artifactId>spring-security-config</artifactId>
-        	<version>${spring.security.version}</version>
-    	</dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
 
 		<!-- JPA & Hibernate -->
 
@@ -184,5 +184,13 @@
 			<version>3.0.0</version>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.glassfish.jersey.test-framework.providers</groupId>
+			<artifactId>jersey-test-framework-provider-jetty</artifactId>
+			<version>${jersey.version}</version>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 </project>

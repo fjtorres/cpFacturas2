@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+       http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<context:component-scan base-package="es.fjtorres.cpFacturas.server" />
+
+	<!-- Dozer configuration -->
+
+	<bean id="dozerCustomFieldMapper" class="es.fjtorres.cpFacturas.server.dozer.CustomFieldMapper" />
+
+	<bean class="org.dozer.spring.DozerBeanMapperFactoryBean">
+		<property name="mappingFiles" value="classpath*:/dozer/*mapping.xml" />
+		<property name="customFieldMapper" ref="dozerCustomFieldMapper" />
+	</bean>
+	
+	<bean id="passwordEncoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+		<constructor-arg value="15" />
+	</bean>
+
+	<security:authentication-manager id="authenticationManager">
+		<security:authentication-provider
+			user-service-ref="appUserDetailsService">
+			<security:password-encoder ref="passwordEncoder" />
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+	<security:http realm="Protected API" use-expressions="true"
+		auto-config="false" create-session="stateless" entry-point-ref="unauthorizedEntryPoint"
+		authentication-manager-ref="authenticationManager">
+		<security:custom-filter ref="authenticationTokenProcessingFilter"
+			position="FORM_LOGIN_FILTER" />
+		<security:intercept-url pattern="/**" access="permitAll" method="OPTIONS"/>
+		<security:intercept-url pattern="/api/authentication" method="POST" access="permitAll" />
+		<security:intercept-url pattern="/api/authentication" method="GET" access="isAuthenticated()" />
+		<security:intercept-url pattern="/api/*" access="isAuthenticated()" />
+	</security:http>
+	
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="org.h2.Driver" />
+		<property name="url"
+			value="jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;MODE=MYSQL;TRACE_LEVEL_SYSTEM_OUT=2" />
+		<property name="username" value="sa" />
+		<property name="password" value="" />
+	</bean>
+
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="generateDdl" value="true" />
+				<property name="database" value="H2" />
+			</bean>
+		</property>
+		<property name="persistenceUnitName" value="persistenceUnit" />
+	</bean>
+
+	<bean id="org.h2.tools.Server-WebServer" class="org.h2.tools.Server"
+		factory-method="createWebServer" depends-on="dataSource" init-method="start"
+		lazy-init="false">
+		<constructor-arg value="-web,-webPort,11111" />
+	</bean>
+
+	<!-- Transactions -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+</beans>

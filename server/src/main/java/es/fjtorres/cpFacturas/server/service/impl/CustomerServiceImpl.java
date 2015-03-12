@@ -22,9 +22,8 @@ import es.fjtorres.cpFacturas.server.service.IPersistenceService;
 
 @Named
 @Transactional(readOnly = true)
-public class CustomerServiceImpl extends
-      AbstractEntityService<Customer, CustomerDto, Long> implements
-      ICustomerService {
+public class CustomerServiceImpl extends AbstractEntityService<Customer, CustomerDto, Long>
+      implements ICustomerService {
 
    @Inject
    public CustomerServiceImpl(final IBasicService pBasicService,
@@ -43,8 +42,8 @@ public class CustomerServiceImpl extends
    }
 
    @Override
-   public CustomerPageDto find(final int page, final int pageSize,
-         final String sortField, final String sortDirection) {
+   public CustomerPageDto find(final int page, final int pageSize, final String sortField,
+         final String sortDirection) {
 
       if (pageSize == 0) {
          ExceptionUtils.throwIllegalArgument("page size cannon't be zero");
@@ -61,14 +60,13 @@ public class CustomerServiceImpl extends
          int maxPages = (int) (total / pageSize);
 
          if (page > maxPages) {
-            ExceptionUtils.throwIllegalArgument(
-                  "the page cannon't be greater than: {0}", maxPages);
+            ExceptionUtils.throwIllegalArgument("the page cannon't be greater than: {0}", maxPages);
          }
 
          final int startPosition = page == 0 ? page : (page * pageSize);
 
-         final List<Customer> entities = getPersistenceService().find(
-               startPosition, pageSize, sortField, order, getEntityClass());
+         final List<Customer> entities = getPersistenceService().find(startPosition, pageSize,
+               sortField, order, getEntityClass());
 
          dtos = getBasicService().convert(entities, getDtoClass());
       }
@@ -83,8 +81,7 @@ public class CustomerServiceImpl extends
    public CustomerDto findById(final Long pId) {
       Objects.requireNonNull(pId, "ID cannon't be null");
 
-      final Customer entity = getPersistenceService().findById(pId,
-            Customer.class);
+      final Customer entity = getPersistenceService().findById(pId, Customer.class);
       return getBasicService().convert(entity, getDtoClass());
    }
 
@@ -102,8 +99,8 @@ public class CustomerServiceImpl extends
          ExceptionUtils.throwIllegalArgument("Code cannon't be empty");
       }
 
-      final Customer entity = getPersistenceService().findByUniqueField("code",
-            pCode, getEntityClass());
+      final Customer entity = getPersistenceService().findByUniqueField("code", pCode,
+            getEntityClass());
 
       return getBasicService().convert(entity, getDtoClass());
    }

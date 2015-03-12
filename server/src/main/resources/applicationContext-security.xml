@@ -19,22 +19,31 @@
 		</security:authentication-provider>
 	</security:authentication-manager>
 
+	<security:http security="none" pattern="/css/*.css" />
+	<security:http security="none" pattern="/js/*.js" />
+	<security:http security="none" pattern="/index.html" />
+
 	<security:http realm="Protected API" use-expressions="true"
 		auto-config="false" create-session="stateless" entry-point-ref="unauthorizedEntryPoint"
 		authentication-manager-ref="authenticationManager">
 		<security:custom-filter ref="authenticationTokenProcessingFilter"
 			position="FORM_LOGIN_FILTER" />
-		<security:intercept-url pattern="/**" access="permitAll" method="OPTIONS"/>
-		<security:intercept-url pattern="/api/authentication" method="POST" access="permitAll" />
-		<security:intercept-url pattern="/api/authentication" method="GET" access="isAuthenticated()" />
-		<security:intercept-url pattern="/api/*" access="isAuthenticated()" />
-<!-- 		<security:intercept-url method="GET" pattern="/rest/news/**" -->
-<!-- 			access="hasRole('user')" /> -->
-<!-- 		<security:intercept-url method="PUT" pattern="/rest/news/**" -->
-<!-- 			access="hasRole('admin')" /> -->
-<!-- 		<security:intercept-url method="POST" pattern="/rest/news/**" -->
-<!-- 			access="hasRole('admin')" /> -->
-<!-- 		<security:intercept-url method="DELETE" -->
-<!-- 			pattern="/rest/news/**" access="hasRole('admin')" /> -->
+
+		<security:intercept-url pattern="/**" access="permitAll"
+			method="OPTIONS" />
+		<security:intercept-url pattern="/api/authentication"
+			method="POST" access="permitAll" />
+		<security:intercept-url pattern="/api/authentication"
+			method="GET" access="isAuthenticated()" />
+		<security:intercept-url pattern="/api/*"
+			access="isAuthenticated()" />
+		<!-- <security:intercept-url method="GET" pattern="/rest/news/**" -->
+		<!-- access="hasRole('user')" /> -->
+		<!-- <security:intercept-url method="PUT" pattern="/rest/news/**" -->
+		<!-- access="hasRole('admin')" /> -->
+		<!-- <security:intercept-url method="POST" pattern="/rest/news/**" -->
+		<!-- access="hasRole('admin')" /> -->
+		<!-- <security:intercept-url method="DELETE" -->
+		<!-- pattern="/rest/news/**" access="hasRole('admin')" /> -->
 	</security:http>
 </beans>

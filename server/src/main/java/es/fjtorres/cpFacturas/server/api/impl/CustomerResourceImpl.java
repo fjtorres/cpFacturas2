@@ -30,8 +30,7 @@ import es.fjtorres.cpFacturas.server.service.ICustomerService;
 @Named
 @Path(CUSTOMERS_PATH)
 @Produces(MediaType.APPLICATION_JSON)
-public class CustomerResourceImpl extends AbstractResource implements
-      ICustomerResource {
+public class CustomerResourceImpl extends AbstractResource implements ICustomerResource {
 
    /**
     * 
@@ -51,8 +50,7 @@ public class CustomerResourceImpl extends AbstractResource implements
 
    @Override
    @GET
-   public Response find(
-         @DefaultValue("0") @QueryParam(PAGE_NUMBER) final int page,
+   public Response find(@DefaultValue("0") @QueryParam(PAGE_NUMBER) final int page,
          @DefaultValue("10") @QueryParam(PAGE_SIZE) final int pageSize,
          @QueryParam(PAGE_SORT_FIELD) final String sortField,
          @DefaultValue("ASC") @QueryParam(PAGE_SORT_DIRECTION) final String sortDirection) {

@@ -5,14 +5,17 @@ import java.util.Objects;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import es.fjtorres.cpFacturas.common.dto.AbstractDto;
 import es.fjtorres.cpFacturas.common.exception.ValidationException;
 import es.fjtorres.cpFacturas.server.model.AbstractEntity;
 import es.fjtorres.cpFacturas.server.service.IBasicService;
 import es.fjtorres.cpFacturas.server.service.IEntityService;
 import es.fjtorres.cpFacturas.server.service.IPersistenceService;
 
-public abstract class AbstractEntityService<E extends AbstractEntity<Id>, D, Id extends Serializable>
+public abstract class AbstractEntityService<E extends AbstractEntity<Id>, D extends AbstractDto<Id>, Id extends Serializable>
       implements IEntityService<E, D, Id> {
+
+   private static final Long DEFAULT_ID = -1L;
 
    private final IPersistenceService<Id, E> persistenceService;
 
@@ -39,6 +42,9 @@ public abstract class AbstractEntityService<E extends AbstractEntity<Id>, D, Id 
 
       final E entity = getBasicService().convert(pDto, getEntityClass());
       if (getBasicService().validate(entity)) {
+         if (DEFAULT_ID.equals(entity.getId())) {
+            entity.setId(null);
+         }
          getPersistenceService().persist(entity);
       }
    }

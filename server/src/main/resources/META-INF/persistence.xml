@@ -9,12 +9,11 @@
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />
 
-			<!--
-				JPA 2.1 properties to create database
-				URL: https://github.com/hantsy/ee7-sandbox/wiki/jpa-scripts
-			 -->
-			<property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
-			<property name="javax.persistence.schema-generation.create-source" value="metadata"/>
+			<!-- JPA 2.1 properties to create database URL: https://github.com/hantsy/ee7-sandbox/wiki/jpa-scripts -->
+			<property name="javax.persistence.schema-generation.database.action"
+				value="drop-and-create" />
+			<property name="javax.persistence.schema-generation.create-source"
+				value="metadata" />
 			<property name="javax.persistence.sql-load-script-source"
 				value="META-INF/DDL/LOAD_DATA.sql" />
 		</properties>

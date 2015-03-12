@@ -19,6 +19,7 @@
     "yes" : "Yes"
   },
   "messages" : {
+    "loader": "Loading ...",
     "confirmation" : {
       "title" : "Operation confirmation"
     }
@@ -38,7 +39,7 @@
       "lastMonthReport" : "Invoicing for the last month"
     },
     "customer": {
-      "title": "Private customers",
+      "title": "Customers",
       "create": "New",
       "list": "List"
     },
@@ -55,11 +56,37 @@
     "logout" : "System logout",
     "username" : "User" 
   },
+  "home": {
+  	"newInvoice": {
+  		"title": "New invoice",
+  		"description": "Create new invoice on system"
+  	},
+  	"invoicesList": {
+  		"title": "Invoices",
+  		"description": "Show invoices list"
+  	},
+  	"customersList": {
+  		"title": "Customers",
+  		"description": "Show customers list"
+  	},
+  	"insurersList": {
+  		"title": "Insurers",
+  		"description": "Show insurers list"
+  	},
+  	 "vehiclesList": {
+  		"title": "Vehicles",
+  		"description": "Show vehicles list"
+  	},
+  	"configuration": {
+  		"title": "Configuration",
+  		"description": "System configuration"
+  	}
+  },
   "customers": {
     "view": {
-      "list": "Private customers list",
-      "create": "New private customer",
-      "update": "Update private customer data"
+      "list": "Customers list",
+      "create": "New customer",
+      "update": "Update customer data"
     },
     "field": {
       "code": "Code",
@@ -94,5 +121,14 @@
       "update": "Update vehicle data"
     },
     "field": {}
+  },
+  "invoices" : {
+  	"view": {
+      "list": "Invoices list",
+      "create": "New invoice",
+      "update": "Update invoice data"
+  	},
+  	"field": {
+  	}
   }
 }

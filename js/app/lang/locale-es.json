@@ -19,6 +19,7 @@
     "yes" : "Si"
   },
   "messages" : {
+  	"loader": "Cargando ...",
     "confirmation" : {
       "title" : "Confirmar operación"
     }
@@ -37,7 +38,7 @@
       "lastMonthReport" : "Facturación del último mes"
     },
     "customer": {
-      "title": "Particulares",
+      "title": "Clientes",
       "create": "Nuevo",
       "list": "Listado"
     },
@@ -53,6 +54,32 @@
     },
     "logout" : "Salir del sistema",
     "username" : "Usuario" 
+  },
+  "home": {
+  	"newInvoice": {
+  		"title": "Nueva factura",
+  		"description": "Creación de una nueva factura en el sistema."
+  	},
+  	"invoicesList": {
+  		"title": "Facturas",
+  		"description": "Muestra el listado de facturas"
+  	},
+  	"customersList": {
+  		"title": "Clientes",
+  		"description": "Muestra el listado de clientes"
+  	},
+  	"insurersList": {
+  		"title": "Aseguradoras",
+  		"description": "Muestra el listado de aseguradoras"
+  	},
+  	 "vehiclesList": {
+  		"title": "Vehículos",
+  		"description": "Muestra el listado de vehículos"
+  	},
+  	"configuration": {
+  		"title": "Configuración",
+  		"description": "Permite configurar la información del sistema"
+  	}
   },
   "customers": {
     "view": {
@@ -88,10 +115,19 @@
   },
   "vehicles": {
     "view": {
-      "list": "Listado de vehiculos",
-      "create": "Nuevo vehiculo",
-      "update": "Modificación datos del vehiculo"
+      "list": "Listado de vehículos",
+      "create": "Nuevo vehículo",
+      "update": "Modificación datos del vehículo"
     },
     "field": {}
+  },
+  "invoices" : {
+  	"view": {
+      "list": "Listado de facturas",
+      "create": "New invoice",
+      "update": "Update invoice data"
+  	},
+  	"field": {
+  	}
   }
 }

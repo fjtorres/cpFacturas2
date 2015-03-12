@@ -6,7 +6,7 @@ function CustomersController ($scope, $rootScope, $routeParams, $modal, $log, cu
     expandTable("#btnExpanCustomerList", "#customer-list");
 
     // Clear scope vars
-    $scope.model = {'id': 0,'type': 'PERSON', 'contactData': {}};
+    $scope.model = {'id': -1,'type': 'PERSON', 'contactData': {}};
     $scope.items = [];
     $scope.isUpdate = false;
     $scope.currentPage = 1;

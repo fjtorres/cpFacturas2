@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('cpFacturasApp', ['ngRoute', 'ngResource', 'ngCookies', 'pascalprecht.translate', 'ui.bootstrap'])
+angular.module('cpFacturasApp', ['ngRoute', 'ngResource', 'ngCookies', 'ngAnimate', 'pascalprecht.translate', 'ui.bootstrap'])
 .constant("myConfig", {
-        "apiUrl": "http://localhost:8081/server/api"
+        "apiUrl": "http://localhost:8080/server/api"
 })
 .config(['$routeProvider', '$translateProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $translateProvider, $locationProvider, $httpProvider) {
 
@@ -165,4 +165,15 @@ angular.module('cpFacturasApp', ['ngRoute', 'ngResource', 'ngCookies', 'pascalpr
             }
         };
     });
+    
+    // Loader calls
+//    $httpProvider.defaults.transformRequest.push(function(data) {
+//		$("#page-loader").removeClass("hidden");
+//		return data;
+//	});
+//    
+//    $httpProvider.defaults.transformResponse.push(function(data) {
+//    	$("#page-loader").addClass("hidden");
+//		return data;
+//    });
 }]);

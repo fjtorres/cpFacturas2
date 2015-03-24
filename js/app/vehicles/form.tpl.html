@@ -1,0 +1,55 @@
+<div class="row">
+    
+    <div class="col-sm-6">
+    
+    	<div class="form-group form-group-sm">
+            <label for="txtVehicleRegistration" class="control-label col-sm-3">{{'vehicle.field.registration' | translate}}</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control col-sm-3" id="txtVehicleRegistration" placeholder="{{'vehicle.field.registration.placeholder' | translate}}"
+                    maxlenght="25" ng-model="model.registration" ng-disabled="isUpdate" required tabindex="1" ng-model-options="{ updateOn: 'submit' }"/>
+            </div>
+        </div>
+    
+	</div>
+	
+	<div class="clearfix" />
+	
+<!-- 	<div class="col-sm-6"> -->
+	
+<!-- 	    <div class="form-group form-group-sm"> -->
+<!--             <label for="txtVehicleCustomer" class="control-label col-sm-3">{{'vehicle.field.customer' | translate}}</label> -->
+<!--             <div class="col-sm-5"> -->
+<!--                 <input type="text" class="form-control col-sm-3" id="txtVehicleCustomer" placeholder="{{'vehicle.field.customer' | translate}}" -->
+<!--                     maxlenght="25" ng-model="model.customer" ng-disabled="isUpdate" required tabindex="2" ng-model-options="{ updateOn: 'submit' }" -->
+<!--                     typeahead="customer for customers in customerAutocomplete($viewValue)" typeahead-loading="loadingCustomers"/> -->
+<!--                 <i ng-show="loadingCustomers" class="glyphicon glyphicon-refresh"></i> -->
+<!--             </div> -->
+<!--         </div> -->
+	
+<!-- 	</div> -->
+	
+	<div class="col-sm-6">
+	
+	    <div class="form-group form-group-sm">
+            <label for="txtVehicleBrand" class="control-label col-sm-3">{{'vehicle.field.brand' | translate}}</label>
+            <div class="col-sm-5">
+            	<select id="txtVehicleBrand" ng-model="selectedBrand" ng-options="item.id as item.name for item in brands" ng-change="changeBrand()"
+            		ng-disabled="isUpdate" required tabindex="2"></select>
+            </div>
+        </div>
+	
+	</div>
+	
+	<div class="col-sm-6">
+	
+	    <div class="form-group form-group-sm">
+            <label for="txtVehicleModel" class="control-label col-sm-3">{{'vehicle.field.model' | translate}}</label>
+            <div class="col-sm-5">
+            	<select id="txtVehicleModel" ng-disabled="isUpdate" ng-model="selectedModel"  ng-options="item.id as item.name for item in models"
+					required tabindex="3"></select>
+            </div>
+        </div>
+	
+	</div>
+	
+</div>

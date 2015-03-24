@@ -119,7 +119,12 @@
       "create": "Nuevo vehículo",
       "update": "Modificación datos del vehículo"
     },
-    "field": {}
+    "field": {
+      "registration": "Matrícula",
+      "customer": "Cliente",
+      "brand": "Marca",
+      "model": "Modelo"
+    }
   },
   "invoices" : {
   	"view": {

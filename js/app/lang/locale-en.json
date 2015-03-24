@@ -120,7 +120,12 @@
       "create": "New vehicle",
       "update": "Update vehicle data"
     },
-    "field": {}
+    "field": {
+      "registration": "Registration",
+      "customer": "Customer",
+      "brand": "Brand",
+      "model": "Model"
+    }
   },
   "invoices" : {
   	"view": {

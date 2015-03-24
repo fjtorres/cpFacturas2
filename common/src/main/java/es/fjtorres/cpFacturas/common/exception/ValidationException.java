@@ -1,5 +1,6 @@
 package es.fjtorres.cpFacturas.common.exception;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class ValidationException extends AppException {
@@ -13,6 +14,10 @@ public class ValidationException extends AppException {
 
     public ValidationException() {
         
+    }
+    
+    public ValidationException(final String pError) {
+       this.errors = Arrays.asList(pError);
     }
     
     public ValidationException(final List<String> pErrors) {

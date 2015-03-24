@@ -30,8 +30,7 @@ import es.fjtorres.cpFacturas.server.service.IVehicleService;
 @Named
 @Path(VEHICLES_PATH)
 @Produces(MediaType.APPLICATION_JSON)
-public class VehicleResourceImpl extends AbstractResource implements
-      IVehicleResource {
+public class VehicleResourceImpl extends AbstractResource implements IVehicleResource {
 
    /**
     * 
@@ -51,8 +50,7 @@ public class VehicleResourceImpl extends AbstractResource implements
 
    @Override
    @GET
-   public Response find(
-         @DefaultValue("0") @QueryParam(PAGE_NUMBER) final int page,
+   public Response find(@DefaultValue("0") @QueryParam(PAGE_NUMBER) final int page,
          @DefaultValue("10") @QueryParam(PAGE_SIZE) final int pageSize,
          @QueryParam(PAGE_SORT_FIELD) final String sortField,
          @DefaultValue("ASC") @QueryParam(PAGE_SORT_DIRECTION) final String sortDirection) {
@@ -98,4 +96,5 @@ public class VehicleResourceImpl extends AbstractResource implements
       getService().delete(pId);
       return Response.ok().build();
    }
+
 }

@@ -13,6 +13,8 @@ public final class NameTokens {
     public static final String INVOICES_PATH = "/invoices";
 
     public static final String VEHICLES_PATH = "/vehicles";
+    public static final String VEHICLES_BRAND_PATH = VEHICLES_PATH + "/brands";
+    public static final String VEHICLES_MODEL_PATH = VEHICLES_PATH + "/models";
 
     public static final String PAGE_NUMBER = "page";
     public static final String PAGE_SIZE = "pageSize";

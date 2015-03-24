@@ -9,11 +9,91 @@
 	<artifactId>server</artifactId>
 	<packaging>war</packaging>
 
+	<profiles>
+		<profile>
+			<id>DEV</id>
+			<properties>
+				<jpa.schema.generation.action>drop-and-create</jpa.schema.generation.action>
+				<jpa.schema.generation.source>metadata</jpa.schema.generation.source>
+				<jpa.schema.generation.load.script>META-INF/DDL/LOAD_DATA.sql</jpa.schema.generation.load.script>
+				<jpa.showSql>true</jpa.showSql>
+				<jpa.formatSql>true</jpa.formatSql>
+				<jpa.dialect>org.hibernate.dialect.H2Dialect</jpa.dialect>
+				<database.type>H2</database.type>
+				<database.driver>org.h2.Driver</database.driver>
+				<!-- jdbc:h2:mem:test;user=sa;password=;DB_CLOSE_DELAY=-1;MODE=PostgreSQL;TRACE_LEVEL_SYSTEM_OUT=2 -->
+			</properties>
+
+			<dependencies>
+				<dependency>
+					<groupId>com.h2database</groupId>
+					<artifactId>h2</artifactId>
+					<version>1.4.182</version>
+				</dependency>
+			</dependencies>
+
+		</profile>
+		<profile>
+			<id>HEROKU_DEV</id>
+			<activation>
+				<property>
+					<name>cloud</name>
+					<value>DEV</value>
+				</property>
+			</activation>
+			<properties>
+				<jpa.schema.generation.action>drop-and-create</jpa.schema.generation.action>
+				<jpa.schema.generation.source>metadata</jpa.schema.generation.source>
+				<jpa.schema.generation.load.script>META-INF/DDL/LOAD_DATA.sql</jpa.schema.generation.load.script>
+				<jpa.showSql>true</jpa.showSql>
+				<jpa.formatSql>true</jpa.formatSql>
+				<jpa.dialect>org.hibernate.dialect.PostgreSQLDialect</jpa.dialect>
+				<database.type>POSTGRESQL</database.type>
+				<database.driver>org.postgresql.Driver</database.driver>
+				<!-- jdbc:postgresql://localhost:5432/cpfacturas?user=cpfacturas&password=cpfacturas -->
+			</properties>
+
+			<dependencies>
+				<dependency>
+				<groupId>org.postgresql</groupId>
+				<artifactId>postgresql</artifactId>
+				<version>9.3-1103-jdbc41</version>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
+
 	<properties>
 		<jersey.version>2.14</jersey.version>
-		<spring.version>3.2.8.RELEASE</spring.version>
-		<spring.security.version>3.2.5.RELEASE</spring.security.version>
+		<spring.version>4.1.5.RELEASE</spring.version>
+		<spring.security.version>3.2.6.RELEASE</spring.security.version>
 	</properties>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>9.2.10.v20150310</version>
+				<configuration>
+					<scanIntervalSeconds>10</scanIntervalSeconds>
+					<stopKey>alpha</stopKey>
+					<stopPort>9099</stopPort>
+					<webApp>
+						<contextPath>/server</contextPath>
+					</webApp>
+				</configuration>
+			</plugin>
+		</plugins>
+
+	</build>
 
 	<dependencies>
 		<dependency>
@@ -87,6 +167,24 @@
 			<groupId>org.glassfish.jersey.ext</groupId>
 			<artifactId>jersey-spring3</artifactId>
 			<version>${jersey.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>spring-beans</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-context</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-core</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-web</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
@@ -95,18 +193,18 @@
 			<version>${jersey.version}</version>
 		</dependency>
 
-		<!-- <dependency> -->
-		<!-- <groupId>org.glassfish.jersey.ext</groupId> -->
-		<!-- <artifactId>jersey-bean-validation</artifactId> -->
-		<!-- <version>${jersey.version}</version> -->
-		<!-- </dependency> -->
-
 		<!-- Spring -->
 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
 			<version>${spring.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
@@ -133,17 +231,62 @@
 			<version>${spring.version}</version>
 		</dependency>
 
+
 		<!-- Spring security -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
 			<version>${spring.security.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>spring-beans</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-context</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-core</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-web</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-aop</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-expression</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
 			<version>${spring.security.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>spring-beans</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-context</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-core</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>spring-aop</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- JPA & Hibernate -->
@@ -158,12 +301,6 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>4.3.7.Final</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<version>1.4.182</version>
 		</dependency>
 
 		<dependency>

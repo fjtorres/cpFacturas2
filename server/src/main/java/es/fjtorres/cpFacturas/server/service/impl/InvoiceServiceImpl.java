@@ -15,7 +15,7 @@ import es.fjtorres.cpFacturas.common.pagination.OrderBy;
 import es.fjtorres.cpFacturas.server.model.Invoice;
 import es.fjtorres.cpFacturas.server.service.IBasicService;
 import es.fjtorres.cpFacturas.server.service.IInvoiceService;
-import es.fjtorres.cpFacturas.server.service.IPersistenceService;
+import es.fjtorres.cpFacturas.server.service.persistence.IPersistenceService;
 
 @Named
 @Transactional(readOnly = true)

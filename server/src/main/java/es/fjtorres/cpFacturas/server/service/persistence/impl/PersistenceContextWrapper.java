@@ -1,4 +1,4 @@
-package es.fjtorres.cpFacturas.server.service.impl;
+package es.fjtorres.cpFacturas.server.service.persistence.impl;
 
 import java.io.Serializable;
 

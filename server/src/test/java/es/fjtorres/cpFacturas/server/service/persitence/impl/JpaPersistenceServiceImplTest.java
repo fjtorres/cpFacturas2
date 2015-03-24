@@ -1,4 +1,4 @@
-package es.fjtorres.cpFacturas.server.service.impl;
+package es.fjtorres.cpFacturas.server.service.persitence.impl;
 
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeMethod;

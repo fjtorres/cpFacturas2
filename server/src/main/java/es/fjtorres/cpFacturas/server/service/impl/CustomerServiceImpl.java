@@ -16,9 +16,10 @@ import es.fjtorres.cpFacturas.common.exception.ExceptionUtils;
 import es.fjtorres.cpFacturas.common.exception.ValidationException;
 import es.fjtorres.cpFacturas.common.pagination.OrderBy;
 import es.fjtorres.cpFacturas.server.model.Customer;
+import es.fjtorres.cpFacturas.server.model.metadata.CustomerMetadata;
 import es.fjtorres.cpFacturas.server.service.IBasicService;
 import es.fjtorres.cpFacturas.server.service.ICustomerService;
-import es.fjtorres.cpFacturas.server.service.IPersistenceService;
+import es.fjtorres.cpFacturas.server.service.persistence.IPersistenceService;
 
 @Named
 @Transactional(readOnly = true)
@@ -78,31 +79,29 @@ public class CustomerServiceImpl extends AbstractEntityService<Customer, Custome
    }
 
    @Override
-   public CustomerDto findById(final Long pId) {
-      Objects.requireNonNull(pId, "ID cannon't be null");
-
-      final Customer entity = getPersistenceService().findById(pId, Customer.class);
-      return getBasicService().convert(entity, getDtoClass());
-   }
-
-   @Override
    @Transactional
    public void add(final CustomerDto pDto) throws ValidationException {
-      // FIXME Add unique constraint check (Code)
-      super.add(pDto);
+      Objects.requireNonNull(pDto, ERROR_DTO_NULL);
+      if (existCode(pDto.getCode())) {
+         throw new ValidationException("The customer code exist");
+      } else {
+         super.add(pDto);
+      }
    }
 
-   @Override
-   public CustomerDto findByCode(final String pCode) {
-      Objects.requireNonNull(pCode, "Code cannon't be null");
-      if (StringUtils.isBlank(pCode)) {
-         ExceptionUtils.throwIllegalArgument("Code cannon't be empty");
+   private boolean existCode(final String pCode) {
+      boolean exist = false;
+
+      if (StringUtils.isNotBlank(pCode)) {
+         exist = findEntityByCode(pCode) == null;
       }
 
-      final Customer entity = getPersistenceService().findByUniqueField("code", pCode,
-            getEntityClass());
+      return exist;
+   }
 
-      return getBasicService().convert(entity, getDtoClass());
+   private Customer findEntityByCode(final String pCode) {
+      return getPersistenceService().findByUniqueField(CustomerMetadata.FIELD_CODE, pCode,
+            getEntityClass());
    }
 
 }

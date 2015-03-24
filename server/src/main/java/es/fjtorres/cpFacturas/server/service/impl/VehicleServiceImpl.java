@@ -14,8 +14,8 @@ import es.fjtorres.cpFacturas.common.exception.ExceptionUtils;
 import es.fjtorres.cpFacturas.common.pagination.OrderBy;
 import es.fjtorres.cpFacturas.server.model.Vehicle;
 import es.fjtorres.cpFacturas.server.service.IBasicService;
-import es.fjtorres.cpFacturas.server.service.IPersistenceService;
 import es.fjtorres.cpFacturas.server.service.IVehicleService;
+import es.fjtorres.cpFacturas.server.service.persistence.IPersistenceService;
 
 @Named
 @Transactional(readOnly = true)

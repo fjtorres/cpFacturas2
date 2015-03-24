@@ -16,8 +16,8 @@ import es.fjtorres.cpFacturas.common.exception.ValidationException;
 import es.fjtorres.cpFacturas.server.MockitoUtils;
 import es.fjtorres.cpFacturas.server.dozer.service.IDozerService;
 import es.fjtorres.cpFacturas.server.model.Customer;
-import es.fjtorres.cpFacturas.server.service.IPersistenceService;
 import es.fjtorres.cpFacturas.server.service.IValidationService;
+import es.fjtorres.cpFacturas.server.service.persistence.IPersistenceService;
 
 public class CustomerServiceImplTest {
 

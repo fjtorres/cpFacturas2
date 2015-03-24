@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import es.fjtorres.cpFacturas.server.model.User;
-import es.fjtorres.cpFacturas.server.service.IPersistenceService;
+import es.fjtorres.cpFacturas.server.service.persistence.IPersistenceService;
 
 @Named("appUserDetailsService")
 public class ApplicationUserDetailsService implements UserDetailsService {

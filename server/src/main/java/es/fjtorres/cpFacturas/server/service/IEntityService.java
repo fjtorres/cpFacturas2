@@ -13,4 +13,6 @@ public interface IEntityService<E, D, Id> {
    void update(D dto) throws ValidationException;
 
    void delete(Id id);
+   
+   D findById(Id id);
 }

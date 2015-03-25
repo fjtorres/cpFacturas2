@@ -4,11 +4,15 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaQuery;
+
 import es.fjtorres.cpFacturas.common.pagination.OrderBy;
 import es.fjtorres.cpFacturas.server.model.AbstractEntity;
-import es.fjtorres.cpFacturas.server.service.persistence.criteria.SearchInfo;
 
 public interface IPersistenceService<Id extends Serializable, T extends AbstractEntity<Id>> {
+
+   EntityManager getEntityManager();
 
    /**
     * Persist entity.
@@ -75,6 +79,10 @@ public interface IPersistenceService<Id extends Serializable, T extends Abstract
    <V> T findByUniqueField(String field, V fieldValue, Class<T> persistenceClass);
 
    List<T> findByFilter(Map<String, Object> filters, Class<T> persistenceClass);
-   
-   List<T> findByFilter(Class<T> persistenceClass, SearchInfo searchInfo);
+
+   <V> List<T> findBySingleFilter(String filterField, V filterValue, Class<T> persistenceClass);
+
+   List<T> findByQuery(CriteriaQuery<T> query);
+
+   T findSingleByQuery(CriteriaQuery<T> query);
 }

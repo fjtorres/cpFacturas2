@@ -1,6 +1,7 @@
 package es.fjtorres.cpFacturas.server.service.persistence.impl;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -14,24 +15,24 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import es.fjtorres.cpFacturas.common.pagination.OrderBy;
 import es.fjtorres.cpFacturas.server.model.AbstractEntity;
 import es.fjtorres.cpFacturas.server.service.persistence.IPersistenceService;
-import es.fjtorres.cpFacturas.server.service.persistence.criteria.Join;
-import es.fjtorres.cpFacturas.server.service.persistence.criteria.Order;
-import es.fjtorres.cpFacturas.server.service.persistence.criteria.SearchInfo;
-import es.fjtorres.cpFacturas.server.service.persistence.criteria.conditions.Condition;
-import es.fjtorres.cpFacturas.server.service.persistence.criteria.conditions.LikeCondition;
 
 @Named("jpaPersistenceService")
 public class JpaPersistenceServiceImpl<Id extends Serializable, T extends AbstractEntity<Id>>
       implements IPersistenceService<Id, T> {
 
+   private static final String ERRO_QUERY_NULL = "Query cannon't be null.";
    private static final String ERROR_PERSISTENT_CONTEXT_NULL = "persistent context cannon't be null";
    private static final String ERROR_PERSISTENT_CLASS_NULL = "Persistence class cannon't be null";
    private static final String ERROR_ENTITY_ID_NULL = "Entity identifier cannon't be null";
    private static final String ERROR_ENTITY_NULL = "Entity cannon't be null";
+
+   private final Logger logger = LoggerFactory.getLogger(getClass());
 
    private final PersistenceContextWrapper contextWrapper;
 
@@ -44,7 +45,11 @@ public class JpaPersistenceServiceImpl<Id extends Serializable, T extends Abstra
       }
    }
 
-   private EntityManager getEntityManager() {
+   protected Logger getLogger() {
+      return logger;
+   }
+
+   public EntityManager getEntityManager() {
       return contextWrapper.getEntityManager();
    }
 
@@ -62,14 +67,10 @@ public class JpaPersistenceServiceImpl<Id extends Serializable, T extends Abstra
       try {
          from.get(field);
       } catch (final IllegalArgumentException iae) {
-         LOGGER.warn("Invalid field \"" + field + "\" for root:" + from);
+         getLogger().warn("Invalid field \"" + field + "\" for root:" + from);
          exist = false;
       }
       return exist;
-   }
-   
-   private CustomQueryBuilder<T> createDefaultBuilder(final Class<T> pPersistenceClass) {
-      return new CustomQueryBuilder<T>(getEntityManager(), pPersistenceClass);
    }
 
    @Override
@@ -112,8 +113,9 @@ public class JpaPersistenceServiceImpl<Id extends Serializable, T extends Abstra
       final CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
       final CriteriaQuery<T> query = builder.createQuery(pPersistenceClass);
       final Root<T> from = query.from(pPersistenceClass);
+      query.select(from);
 
-      if (sortDirection != null && StringUtils.isNotBlank(sortField) && isField(sortField)) {
+      if (sortDirection != null && StringUtils.isNotBlank(sortField) && isField(from, sortField)) {
          final Path<Object> field = from.get(sortField);
          switch (sortDirection) {
          case ASC:
@@ -125,8 +127,8 @@ public class JpaPersistenceServiceImpl<Id extends Serializable, T extends Abstra
          }
       }
 
-      return getEntityManager().createQuery(query).setFirstResult(startPosition).setMaxResults(maxResults)
-            .getResultList();
+      return getEntityManager().createQuery(query).setFirstResult(startPosition)
+            .setMaxResults(maxResults).getResultList();
    }
 
    @Override
@@ -144,56 +146,55 @@ public class JpaPersistenceServiceImpl<Id extends Serializable, T extends Abstra
          final Class<T> pPersistenceClass) {
       Objects.requireNonNull(pPersistenceClass, ERROR_PERSISTENT_CLASS_NULL);
 
-      final CustomQueryBuilder<T> builder = createDefaultBuilder(pPersistenceClass);
-      builder.equal(field, fieldValue);
+      final CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
+      final CriteriaQuery<T> query = builder.createQuery(pPersistenceClass);
+      final Root<T> from = query.from(pPersistenceClass);
+      query.select(from);
 
-      return builder.build().getSingleResult();
+      if (isField(from, field)) {
+         query.where(builder.equal(from.get(field), fieldValue));
+      }
+
+      return getEntityManager().createQuery(query).getSingleResult();
    }
 
    public List<T> findByFilter(final Map<String, Object> pFilters, final Class<T> pPersistenceClass) {
       Objects.requireNonNull(pPersistenceClass, ERROR_PERSISTENT_CLASS_NULL);
 
-      final CustomQueryBuilder<T> builder = createDefaultBuilder(pPersistenceClass);
+      final CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
+      final CriteriaQuery<T> query = builder.createQuery(pPersistenceClass);
+      final Root<T> from = query.from(pPersistenceClass);
+      query.select(from);
 
       if (pFilters != null && !pFilters.isEmpty()) {
-         pFilters.entrySet().stream().map(e -> builder.equal(e.getKey(), e.getValue()));
+         pFilters.entrySet().stream().map(e -> {
+            if (isField(from, e.getKey())) {
+               query.where(builder.equal(from.get(e.getKey()), e.getValue()));
+            }
+            return e;
+         });
       }
 
-      return builder.build().getResultList();
+      return getEntityManager().createQuery(query).getResultList();
    }
 
    @Override
-   public List<T> findByFilter(Class<T> pPersistenceClass, final SearchInfo pSearchInfo) {
-      Objects.requireNonNull(pPersistenceClass, ERROR_PERSISTENT_CLASS_NULL);
-
-      final CustomQueryBuilder<T> builder = createDefaultBuilder(pPersistenceClass);
-
-      if (pSearchInfo != null) {
-
-         if (pSearchInfo.hasJoins()) {
-            for (final Join join : pSearchInfo.getJoins()) {
-               builder.join(join);
-            }
-         }
-
-         if (pSearchInfo.hasConditions()) {
-            for (final Condition<?> condition : pSearchInfo.getConditions()) {
-               if (condition instanceof LikeCondition) {
-                  builder.like(condition.getField(), (String) condition.getValue());
-               } else {
-                  builder.equal(condition.getField(), condition.getValue());
-               }
-            }
-         }
-
-         if (pSearchInfo.hasOrders()) {
-            for (final Order order : pSearchInfo.getOrders()) {
-               builder.order(order.getField(), order.getDirection());
-            }
-         }
-      }
-
-      return builder.build().getResultList();
+   public <V> List<T> findBySingleFilter(String pFilterField, V pFilterValue,
+         Class<T> pPersistenceClass) {
+      final Map<String, Object> filterMap = new HashMap<String, Object>();
+      filterMap.put(pFilterField, pFilterValue);
+      return findByFilter(filterMap, pPersistenceClass);
    }
 
+   @Override
+   public List<T> findByQuery(final CriteriaQuery<T> pQuery) {
+      Objects.requireNonNull(pQuery, ERRO_QUERY_NULL);
+      return getEntityManager().createQuery(pQuery).getResultList();
+   }
+
+   @Override
+   public T findSingleByQuery(CriteriaQuery<T> pQuery) {
+      Objects.requireNonNull(pQuery, ERRO_QUERY_NULL);
+      return getEntityManager().createQuery(pQuery).getSingleResult();
+   }
 }

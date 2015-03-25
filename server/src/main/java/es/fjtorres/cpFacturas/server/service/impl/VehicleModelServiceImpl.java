@@ -4,19 +4,20 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.springframework.transaction.annotation.Transactional;
 
 import es.fjtorres.cpFacturas.common.dto.VehicleModelDto;
+import es.fjtorres.cpFacturas.server.model.VehicleBrand;
 import es.fjtorres.cpFacturas.server.model.VehicleModel;
 import es.fjtorres.cpFacturas.server.model.metadata.VehicleModelMetadata;
 import es.fjtorres.cpFacturas.server.service.IBasicService;
 import es.fjtorres.cpFacturas.server.service.IVehicleModelService;
 import es.fjtorres.cpFacturas.server.service.persistence.IPersistenceService;
-import es.fjtorres.cpFacturas.server.service.persistence.criteria.Join;
-import es.fjtorres.cpFacturas.server.service.persistence.criteria.SearchInfo;
-import es.fjtorres.cpFacturas.server.service.persistence.criteria.conditions.Condition;
-import es.fjtorres.cpFacturas.server.service.persistence.criteria.conditions.LikeCondition;
 
 @Named
 @Transactional(readOnly = true)
@@ -41,13 +42,19 @@ public class VehicleModelServiceImpl extends
 
    @Override
    public List<VehicleModelDto> findModels(String pSearchValue, Long pBrandId) {
-      final SearchInfo search = new SearchInfo();
-      search.addCondition(new LikeCondition(VehicleModelMetadata.FIELD_NAME, pSearchValue));
-      search.addCondition(new Condition<Long>("brand.id", pBrandId));
-      search.addJoin(new Join(VehicleModelMetadata.FIELD_BRAND));
-      
-      return getBasicService().convert(
-            getPersistenceService().findByFilter(getEntityClass(), search), getDtoClass());
+      final EntityManager entityManager = getPersistenceService().getEntityManager();
+
+      final CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+      final CriteriaQuery<VehicleModel> query = builder.createQuery(getEntityClass());
+      final Root<VehicleModel> from = query.from(getEntityClass());
+      query.select(from);
+
+      javax.persistence.criteria.Join<VehicleModel, VehicleBrand> join = from
+            .join(VehicleModelMetadata.FIELD_BRAND);
+      query.where(builder.like(from.get(VehicleModelMetadata.FIELD_NAME), pSearchValue)).where(
+            builder.equal(join.get("id"), pBrandId));
+
+      return getBasicService().convert(getPersistenceService().findByQuery(query), getDtoClass());
    }
 
 }

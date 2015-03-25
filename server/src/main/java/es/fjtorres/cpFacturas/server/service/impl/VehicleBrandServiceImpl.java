@@ -13,8 +13,6 @@ import es.fjtorres.cpFacturas.server.model.metadata.VehicleBrandMetadata;
 import es.fjtorres.cpFacturas.server.service.IBasicService;
 import es.fjtorres.cpFacturas.server.service.IVehicleBrandService;
 import es.fjtorres.cpFacturas.server.service.persistence.IPersistenceService;
-import es.fjtorres.cpFacturas.server.service.persistence.criteria.SearchInfo;
-import es.fjtorres.cpFacturas.server.service.persistence.criteria.conditions.LikeCondition;
 
 @Named
 @Transactional(readOnly = true)
@@ -39,10 +37,9 @@ public class VehicleBrandServiceImpl extends
 
    @Override
    public List<VehicleBrandDto> findBrands(final String pSearchValue) {
-      final SearchInfo search = new SearchInfo();
-      search.addCondition(new LikeCondition(VehicleBrandMetadata.FIELD_NAME, pSearchValue));
       return getBasicService().convert(
-            getPersistenceService().findByFilter(getEntityClass(), search), getDtoClass());
+            getPersistenceService().findBySingleFilter(VehicleBrandMetadata.FIELD_NAME,
+                  pSearchValue, getEntityClass()), getDtoClass());
    }
 
 }

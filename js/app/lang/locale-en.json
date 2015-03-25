@@ -20,6 +20,7 @@
   },
   "messages" : {
     "loader": "Loading ...",
+    "select": "Select...",
     "confirmation" : {
       "title" : "Operation confirmation"
     }
@@ -122,6 +123,7 @@
     },
     "field": {
       "registration": "Registration",
+      "registration.placeholder": "Enter the registration",
       "customer": "Customer",
       "brand": "Brand",
       "model": "Model"

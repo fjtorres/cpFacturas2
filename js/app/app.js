@@ -102,6 +102,7 @@ angular.module('cpFacturasApp', ['ngRoute', 'ngResource', 'ngCookies', 'ngAnimat
 	$routeProvider.when('/vehicles', {
             templateUrl: 'js/app/vehicles/list.tpl.html',
             controller: 'vehiclesController',
+            controllerAs: 'ctrl',
             access: {
                 allowAnonymous: false
             }
@@ -109,6 +110,7 @@ angular.module('cpFacturasApp', ['ngRoute', 'ngResource', 'ngCookies', 'ngAnimat
         .when('/vehicles/create', {
             templateUrl: 'js/app/vehicles/create.tpl.html',
             controller: 'vehiclesController',
+            controllerAs: 'ctrl',
             access: {
                 allowAnonymous: false
             }
@@ -116,6 +118,7 @@ angular.module('cpFacturasApp', ['ngRoute', 'ngResource', 'ngCookies', 'ngAnimat
         .when('/vehicles/update/:itemId', {
             templateUrl: 'js/app/vehicles/update.tpl.html',
             controller: 'vehiclesController',
+            controllerAs: 'ctrl',
             access: {
                 allowAnonymous: false
             }

@@ -20,6 +20,7 @@
   },
   "messages" : {
   	"loader": "Cargando ...",
+    "select": "Seleccionar...",
     "confirmation" : {
       "title" : "Confirmar operación"
     }
@@ -121,6 +122,7 @@
     },
     "field": {
       "registration": "Matrícula",
+      "registration.placeholder": "Introduzca la matrícula",
       "customer": "Cliente",
       "brand": "Marca",
       "model": "Modelo"

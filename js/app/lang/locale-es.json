@@ -102,7 +102,8 @@
     },
     "messages" : {
       "delete": {
-        "confirmation" : "¿Esta seguro de eliminar el cliente seleccionado?"
+        "confirmation" : "¿Esta seguro de eliminar el cliente seleccionado?",
+        "success": "Se ha eliminado correctamente el cliente."
       }
     }
   },
@@ -126,6 +127,12 @@
       "customer": "Cliente",
       "brand": "Marca",
       "model": "Modelo"
+    },
+    "messages": {
+      "delete": {
+        "confirmation": "¿Esta seguro de eliminar el vehículo seleccionado?",
+        "success": "Se ha eliminado correctamente el vehículo."
+      }
     }
   },
   "invoices" : {

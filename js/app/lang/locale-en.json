@@ -103,7 +103,8 @@
     },
     "messages" : {
       "delete": {
-        "confirmation" : "Are you sure remove selected customer?"
+        "confirmation" : "Are you sure remove selected customer?",
+        "success": "You have successfully removed the customer."
       }
     }
   },
@@ -127,6 +128,12 @@
       "customer": "Customer",
       "brand": "Brand",
       "model": "Model"
+    },
+    "messages": {
+      "delete": {
+        "confirmation": "Are you sure remove selected vehicle?",
+        "success": "You have successfully removed the vehicle."
+      }
     }
   },
   "invoices" : {

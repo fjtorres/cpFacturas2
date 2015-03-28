@@ -104,6 +104,12 @@
       "delete": {
         "confirmation" : "¿Esta seguro de eliminar el cliente seleccionado?",
         "success": "Se ha eliminado correctamente el cliente."
+      },
+      "create": {
+        "success": "Se ha creado correctamente el cliente."
+      },
+      "update": {
+        "success": "Se han actualizado correctamente los datos del cliente."
       }
     }
   },
@@ -126,12 +132,21 @@
       "registration.placeholder": "Introduzca la matrícula",
       "customer": "Cliente",
       "brand": "Marca",
-      "model": "Modelo"
+      "model": "Modelo",
+      "year": "Año",
+      "doors": "Nº de puertas",
+      "fuelType": "Tipo de combustible"
     },
     "messages": {
       "delete": {
         "confirmation": "¿Esta seguro de eliminar el vehículo seleccionado?",
         "success": "Se ha eliminado correctamente el vehículo."
+      },
+      "create": {
+        "success": "Se ha creado correctamente el vehículo."
+      },
+      "update": {
+        "success": "Se han actualizado correctamente los datos del vehículo."
       }
     }
   },

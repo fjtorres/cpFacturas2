@@ -32,7 +32,7 @@
                 <tbody>
                     <tr ng-repeat="item in ctrl.items">
                         <td>{{item.registration}}</td>
-                        <td>{{item.customer.firstName}}</td>
+                        <td>{{item.customer.firstName + ' ' + item.customer.lastName}}</td>
                         <td>{{item.model.brand.name}}</td>
                         <td>{{item.model.name}}</td>
                         <td>
@@ -47,7 +47,7 @@
                 </tbody>
             </table>
 
-            <pagination total-items="ctrl.totalItems" ng-model="ctrl.currentPage" items-per-page="ctrl.itemsPerPage" ng-change="ctrl.pageChanged()" 
+            <pagination total-items="ctrl.totalItems" ng-model="ctrl.currentPage" items-per-page="ctrl.itemsPerPage" ng-change="ctrl.onPageChanged()" 
                 boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" />
 
         </div>

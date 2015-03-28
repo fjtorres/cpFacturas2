@@ -8,11 +8,13 @@
         };
 
 
-        this.translate = function(key) {
+        this.translate = function(key, callback) {
             $translate(key).then(function(text) {
-                return text;
+                callback(text);
             });
         }
+        
+        return this;
     }
 
     angular.module('cpFacturasApp').factory('genericService', ['$rootScope', '$location', '$translate', GenericService]);

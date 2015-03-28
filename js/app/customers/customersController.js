@@ -1,74 +1,87 @@
-'use strict';
+(function() {
+  'use strict';
 
-angular.module('cpFacturasApp').controller('customersController', ['$scope', '$rootScope', '$routeParams', '$modal', '$log', 'customerService', CustomersController]);
+  function CustomersController ($rootScope, $routeParams, $modal, genericService, customerService) {
+	    expandTable("#btnExpanCustomerList", "#customer-list");
 
-function CustomersController ($scope, $rootScope, $routeParams, $modal, $log, customerService) {
-    expandTable("#btnExpanCustomerList", "#customer-list");
+	    var vm = this;
+	    vm.entity = {'id': -1,'type': 'PERSON', 'contactData': {}};
+	    
+	    vm.items = [];
+	    vm.isUpdate = false;
+	    vm.currentPage = 1;
+	    vm.totalItems = 0;
+	    vm.itemsPerPage = 10;
+	    vm.sortField = 'firstName';
+	    vm.sortDirection = 'ASC';
 
-    // Clear scope vars
-    $scope.model = {'id': -1,'type': 'PERSON', 'contactData': {}};
-    $scope.items = [];
-    $scope.isUpdate = false;
-    $scope.currentPage = 1;
-    $scope.totalItems = 0;
-    $scope.itemsPerPage = 10;
-    $scope.sortField = 'firstName';
-    $scope.sortDirection = 'ASC';
+	    if ($routeParams.itemId != undefined) {
+	        vm.model = customerService.resource.get({'key': $routeParams.itemId});
+	        vm.isUpdate = true;
+	    }
 
-    if ($routeParams.itemId != undefined) {
-        $scope.model = customerService.get({'key': $routeParams.itemId});
-        $scope.isUpdate = true;
-    }
+	    vm.onSaveSubmit = function () {
+	        if (vm.isUpdate) {
+	            customerService.resource.update({}, vm.entity, function(){
+	            	genericService.translate('customers.messages.update.success', function (text) {
+	            		$rootScope.$broadcast('successMessage', text);
+	            	});
+	                $rootScope.redirectTo("/customers");
+	            });
+	        } else {
+	            customerService.resource.save({}, vm.entity, function(){
+	            	genericService.translate('customers.messages.create.success', function (text) {
+	            		$rootScope.$broadcast('successMessage', text);
+	            	});
+	                $rootScope.redirectTo("/customers");
+	            });
+	        }
+	    };
 
-    $scope.save = function () {
-        if ($scope.isUpdate) {
-            customerService.update({}, $scope.model, function(){
-                $rootScope.$broadcast('successMessage', "Save customer");
-                $scope.redirectTo("/customers");
-            });
-        } else {
-            customerService.save({}, $scope.model, function(){
-                $rootScope.$broadcast('successMessage', "Create customer");
-                $scope.redirectTo("/customers");
-            });
-        }
-    };
+	    vm.onConfirmDeleteClick = function(item){
+	        
+	        var modalInstance = $modal.open({
+	          templateUrl: 'js/app/main/confirmation.tpl.html',
+	          controller: 'confirmController',
+	          size: 'md',
+	          resolve: {
+	            title: function(){return "messages.confirmation.title";},
+	            body: function () {return "customers.messages.delete.confirmation";}
+	          }
+	        });
 
-    $scope.confirmDelete = function(item){
-        
-        var modalInstance = $modal.open({
-          templateUrl: 'js/app/main/confirmation.tpl.html',
-          controller: 'confirmController',
-          size: 'md',
-          resolve: {
-            title: function(){return "messages.confirmation.title";},
-            body: function () {return "customers.messages.delete.confirmation";}
-          }
-        });
+	        modalInstance.result.then(function () {
+	          vm.onDelete(item);
+	        }, function () {
+	          // Empty
+	        });
+	    };
 
-        modalInstance.result.then(function () {
-          $scope.delete(item);
-        }, function () {
-          // Empty
-        });
-    };
+	    vm.onDelete = function (item) {
+	        customerService.resource.delete({"id":item.id}, function () {
+	        	genericService.translate('customers.messages.delete.success', function (text) {
+            		$rootScope.$broadcast('successMessage', text);
+            	});
+	        	vm.onSearch();
+	        });
+	    };
 
-    $scope.delete = function (item) {
-        customerService.delete(item);
-        $rootScope.$broadcast('successMessage', "Delete customer");
-    };
+	    vm.onSearch = function () {
+	        customerService.resource.search({'page': vm.currentPage - 1, 'pageSize': vm.itemsPerPage, 'sortField': vm.sortField, 'sortDirection': vm.sortDirection}, function (result) {
+	            vm.items = result.list;
+	            vm.totalItems = result.total;
+	        });
+	        
+	    };
 
-    $scope.search = function () {
-        customerService.search({'page': $scope.currentPage - 1, 'pageSize': $scope.itemsPerPage, 'sortField': $scope.sortField, 'sortDirection': $scope.sortDirection}, function (result) {
-            $scope.items = result.list;
-            $scope.totalItems = result.total;
-        });
-        
-    };
+	    vm.onPageChanged = function () {
+	        vm.onSearch();
+	    };
 
-    $scope.pageChanged = function () {
-        $scope.search();
-    };
+	    vm.onSearch();
+	}
+  
+angular.module('cpFacturasApp').controller('customersController', ['$rootScope', '$routeParams', '$modal', 'genericService', 'customerService', CustomersController]);
 
-    $scope.search();
-}
+
+}());

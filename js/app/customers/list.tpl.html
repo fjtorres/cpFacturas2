@@ -29,7 +29,7 @@
                     <th style="width: 90px;"></th>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="item in items">
+                    <tr ng-repeat="item in ctrl.items">
                         <td>{{item.firstName}}</td>
                         <td>{{item.lastName}}</td>
                         <td>{{item.contactData.email}}</td>
@@ -37,7 +37,7 @@
                             <div class="text-center">
                                 <div class="btn-group">
                                     <a href="#/customers/update/{{item.id}}" class="btn btn-primary btn-xs" title=""><i class="fa fa-pencil"></i></a>
-                                    <a href="#" class="btn btn-danger btn-xs" title="" ng-click="confirmDelete(item)" onclick="return false;"><i class="fa fa-remove"></i></a>
+                                    <a href="#" class="btn btn-danger btn-xs" title="" ng-click="ctrl.onConfirmDeleteClick(item)" onclick="return false;"><i class="fa fa-remove"></i></a>
                                 </div>
                             </div>
                         </td>
@@ -45,7 +45,7 @@
                 </tbody>
             </table>
 
-            <pagination total-items="totalItems" ng-model="currentPage" items-per-page="itemsPerPage" ng-change="pageChanged()" 
+            <pagination total-items="ctrl.totalItems" ng-model="ctrl.currentPage" items-per-page="ctrl.itemsPerPage" ng-change="ctrl.onPageChanged()" 
                 boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" />
 
         </div>

@@ -31,11 +31,15 @@
         };
     
         vm.onDelete = function (item) {
-            vehiclesService.delete(item);
-            $rootScope.$broadcast('successMessage', genericService.translate("vehicles.messages.delete.success");
+            vehiclesService.delete({"id":item.id}, function () {
+        		genericService.translate('vehicles.messages.delete.success', function (text) {
+            		$rootScope.$broadcast('successMessage', text);
+            	});
+            	vm.onSearch();
+            });
         };
     
-        vm.search = function () {
+        vm.onSearch = function () {
             vehiclesService.search({'page': vm.currentPage - 1, 'pageSize': vm.itemsPerPage, 'sortField': vm.sortField, 'sortDirection': vm.sortDirection}, function (result) {
                 vm.items = result.list;
                 vm.totalItems = result.total;
@@ -43,12 +47,12 @@
             
         };
     
-        vm.pageChanged = function () {
-            vm.search();
+        vm.onPageChanged = function () {
+            vm.onSearch();
         };
         
         // Call init methods
-        vm.search();
+        vm.onSearch();
        
     }
   

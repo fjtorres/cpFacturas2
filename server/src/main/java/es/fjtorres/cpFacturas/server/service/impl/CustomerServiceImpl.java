@@ -6,6 +6,11 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.NoResultException;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +45,25 @@ public class CustomerServiceImpl extends AbstractEntityService<Customer, Custome
    @Override
    public Class<CustomerDto> getDtoClass() {
       return CustomerDto.class;
+   }
+
+   private boolean existCode(final String pCode) {
+      boolean exist = false;
+
+      if (StringUtils.isNotBlank(pCode)) {
+         try {
+            exist = findEntityByCode(pCode) != null;
+         } catch (final NoResultException e) {
+            exist = false;
+         }
+      }
+
+      return exist;
+   }
+
+   private Customer findEntityByCode(final String pCode) {
+      return getPersistenceService().findByUniqueField(CustomerMetadata.FIELD_CODE, pCode,
+            getEntityClass());
    }
 
    @Override
@@ -89,19 +113,25 @@ public class CustomerServiceImpl extends AbstractEntityService<Customer, Custome
       }
    }
 
-   private boolean existCode(final String pCode) {
-      boolean exist = false;
-
-      if (StringUtils.isNotBlank(pCode)) {
-         exist = findEntityByCode(pCode) == null;
+   @Override
+   public List<CustomerDto> findByText(final String pSearchText) {
+      final CriteriaBuilder builder = getPersistenceService().getEntityManager()
+            .getCriteriaBuilder();
+      final CriteriaQuery<Customer> query = builder.createQuery(getEntityClass());
+      final Root<Customer> from = query.from(getEntityClass());
+      // query.select(builder.construct(getEntityClass(), from.get(CustomerMetadata.FIELD_CODE),
+      // from.get(CustomerMetadata.FIELD_FIRST_NAME), from.get(CustomerMetadata.FIELD_LAST_NAME)));
+      query.select(from);
+      if (StringUtils.isNoneBlank(pSearchText)) {
+         final String likeText = "%" + pSearchText + "%";
+         final Predicate whereFirstName = builder.like(
+               builder.upper(from.get(CustomerMetadata.FIELD_FIRST_NAME)), likeText.toUpperCase());
+         final Predicate whereLastName = builder.like(
+               builder.upper(from.get(CustomerMetadata.FIELD_LAST_NAME)), likeText.toUpperCase());
+         final Predicate whereCode = builder.like(
+               builder.upper(from.get(CustomerMetadata.FIELD_CODE)), likeText.toUpperCase());
+         query.where(builder.or(whereCode, whereFirstName, whereLastName));
       }
-
-      return exist;
+      return getBasicService().convert(getPersistenceService().findByQuery(query), getDtoClass());
    }
-
-   private Customer findEntityByCode(final String pCode) {
-      return getPersistenceService().findByUniqueField(CustomerMetadata.FIELD_CODE, pCode,
-            getEntityClass());
-   }
-
 }

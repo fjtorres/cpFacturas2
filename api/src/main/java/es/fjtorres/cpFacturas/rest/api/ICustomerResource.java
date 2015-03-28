@@ -15,4 +15,6 @@ public interface ICustomerResource {
    Response delete(Long id);
 
    Response findById(Long id);
+   
+   Response findByText(String searchText);
 }

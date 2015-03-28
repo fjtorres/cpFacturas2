@@ -103,4 +103,11 @@ public class CustomerResourceImpl extends AbstractResource implements ICustomerR
       return Response.ok(getService().findById(pId)).build();
    }
 
+   @GET
+   @Path("/search")
+   @Override
+   public Response findByText(@QueryParam("searchText") String pSearchText) {
+      return Response.ok(getService().findByText(pSearchText)).build();
+   }
+
 }

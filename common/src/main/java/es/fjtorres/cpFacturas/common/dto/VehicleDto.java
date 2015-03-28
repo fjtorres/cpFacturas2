@@ -1,5 +1,9 @@
 package es.fjtorres.cpFacturas.common.dto;
 
+import java.util.Objects;
+
+import es.fjtorres.cpFacturas.common.FuelType;
+
 public class VehicleDto extends AbstractDto<Long> {
 
    private static final long serialVersionUID = 5179390791312041743L;
@@ -11,6 +15,32 @@ public class VehicleDto extends AbstractDto<Long> {
    private CustomerDto customer;
 
    private VehicleModelDto model;
+
+   private FuelType fuelType;
+
+   private Integer year;
+
+   private Short doors;
+
+   @Override
+   public boolean equals(Object pObj) {
+      boolean isEquals = false;
+
+      if (this == pObj) {
+         isEquals = true;
+      } else if (pObj == null) {
+         isEquals = false;
+      } else if (pObj instanceof VehicleDto) {
+         final VehicleDto other = (VehicleDto) pObj;
+         isEquals = Objects.equals(getRegistration(), other.getRegistration());
+      }
+      return isEquals;
+   }
+
+   @Override
+   public int hashCode() {
+      return Objects.hash(getRegistration());
+   }
 
    @Override
    public Long getId() {
@@ -44,6 +74,30 @@ public class VehicleDto extends AbstractDto<Long> {
 
    public void setModel(final VehicleModelDto model) {
       this.model = model;
+   }
+
+   public FuelType getFuelType() {
+      return fuelType;
+   }
+
+   public void setFuelType(FuelType pFuelType) {
+      fuelType = pFuelType;
+   }
+
+   public Integer getYear() {
+      return year;
+   }
+
+   public void setYear(Integer pYear) {
+      year = pYear;
+   }
+
+   public Short getDoors() {
+      return doors;
+   }
+
+   public void setDoors(Short pDoors) {
+      doors = pDoors;
    }
 
 }

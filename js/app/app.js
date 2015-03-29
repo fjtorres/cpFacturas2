@@ -57,7 +57,7 @@ angular.module('cpFacturasApp', ['ngRoute', 'ngResource', 'ngCookies', 'ngAnimat
     $routeProvider
         .when('/customers', {
             templateUrl: 'js/app/customers/list.tpl.html',
-            controller: 'customersController',
+            controller: 'customerListController',
             controllerAs: 'ctrl',
             access: {
                 allowAnonymous: false
@@ -65,7 +65,7 @@ angular.module('cpFacturasApp', ['ngRoute', 'ngResource', 'ngCookies', 'ngAnimat
         })
         .when('/customers/create', {
             templateUrl: 'js/app/customers/create.tpl.html',
-            controller: 'customersController',
+            controller: 'customerController',
             controllerAs: 'ctrl',
             access: {
                 allowAnonymous: false
@@ -73,7 +73,7 @@ angular.module('cpFacturasApp', ['ngRoute', 'ngResource', 'ngCookies', 'ngAnimat
         })
         .when('/customers/update/:itemId', {
             templateUrl: 'js/app/customers/update.tpl.html',
-            controller: 'customersController',
+            controller: 'customerController',
             controllerAs: 'ctrl',
             access: {
                 allowAnonymous: false

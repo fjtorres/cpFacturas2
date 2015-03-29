@@ -12,8 +12,20 @@
             $translate(key).then(function(text) {
                 callback(text);
             });
-        }
+        };
         
+        this.showMessage = function (key) {
+        	this.translate(key, function (text) {
+        		$rootScope.$broadcast('successMessage', text);
+        	});
+        };
+        
+        this.showError = function (key) {
+        	this.translate(key, function (text) {
+        		$rootScope.$broadcast('errorMessage', text);
+        	});
+        };
+
         return this;
     }
 

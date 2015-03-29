@@ -1,7 +1,9 @@
 (function() {
   'use strict';
 
-  function VehicleListController ($rootScope, $modal, genericService, vehiclesService) {
+  function VehicleListController ($modal, genericService, vehiclesService) {
+	  expandTable("#btnExpanCustomerList", "#vehicle-list");
+	  
         var vm = this;
        
         vm.items = [];
@@ -32,9 +34,7 @@
     
         vm.onDelete = function (item) {
             vehiclesService.delete({"id":item.id}, function () {
-        		genericService.translate('vehicles.messages.delete.success', function (text) {
-            		$rootScope.$broadcast('successMessage', text);
-            	});
+        		genericService.showMessage('vehicles.messages.delete.success');
             	vm.onSearch();
             });
         };
@@ -56,6 +56,6 @@
        
     }
   
-    angular.module('cpFacturasApp').controller('vehicleListController', ['$rootScope', '$modal', 'genericService', 'vehiclesService', VehicleListController]);
+    angular.module('cpFacturasApp').controller('vehicleListController', ['$modal', 'genericService', 'vehiclesService', VehicleListController]);
 
 }());

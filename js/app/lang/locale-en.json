@@ -148,6 +148,10 @@
       },
       "update": {
         "success": "You have successfully updated vehicle data."
+      },
+      "groupBy": {
+        "general": "General",
+        "others": "Others"
       }
     }
   },

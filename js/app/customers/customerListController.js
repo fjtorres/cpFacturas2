@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  function CustomersController ($rootScope, $routeParams, $modal, genericService, customerService) {
+  function CustomerListController ($modal, genericService, customerService) {
 	    expandTable("#btnExpanCustomerList", "#customer-list");
 
 	    var vm = this;
@@ -34,9 +34,7 @@
 
 	    vm.onDelete = function (item) {
 	        customerService.resource.delete({"id":item.id}, function () {
-	        	genericService.translate('customers.messages.delete.success', function (text) {
-            		$rootScope.$broadcast('successMessage', text);
-            	});
+	        	genericService.showMessage('customers.messages.delete.success');
 	        	vm.onSearch();
 	        });
 	    };
@@ -56,7 +54,7 @@
 	    vm.onSearch();
 	}
   
-angular.module('cpFacturasApp').controller('customersController', ['$rootScope', '$routeParams', '$modal', 'genericService', 'customerService', CustomersController]);
+angular.module('cpFacturasApp').controller('customerListController', ['$modal', 'genericService', 'customerService', CustomerListController]);
 
 
 }());

@@ -15,6 +15,10 @@ function MessagesController ($scope) {
             {"type": "danger", "msg" : message}
         ];
     });
+    
+    $scope.$on('clearMessage', function (event) {
+    	$scope.alerts = [];
+    });
 
     $scope.closeAlert = function (index) {
         $scope.alerts.splice(index, 1);

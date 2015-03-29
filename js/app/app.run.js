@@ -23,6 +23,9 @@ angular.module('cpFacturasApp').run(['$rootScope', '$location', '$translate', '$
     $rootScope.appVersion = appVersion;
 
     $rootScope.$on("$routeChangeStart", function (event, next, current){
+    	
+    	// $rootScope.$broadcast('clearMessage');
+    	
         if (current === undefined) {
             $location.path("/login");
         } else if (current != undefined && current.access != undefined && current.access.allowAnonymous && $rootScope.loggedInUser == null) {

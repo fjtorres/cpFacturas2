@@ -1,9 +1,7 @@
 (function() {
   'use strict';
 
-  function CustomersController ($rootScope, $routeParams, $modal, genericService, customerService) {
-	    expandTable("#btnExpanCustomerList", "#customer-list");
-
+  function CustomerController ($routeParams, $modal, genericService, customerService) {
 	    var vm = this;
 	    vm.entity = {'id': -1,'type': 'PERSON', 'contactData': {}};
 	    vm.isUpdate = false;
@@ -16,24 +14,20 @@
 	    vm.onSaveSubmit = function () {
 	        if (vm.isUpdate) {
 	            customerService.resource.update({}, vm.entity, function(){
-	            	genericService.translate('customers.messages.update.success', function (text) {
-	            		$rootScope.$broadcast('successMessage', text);
-	            	});
-	                $rootScope.redirectTo("/customers");
+	            	genericService.showMessage('customers.messages.update.success');
+	            	genericService.redirectTo("/customers");
 	            });
 	        } else {
 	            customerService.resource.save({}, vm.entity, function(){
-	            	genericService.translate('customers.messages.create.success', function (text) {
-	            		$rootScope.$broadcast('successMessage', text);
-	            	});
-	                $rootScope.redirectTo("/customers");
+	            	genericService.showMessage('customers.messages.create.success');
+	            	genericService.redirectTo("/customers");
 	            });
 	        }
 	    };
 
 	}
   
-  angular.module('cpFacturasApp').controller('customersController', ['$rootScope', '$routeParams', '$modal', 'genericService', 'customerService', CustomersController]);
+  angular.module('cpFacturasApp').controller('customerController', ['$routeParams', '$modal', 'genericService', 'customerService', CustomerController]);
 
 
 }());

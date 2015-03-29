@@ -13,6 +13,8 @@ public class VehicleBrandDto extends AbstractDto<Long> {
 
    private String name;
 
+   private boolean preferent;
+
    @Override
    public boolean equals(final Object pObj) {
       boolean isEquals = false;
@@ -49,5 +51,13 @@ public class VehicleBrandDto extends AbstractDto<Long> {
 
    public void setName(final String name) {
       this.name = name;
+   }
+
+   public boolean isPreferent() {
+      return preferent;
+   }
+
+   public void setPreferent(boolean pPreferent) {
+      preferent = pPreferent;
    }
 }

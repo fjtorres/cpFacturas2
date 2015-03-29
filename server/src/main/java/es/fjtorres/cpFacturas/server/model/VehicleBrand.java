@@ -31,6 +31,9 @@ public class VehicleBrand extends AbstractEntity<Long> {
 
    @Column(name = "NAME", length = 100, nullable = false, unique = true)
    private String name;
+   
+   @Column(name = "IS_PREFERENT", nullable = false)
+   private boolean preferent;
 
    @Override
    public boolean equals(final Object pObj) {
@@ -68,5 +71,13 @@ public class VehicleBrand extends AbstractEntity<Long> {
 
    public void setName(final String name) {
       this.name = name;
+   }
+
+   public boolean isPreferent() {
+      return preferent;
+   }
+
+   public void setPreferent(boolean pPreferent) {
+      preferent = pPreferent;
    }
 }

@@ -5,7 +5,12 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.fjtorres.cpFacturas.common.dto.VehicleDto;
@@ -13,14 +18,14 @@ import es.fjtorres.cpFacturas.common.dto.pagination.VehiclePageDto;
 import es.fjtorres.cpFacturas.common.exception.ExceptionUtils;
 import es.fjtorres.cpFacturas.common.pagination.OrderBy;
 import es.fjtorres.cpFacturas.server.model.Vehicle;
+import es.fjtorres.cpFacturas.server.model.metadata.VehicleMetadata;
 import es.fjtorres.cpFacturas.server.service.IBasicService;
 import es.fjtorres.cpFacturas.server.service.IVehicleService;
 import es.fjtorres.cpFacturas.server.service.persistence.IPersistenceService;
 
 @Named
 @Transactional(readOnly = true)
-public class VehicleServiceImpl extends
-      AbstractEntityService<Vehicle, VehicleDto, Long> implements
+public class VehicleServiceImpl extends AbstractEntityService<Vehicle, VehicleDto, Long> implements
       IVehicleService {
 
    @Inject
@@ -40,9 +45,8 @@ public class VehicleServiceImpl extends
    }
 
    @Override
-   public VehiclePageDto find(final int page, final int pageSize,
-         final String sortField, final String sortDirection)
-         throws IllegalArgumentException {
+   public VehiclePageDto find(final int page, final int pageSize, final String sortField,
+         final String sortDirection) throws IllegalArgumentException {
       if (pageSize == 0) {
          ExceptionUtils.throwIllegalArgument("page size cannon't be zero");
       }
@@ -58,14 +62,13 @@ public class VehicleServiceImpl extends
          int maxPages = (int) (total / pageSize);
 
          if (page > maxPages) {
-            ExceptionUtils.throwIllegalArgument(
-                  "the page cannon't be greater than: {0}", maxPages);
+            ExceptionUtils.throwIllegalArgument("the page cannon't be greater than: {0}", maxPages);
          }
 
          final int startPosition = page == 0 ? page : (page * pageSize);
 
-         final List<Vehicle> entities = getPersistenceService().find(
-               startPosition, pageSize, sortField, order, getEntityClass());
+         final List<Vehicle> entities = getPersistenceService().find(startPosition, pageSize,
+               sortField, order, getEntityClass());
 
          dtos = getBasicService().convert(entities, getDtoClass());
       }
@@ -74,6 +77,22 @@ public class VehicleServiceImpl extends
       pageWrapper.setList(dtos);
       pageWrapper.setTotal(total);
       return pageWrapper;
+   }
+
+   @Override
+   public List<VehicleDto> findByText(final String pSearchText) {
+      final CriteriaBuilder builder = getPersistenceService().getEntityManager()
+            .getCriteriaBuilder();
+      final CriteriaQuery<Vehicle> query = builder.createQuery(getEntityClass());
+      final Root<Vehicle> from = query.from(getEntityClass());
+      query.select(from);
+      if (StringUtils.isNoneBlank(pSearchText)) {
+         final String likeText = "%" + pSearchText + "%";
+         final Predicate whereRegistration = builder.like(
+               builder.upper(from.get(VehicleMetadata.FIELD_REGISTRATION)), likeText.toUpperCase());
+         query.where(whereRegistration);
+      }
+      return getBasicService().convert(getPersistenceService().findByQuery(query), getDtoClass());
    }
 
 }

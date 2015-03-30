@@ -1,5 +1,7 @@
 package es.fjtorres.cpFacturas.server.service;
 
+import java.util.List;
+
 import es.fjtorres.cpFacturas.common.dto.VehicleDto;
 import es.fjtorres.cpFacturas.common.dto.pagination.VehiclePageDto;
 import es.fjtorres.cpFacturas.server.model.Vehicle;
@@ -19,5 +21,7 @@ public interface IVehicleService extends
     */
    VehiclePageDto find(int page, int pageSize, String sortField,
          String sortDirection) throws IllegalArgumentException;
+   
+   List<VehicleDto> findByText(String searchText);
 
 }

@@ -97,4 +97,11 @@ public class VehicleResourceImpl extends AbstractResource implements IVehicleRes
       return Response.ok().build();
    }
 
+   @Override
+   @GET
+   @Path("/search")
+   public Response findByText(final String pSearchText) {
+      return Response.ok(getService().findByText(pSearchText)).build();
+   }
+
 }

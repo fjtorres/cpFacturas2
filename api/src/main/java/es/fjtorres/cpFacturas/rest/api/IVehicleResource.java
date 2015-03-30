@@ -12,5 +12,7 @@ public interface IVehicleResource {
    Response update(VehicleDto dto);
 
    Response delete(Long id);
+   
+   Response findByText(String searchText);
 
 }

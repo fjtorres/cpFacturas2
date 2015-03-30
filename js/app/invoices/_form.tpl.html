@@ -1,0 +1,24 @@
+<div class="row">
+    
+    <div class="col-sm-6">
+    
+    	<div class="form-group">
+            <label for="txtInvoiceVehicle" class="control-label col-sm-3">{{'invoices.field.vehicle' | translate}}</label>
+            <div class="col-sm-5">
+                <input autocomplete='off' type="text" class="form-control col-sm-3" id="txtInvoiceVehicle" placeholder="{{'invoices.field.vehicle.placeholder' | translate}}"
+                    maxlenght="25" ng-model="ctrl.entity.vehicle" ng-disabled="isUpdate" required tabindex="1"
+                    typeahead="item as item.registration + ' (' + item.model.name + ' - ' + item.model.brand.name + ')' for item in ctrl.getVehicles($viewValue)" typeahead-min-length="3"
+                    typeahead-loading="loadingVehicles"/>
+                <i ng-show="loadingVehicles" class="glyphicon glyphicon-refresh"></i>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="clearfix" />
+    
+    <div class="col-sm-6">
+    
+    </div>
+    
+</div>

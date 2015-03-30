@@ -15,19 +15,19 @@
 		vm.isUpdate = false;
 	
 	    if ($routeParams.itemId != undefined) {
-	    	vm.model = vehiclesService.get({'key': $routeParams.itemId});
+	    	vm.entity = vehiclesService.get({'key': $routeParams.itemId});
 	    	vm.isUpdate = true;
 	    }
 	
 	    vm.onSaveSubmit = function () {
 	    	
 	        if (vm.isUpdate) {
-	        	vehiclesService.update({}, vm.entity, function(){
+	        	vehiclesService.resource.update({}, vm.entity, function(){
 	        		genericService.showMessage('vehicles.messages.update.success');
 	        		genericService.redirectTo("/vehicles");
 	            });
 	        } else {
-	        	vehiclesService.save({}, vm.entity, function(){
+	        	vehiclesService.resource.save({}, vm.entity, function(){
 	        		genericService.showMessage('vehicles.messages.create.success');
 	        		genericService.redirectTo("/vehicles");
 	            });
@@ -45,7 +45,7 @@
 		};
 		
 	    vm.getBrands = function (searchValue) {
-	    	vehicleBrandsService.query({'searchValue':searchValue}, function(data){
+	    	vehicleBrandsService.resource.query({'searchValue':searchValue}, function(data){
 	    		
 	    		var firstPreferent = -1;
 	    		
@@ -76,7 +76,7 @@
 	    
 	    vm.getModels = function (searchValue) {
 	    	if (vm.selectedBrand != null) {
-	    		vehicleModelsService.query({'searchValue':searchValue, 'brandId': vm.selectedBrand.id}, function(data) {
+	    		vehicleModelsService.resource.query({'searchValue':searchValue, 'brandId': vm.selectedBrand.id}, function(data) {
 	    			vm.models = data;
 	    			if (data.length > 0) {
 	    				vm.entity.model = data[0];

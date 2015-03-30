@@ -7,7 +7,7 @@
 	    vm.isUpdate = false;
 
 	    if ($routeParams.itemId != undefined) {
-	        vm.model = customerService.resource.get({'key': $routeParams.itemId});
+	        vm.entity = customerService.resource.get({'key': $routeParams.itemId});
 	        vm.isUpdate = true;
 	    }
 

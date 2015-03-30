@@ -7,7 +7,6 @@ angular.module('cpFacturasApp').factory('customerService', ['$resource', '$http'
     mixing.resource = $resource(myConfig.apiUrl + '/customers/:id', {key: '@id'}, {
         search : {method: 'GET'},
         update: {method: 'PUT'},
-        autocomplete: {method: 'GET', url: myConfig.apiUrl + '/customers/search'}
     });
 
     mixing.autocomplete = function (text) {

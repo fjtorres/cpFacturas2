@@ -10,7 +10,7 @@
         vm.currentPage = 1;
         vm.totalItems = 0;
         vm.itemsPerPage = 10;
-        vm.sortField = 'firstName';
+        vm.sortField = 'registration';
         vm.sortDirection = 'ASC';
         
         vm.onConfirmDeleteClick = function(item){
@@ -33,14 +33,14 @@
         };
     
         vm.onDelete = function (item) {
-            vehiclesService.delete({"id":item.id}, function () {
+            vehiclesService.resource.delete({"id":item.id}, function () {
         		genericService.showMessage('vehicles.messages.delete.success');
             	vm.onSearch();
             });
         };
     
         vm.onSearch = function () {
-            vehiclesService.search({'page': vm.currentPage - 1, 'pageSize': vm.itemsPerPage, 'sortField': vm.sortField, 'sortDirection': vm.sortDirection}, function (result) {
+            vehiclesService.resource.search({'page': vm.currentPage - 1, 'pageSize': vm.itemsPerPage, 'sortField': vm.sortField, 'sortDirection': vm.sortDirection}, function (result) {
                 vm.items = result.list;
                 vm.totalItems = result.total;
             });

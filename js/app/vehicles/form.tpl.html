@@ -2,7 +2,7 @@
     
     <div class="col-sm-6">
     
-    	<div class="form-group form-group-sm">
+    	<div class="form-group">
             <label for="txtVehicleRegistration" class="control-label col-sm-3">{{'vehicles.field.registration' | translate}}</label>
             <div class="col-sm-5">
                 <input type="text" class="form-control col-sm-3" id="txtVehicleRegistration" placeholder="{{'vehicles.field.registration.placeholder' | translate}}"
@@ -16,7 +16,7 @@
 	
 	<div class="col-sm-6">
 	
-	    <div class="form-group form-group-sm">
+	    <div class="form-group">
             <label for="txtVehicleBrand" class="control-label col-sm-3">{{'vehicles.field.brand' | translate}}</label>
             <div class="col-sm-5">
             	<select id="txtVehicleBrand" class="form-control" data-ng-model="ctrl.selectedBrand" data-ng-options="item.name group by (item.group | translate) for item in ctrl.brands | orderBy:['group']" ng-change="ctrl.onBrandChange()" required tabindex="2">
@@ -29,7 +29,7 @@
 	
 	<div class="col-sm-6">
 	
-	    <div class="form-group form-group-sm">
+	    <div class="form-group">
             <label for="txtVehicleModel" class="control-label col-sm-3">{{'vehicles.field.model' | translate}}</label>
             <div class="col-sm-5">
             	<select id="txtVehicleModel" class="form-control" data-ng-model="ctrl.entity.model"  data-ng-options="item.name for item in ctrl.models" required tabindex="3">
@@ -42,7 +42,7 @@
 	
 	<div class="col-sm-6">
     
-    	<div class="form-group form-group-sm">
+    	<div class="form-group">
             <label for="txtVehicleYear" class="control-label col-sm-3">{{'vehicles.field.year' | translate}}</label>
             <div class="col-sm-5">
                 <select id="txtVehicleYear" class="form-control" data-ng-model="ctrl.entity.year"  data-ng-options="item for item in ctrl.years" required tabindex="4">
@@ -55,7 +55,7 @@
 	
 	<div class="col-sm-6">
     
-    	<div class="form-group form-group-sm">
+    	<div class="form-group">
             <label for="txtVehicleDoors" class="control-label col-sm-3">{{'vehicles.field.doors' | translate}}</label>
             <div class="col-sm-5">
                 <select id="txtVehicleDoors" class="form-control" data-ng-model="ctrl.entity.doors"  data-ng-options="item for item in ctrl.doors" required tabindex="5">
@@ -69,7 +69,7 @@
 		
 	<div class="col-sm-6">
     
-    	<div class="form-group form-group-sm">
+    	<div class="form-group">
             <label for="txtVehicleFuelType" class="control-label col-sm-3">{{'vehicles.field.fuelType' | translate}}</label>
             <div class="col-sm-5">
                 <select id="txtVehicleFuelType" class="form-control" ng-model="ctrl.entity.fuelType"  ng-options="item.id as item.name for item in ctrl.fuelTypeList" required tabindex="6">
@@ -80,9 +80,9 @@
     
 	</div>
 	
-		<div class="col-sm-6">
+	<div class="col-sm-6">
 	
-	    <div class="form-group form-group-sm">
+	    <div class="form-group">
             <label for="txtVehicleCustomer" class="control-label col-sm-3">{{'vehicles.field.customer' | translate}}</label>
             <div class="col-sm-5">
                 <input autocomplete='off' type="text" class="form-control col-sm-3" id="txtVehicleCustomer" placeholder="{{'vehicles.field.customer' | translate}}"

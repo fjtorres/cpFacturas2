@@ -1,26 +1,41 @@
-'use strict';
+(function() {
+  'use strict';
 
-angular.module('cpFacturasApp').controller('messagesController', ['$scope', MessagesController]);
+	function MessagesController ($scope, $timeout) {
+	    
+		var vm = this;
+		vm.alerts = [];
+		
+		vm.addAlert = function (type, message) {
+			var alert = {
+				"type": type,
+				"msg": message
+			};
+			
+			alert.close = function(){
+			    vm.alerts.splice(vm.alerts.indexOf(this), 1);
+			}
+			
+			vm.alerts.push(alert);
+			
+			$timeout(function(){
+			    vm.alerts.splice(vm.alerts.indexOf(alert), 1);
+			}, 3000);
+		};
+		
+		$scope.$on('successMessage', function (event, message) {
+	        vm.addAlert("success", message);
+	    });
+	
+	    $scope.$on('errorMessage', function (event, message) {
+	    	vm.addAlert("danger", message);
+	    });
+	    
+	    $scope.$on('clearMessage', function (event) {
+	    	vm.alerts = [];
+	    });
+	}
 
-function MessagesController ($scope) {
-    
-    $scope.$on('successMessage', function (event, message) {
-        $scope.alerts = [
-            {"type": "success", "msg" : message}
-        ];
-    });
+	angular.module('cpFacturasApp').controller('messagesController', ['$scope', '$timeout', MessagesController]);
 
-    $scope.$on('errorMessage', function (event, message) {
-        $scope.alerts = [
-            {"type": "danger", "msg" : message}
-        ];
-    });
-    
-    $scope.$on('clearMessage', function (event) {
-    	$scope.alerts = [];
-    });
-
-    $scope.closeAlert = function (index) {
-        $scope.alerts.splice(index, 1);
-    };
-}
+}());

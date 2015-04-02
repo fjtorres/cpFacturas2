@@ -26,28 +26,24 @@ angular.module('cpFacturasApp', ['ngRoute', 'ngResource', 'ngCookies', 'ngAnimat
     $routeProvider
         .when('/invoices', {
             templateUrl: 'js/app/invoices/list.tpl.html',
-            controller: 'invoicesController',
+            controller: 'invoiceListController',
+            controllerAs: 'ctrl',
             access: {
                 allowAnonymous: false
             }
         })
         .when('/invoices/create', {
-            templateUrl: 'js/app/invoices/list.tpl.html',
-            controller: 'invoicesController',
+            templateUrl: 'js/app/invoices/create.tpl.html',
+            controller: 'invoiceController',
+            controllerAs: 'ctrl',
             access: {
                 allowAnonymous: false
             }
         })
         .when('/invoices/update/:itemId', {
-            templateUrl: 'js/app/invoices/list.tpl.html',
-            controller: 'invoicesController',
-            access: {
-                allowAnonymous: false
-            }
-        })
-        .when('/invoices/report/last/month', {
-            templateUrl: 'js/app/invoices/list.tpl.html',
-            controller: 'invoicesController',
+            templateUrl: 'js/app/invoices/update.tpl.html',
+            controller: 'invoiceController',
+            controllerAs: 'ctrl',
             access: {
                 allowAnonymous: false
             }

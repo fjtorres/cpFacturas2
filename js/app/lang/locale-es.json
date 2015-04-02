@@ -10,6 +10,7 @@
   },
   "buttons": {
     "access": "Acceder",
+    "add": "Añadir",
     "back": "Volver",
     "cancel": "Cancelar",
     "clear": "Limpiar",
@@ -157,10 +158,64 @@
   "invoices" : {
   	"view": {
       "list": "Listado de facturas",
-      "create": "New invoice",
-      "update": "Update invoice data"
+      "create": "Nueva factura",
+      "update": "Modificación datos de la factura"
   	},
   	"field": {
-  	}
+      "vehicle": "Vehículo",
+      "vehicle.placeholder": "Introduzca la matrícula del vehículo.",
+      "lines": "Líneas de factura"
+  	},
+    "messages": {
+      "delete": {
+        "confirmation": "¿Esta seguro de eliminar la factura seleccionada?",
+        "success": "Se ha eliminado correctamente la factura."
+      },
+      "create": {
+        "success": "Se ha creado correctamente la factura."
+      },
+      "update": {
+        "success": "Se han actualizado correctamente los datos de la factura."
+      }
+    },
+    "buttons": {
+      "add": "Crear nueva factura",
+      "delete": "Eliminar factura",
+      "update": "Actualizar factura",
+      "selectVehicle": "Seleccionar otro vehículo",
+      "add.line": "Añadir línea a la factura"
+    },
+    "text": {
+      "vehicle": "Datos del vehículo",
+      "customer": "Datos del propietario"
+    }
+  },
+  "invocesLine": {
+    "views": {
+      "modal": "Datos de la línea"
+    },
+    "field": {
+      "description": "Descripción",
+      "description.placeholder": "Introduzca la descripción de la línea de factura.",
+      "amount": "Cantidad",
+      "amount.placeholder": "Introduzca la cantidad.",
+      "price": "Precio",
+      "price.placeholder": "Introduzca el precio",
+      "taxRate": "IVA",
+      "discount": "Descuento",
+      "discount.placeholder": "Introduzca el descuento"
+    },
+    "messages": {
+      "delete": {
+        "confirmation": "¿Esta seguro de eliminar la línea de factura seleccionada?",
+        "success": "Se ha eliminado correctamente la línea de factura."
+      },
+      "create": {
+        "success": "Se ha creado correctamente la línea factura."
+      },
+      "update": {
+        "success": "Se han actualizado correctamente los datos de la línea de factura."
+      }
+    }
   }
 }

@@ -2,6 +2,7 @@ package es.fjtorres.cpFacturas.server.model;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -37,7 +38,7 @@ public class Invoice extends AbstractEntity<Long> {
     @JoinColumn(name = "VEHICLE_ID", nullable = false)
     private Vehicle vehicle;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "invoice")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "invoice", cascade = CascadeType.ALL)
     private Set<InvoiceLine> lines;
 
     public Long getId() {

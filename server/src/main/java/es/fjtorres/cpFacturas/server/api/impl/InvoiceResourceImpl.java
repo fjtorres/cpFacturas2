@@ -25,13 +25,13 @@ import es.fjtorres.cpFacturas.common.dto.InvoiceDto;
 import es.fjtorres.cpFacturas.common.exception.ValidationException;
 import es.fjtorres.cpFacturas.common.pagination.Page;
 import es.fjtorres.cpFacturas.rest.api.IInvoiceResource;
+import es.fjtorres.cpFacturas.server.service.ExportResult;
 import es.fjtorres.cpFacturas.server.service.IInvoiceService;
 
 @Named
 @Path(INVOICES_PATH)
 @Produces(MediaType.APPLICATION_JSON)
-public class InvoiceResourceImpl extends AbstractResource implements
-      IInvoiceResource {
+public class InvoiceResourceImpl extends AbstractResource implements IInvoiceResource {
 
    /**
     * 
@@ -51,8 +51,7 @@ public class InvoiceResourceImpl extends AbstractResource implements
 
    @Override
    @GET
-   public Response find(
-         @DefaultValue("0") @QueryParam(PAGE_NUMBER) final int page,
+   public Response find(@DefaultValue("0") @QueryParam(PAGE_NUMBER) final int page,
          @DefaultValue("10") @QueryParam(PAGE_SIZE) final int pageSize,
          @QueryParam(PAGE_SORT_FIELD) final String sortField,
          @DefaultValue("ASC") @QueryParam(PAGE_SORT_DIRECTION) final String sortDirection) {
@@ -80,6 +79,7 @@ public class InvoiceResourceImpl extends AbstractResource implements
 
    @Override
    @PUT
+   @Path("{id}")
    @Consumes(MediaType.APPLICATION_JSON)
    public Response update(final InvoiceDto pDto) {
       try {
@@ -96,5 +96,21 @@ public class InvoiceResourceImpl extends AbstractResource implements
    public Response delete(@PathParam("id") final Long pId) {
       getService().delete(pId);
       return Response.ok().build();
+   }
+
+   @Path("{id}")
+   @GET
+   @Override
+   public Response findById(@PathParam("id") final Long pId) {
+      return Response.ok(getService().findById(pId)).build();
+   }
+
+   @Path("export/{id}")
+   @GET
+   @Override
+   public Response export(@PathParam("id") final Long pId) {
+      final ExportResult result = getService().export(pId);
+      return Response.ok(result.getContent())
+            .header("Content-Disposition", "attachment; filename=" + result.getFilename()).type(result.getMediaType()).build();
    }
 }

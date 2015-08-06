@@ -10,7 +10,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "INSURER")
+@Table(name = "INSURERS")
 public class Insurer extends AbstractEntity<Long> {
 
     private static final long serialVersionUID = -3356756855905033999L;

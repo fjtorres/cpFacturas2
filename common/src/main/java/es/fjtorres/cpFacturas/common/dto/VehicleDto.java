@@ -13,6 +13,8 @@ public class VehicleDto extends AbstractDto<Long> {
    private String registration;
 
    private CustomerDto customer;
+   
+   private InsurerDto insurer;
 
    private VehicleModelDto model;
 
@@ -98,6 +100,14 @@ public class VehicleDto extends AbstractDto<Long> {
 
    public void setDoors(Short pDoors) {
       doors = pDoors;
+   }
+
+   public InsurerDto getInsurer() {
+      return insurer;
+   }
+
+   public void setInsurer(InsurerDto pInsurer) {
+      insurer = pInsurer;
    }
 
 }

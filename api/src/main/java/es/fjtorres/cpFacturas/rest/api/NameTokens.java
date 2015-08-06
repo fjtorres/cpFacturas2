@@ -11,6 +11,8 @@ public final class NameTokens {
     public static final String INSURERS_PATH = "/insurers";
 
     public static final String INVOICES_PATH = "/invoices";
+    
+    public static final String INVOICES_EXPORT_PATH = INVOICES_PATH + "/export/";
 
     public static final String VEHICLES_PATH = "/vehicles";
     public static final String VEHICLES_BRAND_PATH = VEHICLES_PATH + "/brands";

@@ -12,4 +12,8 @@ public interface IInsurerResource {
    Response update(InsurerDto dto);
 
    Response delete(Long id);
+   
+   Response findById(Long id);
+   
+   Response findByText(String searchText);
 }

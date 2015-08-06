@@ -79,6 +79,7 @@ public class VehicleResourceImpl extends AbstractResource implements IVehicleRes
 
    @Override
    @PUT
+   @Path("{id}")
    @Consumes(MediaType.APPLICATION_JSON)
    public Response update(final VehicleDto pDto) {
       try {
@@ -95,6 +96,13 @@ public class VehicleResourceImpl extends AbstractResource implements IVehicleRes
    public Response delete(@PathParam("id") final Long pId) {
       getService().delete(pId);
       return Response.ok().build();
+   }
+   
+   @Override
+   @GET
+   @Path("{id}")
+   public Response findById(@PathParam("id") final Long pId) {
+      return Response.ok(getService().findById(pId)).build();
    }
 
    @Override

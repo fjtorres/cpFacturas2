@@ -5,5 +5,6 @@ This project are an full invoicing system for a workshop of paint and body.
 ### Modules
 
 - [Common](./common): Generic classes for server and client.
-- [GWT-Client](./gwt-client): Full client with the user interface developed in GWT.
-- [Server](./server): Full rest api with the business code.
+- [Api](./api): Rest API definition.
+- [Server](./server): Rest api implementation with the business code and model.
+- [GWT-client](./gwt-client): Full client with the user interface developed in GWT.

@@ -39,12 +39,19 @@ public abstract class AbstractEntityService<E extends AbstractEntity<Id>, D exte
       return persistenceService;
    }
 
+   public void prePersist (final E entity) {
+      // Default empty
+   }
+   
    @Override
    @Transactional
    public void add(final D pDto) throws ValidationException {
       Objects.requireNonNull(pDto, ERROR_DTO_NULL);
 
       final E entity = getBasicService().convert(pDto, getEntityClass());
+      
+      prePersist(entity);
+      
       if (getBasicService().validate(entity)) {
          if (DEFAULT_ID.equals(entity.getId())) {
             entity.setId(null);

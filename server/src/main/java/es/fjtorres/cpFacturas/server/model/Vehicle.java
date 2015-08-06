@@ -47,6 +47,10 @@ public class Vehicle extends AbstractEntity<Long> {
    @JoinColumn(name = "CUSTOMER_ID", nullable = false)
    private Customer customer;
 
+   @ManyToOne(fetch = FetchType.LAZY)
+   @JoinColumn(name = "INSURER_ID")
+   private Insurer insurer;
+   
    @NotNull(message = "{vehicle.model.required}")
    @ManyToOne(fetch = FetchType.LAZY)
    @JoinColumn(name = "MODEL_ID", nullable = false)
@@ -154,6 +158,14 @@ public class Vehicle extends AbstractEntity<Long> {
 
    public void setDoors(Short pDoors) {
       doors = pDoors;
+   }
+
+   public Insurer getInsurer() {
+      return insurer;
+   }
+
+   public void setInsurer(Insurer pInsurer) {
+      insurer = pInsurer;
    }
 
 }

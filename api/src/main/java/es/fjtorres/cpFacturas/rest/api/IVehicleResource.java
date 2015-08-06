@@ -13,6 +13,8 @@ public interface IVehicleResource {
 
    Response delete(Long id);
    
+   Response findById(Long id);
+   
    Response findByText(String searchText);
 
 }

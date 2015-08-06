@@ -12,4 +12,8 @@ public interface IInvoiceResource {
    Response update(InvoiceDto dto);
 
    Response delete(Long id);
+   
+   Response findById(Long id);
+   
+   Response export(Long id);
 }

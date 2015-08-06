@@ -78,6 +78,7 @@ public class CustomerResourceImpl extends AbstractResource implements ICustomerR
 
    @Override
    @PUT
+   @Path("{id}")
    @Consumes(MediaType.APPLICATION_JSON)
    public Response update(final CustomerDto pDto) {
       try {

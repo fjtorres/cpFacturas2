@@ -101,4 +101,12 @@ public class InvoiceLine extends AbstractEntity<Long> {
         taxRate = pTaxRate;
     }
 
+   public BigDecimal getDiscount() {
+      return discount;
+   }
+
+   public void setDiscount(BigDecimal pDiscount) {
+      discount = pDiscount;
+   }
+
 }

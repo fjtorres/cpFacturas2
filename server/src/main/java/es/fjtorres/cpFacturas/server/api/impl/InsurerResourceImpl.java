@@ -80,6 +80,7 @@ public class InsurerResourceImpl extends AbstractResource implements
 
    @Override
    @PUT
+   @Path("{id}")
    @Consumes(MediaType.APPLICATION_JSON)
    public Response update(final InsurerDto pDto) {
       try {
@@ -97,5 +98,18 @@ public class InsurerResourceImpl extends AbstractResource implements
       getService().delete(pId);
       return Response.ok().build();
    }
+   
+   @Override
+   @GET
+   @Path("{id}")
+   public Response findById(@PathParam("id") final Long pId) {
+      return Response.ok(getService().findById(pId)).build();
+   }
 
+   @GET
+   @Path("/search")
+   @Override
+   public Response findByText(@QueryParam("searchText") String pSearchText) {
+      return Response.ok(getService().findByText(pSearchText)).build();
+   }
 }

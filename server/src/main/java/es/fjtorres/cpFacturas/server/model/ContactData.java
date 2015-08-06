@@ -13,14 +13,14 @@ public class ContactData implements Serializable {
 
     private static final long serialVersionUID = -4754107930809784781L;
 
-    @NotEmpty(message="{customer.primaryPhone.required}")
+    @NotEmpty(message="{contactData.primaryPhone.required}")
     @Column(name = "PHONE_1", length = 25, nullable = false)
     private String primaryPhoneNumber;
 
     @Column(name = "PHONE_2", length = 25)
     private String secundayPhoneNumber;
 
-    @Email(message="{customer.email.format}")
+    @Email(message="{contactData.email.format}")
     @Column(name = "EMAIL", length = 250)
     private String email;
 

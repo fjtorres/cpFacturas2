@@ -4,8 +4,7 @@ import es.fjtorres.cpFacturas.common.dto.InvoiceDto;
 import es.fjtorres.cpFacturas.common.dto.pagination.InvoicePageDto;
 import es.fjtorres.cpFacturas.server.model.Invoice;
 
-public interface IInvoiceService extends
-      IEntityService<Invoice, InvoiceDto, Long> {
+public interface IInvoiceService extends IEntityService<Invoice, InvoiceDto, Long> {
 
    /**
     * 
@@ -17,7 +16,16 @@ public interface IInvoiceService extends
     * @throws IllegalArgumentException
     *            If any parameter are invalid.
     */
-   InvoicePageDto find(int page, int pageSize, String sortField,
-         String sortDirection) throws IllegalArgumentException;
+   InvoicePageDto find(int page, int pageSize, String sortField, String sortDirection)
+         throws IllegalArgumentException;
+
+   /**
+    * Export invoice to PDF
+    * 
+    * @param id
+    *           Invoice identifier.
+    * @return PDF file.
+    */
+   ExportResult export(Long id);
 
 }

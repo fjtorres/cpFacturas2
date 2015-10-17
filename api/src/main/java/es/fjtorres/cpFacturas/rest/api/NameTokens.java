@@ -7,6 +7,8 @@ public final class NameTokens {
     public static final String AUTHENTICATION_LOGOUT_PATH = AUTHENTICATION_PATH + "/logout";
 
     public static final String CUSTOMERS_PATH = "/customers";
+    
+    public static final String ENUM_PATH = "/enum";
 
     public static final String INSURERS_PATH = "/insurers";
 

@@ -18,37 +18,37 @@ public class InvoiceLineDto extends AbstractDto<Long> {
 
    private String description;
 
-   public BigDecimal getTotalWithTaxRate() {
-      BigDecimal total = BigDecimal.ZERO;
-      if (getPrice() != null && getAmount() != null) {
-         total = getPriceWithTaxRate().multiply(getAmount());
-      }
-      return total;
-   }
-
-   public BigDecimal getTotalWithoutTaxRate() {
-      BigDecimal total = BigDecimal.ZERO;
-      if (getPrice() != null && getAmount() != null) {
-         total = getPrice().multiply(getAmount());
-      }
-      return total;
-   }
-
-   public BigDecimal getTaxRateAmount() {
-      BigDecimal total = BigDecimal.ZERO;
-      if (getPrice() != null && getTaxRate() != null) {
-         total = (getPrice().multiply(getTaxRate())).divide(new BigDecimal(100));
-      }
-      return total;
-   }
-
-   public BigDecimal getPriceWithTaxRate() {
-      BigDecimal priceWithTaxRate = BigDecimal.ZERO;
-      if (getPrice() != null) {
-         priceWithTaxRate = getPrice().add(getTaxRateAmount());
-      }
-      return priceWithTaxRate;
-   }
+//   public BigDecimal getTotalWithTaxRate() {
+//      BigDecimal total = BigDecimal.ZERO;
+//      if (getPrice() != null && getAmount() != null) {
+//         total = getPriceWithTaxRate().multiply(getAmount());
+//      }
+//      return total;
+//   }
+//
+//   public BigDecimal getTotalWithoutTaxRate() {
+//      BigDecimal total = BigDecimal.ZERO;
+//      if (getPrice() != null && getAmount() != null) {
+//         total = getPrice().multiply(getAmount());
+//      }
+//      return total;
+//   }
+//
+//   public BigDecimal getTaxRateAmount() {
+//      BigDecimal total = BigDecimal.ZERO;
+//      if (getPrice() != null && getTaxRate() != null) {
+//         total = (getPrice().multiply(getTaxRate())).divide(new BigDecimal(100));
+//      }
+//      return total;
+//   }
+//
+//   public BigDecimal getPriceWithTaxRate() {
+//      BigDecimal priceWithTaxRate = BigDecimal.ZERO;
+//      if (getPrice() != null) {
+//         priceWithTaxRate = getPrice().add(getTaxRateAmount());
+//      }
+//      return priceWithTaxRate;
+//   }
 
    public Long getId() {
       return id;

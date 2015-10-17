@@ -1,6 +1,6 @@
 package es.fjtorres.cpFacturas.server.model;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -39,7 +39,7 @@ public class Invoice extends AbstractEntity<Long> {
     private Vehicle vehicle;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "invoice", cascade = CascadeType.ALL)
-    private Set<InvoiceLine> lines;
+    private List<InvoiceLine> lines;
 
     public Long getId() {
         return id;
@@ -49,11 +49,11 @@ public class Invoice extends AbstractEntity<Long> {
         id = pId;
     }
 
-    public Set<InvoiceLine> getLines() {
+    public List<InvoiceLine> getLines() {
         return lines;
     }
 
-    public void setLines(Set<InvoiceLine> pLines) {
+    public void setLines(List<InvoiceLine> pLines) {
         lines = pLines;
     }
 

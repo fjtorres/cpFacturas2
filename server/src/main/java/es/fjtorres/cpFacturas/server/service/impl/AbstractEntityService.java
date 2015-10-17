@@ -66,6 +66,9 @@ public abstract class AbstractEntityService<E extends AbstractEntity<Id>, D exte
       Objects.requireNonNull(pDto, ERROR_DTO_NULL);
 
       final E entity = getBasicService().convert(pDto, getEntityClass());
+      
+      prePersist(entity);
+      
       if (getBasicService().validate(entity)) {
          getPersistenceService().update(entity);
       }

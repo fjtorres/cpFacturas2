@@ -12,7 +12,7 @@ public class InvoiceLineDto extends AbstractDto<Long> {
 
    private BigDecimal amount;
 
-   private BigDecimal taxRate;
+   
 
    private BigDecimal discount;
 
@@ -72,14 +72,6 @@ public class InvoiceLineDto extends AbstractDto<Long> {
 
    public void setAmount(BigDecimal pAmount) {
       amount = pAmount;
-   }
-
-   public BigDecimal getTaxRate() {
-      return taxRate;
-   }
-
-   public void setTaxRate(BigDecimal pTaxRate) {
-      taxRate = pTaxRate;
    }
 
    public BigDecimal getDiscount() {

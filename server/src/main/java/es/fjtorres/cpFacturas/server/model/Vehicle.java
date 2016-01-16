@@ -56,16 +56,13 @@ public class Vehicle extends AbstractEntity<Long> {
    @JoinColumn(name = "MODEL_ID", nullable = false)
    private VehicleModel model;
 
-   @NotNull(message = "{vehicle.fuel.required}")
    @Enumerated(EnumType.STRING)
    @Column(name = "FUEL_TYPE", length = 25, nullable = false)
    private FuelType fuelType;
 
-   @NotNull(message = "{vehicle.year.required}")
    @Column(name = "YEAR", nullable = false)
    private Integer year;
 
-   @NotNull(message = "{vehicle.doors.required}")
    @Column(name = "DOORS", nullable = false)
    private Short doors;
 

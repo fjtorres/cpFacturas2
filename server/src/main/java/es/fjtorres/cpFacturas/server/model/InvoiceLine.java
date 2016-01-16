@@ -38,11 +38,6 @@ public class InvoiceLine extends AbstractEntity<Long> {
 
     @DecimalMin(value="0.00")
     @DecimalMax(value="100.00")
-    @Column(name = "TAX_RATE", nullable = false, precision = 5, scale = 2)
-    private BigDecimal taxRate;
-
-    @DecimalMin(value="0.00")
-    @DecimalMax(value="100.00")
     @Column(name = "DISCOUNT", nullable = false, precision = 5, scale = 2)
     private BigDecimal discount;
 
@@ -91,14 +86,6 @@ public class InvoiceLine extends AbstractEntity<Long> {
 
     public void setInvoice(Invoice pInvoice) {
         invoice = pInvoice;
-    }
-
-    public BigDecimal getTaxRate() {
-        return taxRate;
-    }
-
-    public void setTaxRate(BigDecimal pTaxRate) {
-        taxRate = pTaxRate;
     }
 
    public BigDecimal getDiscount() {

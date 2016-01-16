@@ -19,8 +19,6 @@ public abstract class AbstractEntityService<E extends AbstractEntity<Id>, D exte
 
    protected static final String ERROR_DTO_NULL = "DTO cannon't be null";
 
-   private static final Long DEFAULT_ID = -1L;
-
    private final IPersistenceService<Id, E> persistenceService;
 
    private final IBasicService basicService;
@@ -53,7 +51,7 @@ public abstract class AbstractEntityService<E extends AbstractEntity<Id>, D exte
       prePersist(entity);
       
       if (getBasicService().validate(entity)) {
-         if (DEFAULT_ID.equals(entity.getId())) {
+         if (AbstractEntity.DEFAULT_ID.equals(entity.getId())) {
             entity.setId(null);
          }
          getPersistenceService().persist(entity);

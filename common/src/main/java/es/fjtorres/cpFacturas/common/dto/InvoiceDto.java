@@ -1,5 +1,6 @@
 package es.fjtorres.cpFacturas.common.dto;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import es.fjtorres.cpFacturas.common.InvoiceState;
@@ -10,7 +11,11 @@ public class InvoiceDto extends AbstractDto<Long> {
 
    private Long id;
 
+   private String observations;
+   
    private InvoiceState state = InvoiceState.CREATED;
+   
+   private BigDecimal taxRate;
 
    private VehicleDto vehicle;
 
@@ -46,5 +51,21 @@ public class InvoiceDto extends AbstractDto<Long> {
 
    public void setLines(List<InvoiceLineDto> pLines) {
       lines = pLines;
+   }
+
+   public String getObservations() {
+      return observations;
+   }
+
+   public void setObservations(String observations) {
+      this.observations = observations;
+   }
+   
+   public BigDecimal getTaxRate() {
+      return taxRate;
+   }
+
+   public void setTaxRate(BigDecimal pTaxRate) {
+      taxRate = pTaxRate;
    }
 }

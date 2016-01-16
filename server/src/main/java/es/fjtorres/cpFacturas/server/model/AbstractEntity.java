@@ -23,6 +23,8 @@ public abstract class AbstractEntity<Id extends Serializable> implements Seriali
      * 
      */
     private static final long serialVersionUID = -2201504423816671630L;
+    
+    public static final Long DEFAULT_ID = -1L;
 
     @Version
     private long version;

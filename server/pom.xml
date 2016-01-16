@@ -83,6 +83,7 @@
 				<artifactId>jetty-maven-plugin</artifactId>
 				<version>9.2.10.v20150310</version>
 				<configuration>
+					<reload>manual</reload>
 					<scanIntervalSeconds>10</scanIntervalSeconds>
 					<stopKey>alpha</stopKey>
 					<stopPort>9099</stopPort>

@@ -31,8 +31,8 @@ public class JpaPersistenceServiceImpl<Id extends Serializable, T extends Abstra
    private static final String ERROR_PERSISTENT_CLASS_NULL = "Persistence class cannon't be null";
    private static final String ERROR_ENTITY_ID_NULL = "Entity identifier cannon't be null";
    private static final String ERROR_ENTITY_NULL = "Entity cannon't be null";
-
-   private final Logger logger = LoggerFactory.getLogger(getClass());
+   
+   private static final Logger LOGGER = LoggerFactory.getLogger(JpaPersistenceServiceImpl.class);
 
    private final PersistenceContextWrapper contextWrapper;
 
@@ -43,10 +43,6 @@ public class JpaPersistenceServiceImpl<Id extends Serializable, T extends Abstra
       if (contextWrapper == null || contextWrapper.getEntityManager() == null) {
          throw new IllegalArgumentException(ERROR_PERSISTENT_CONTEXT_NULL);
       }
-   }
-
-   protected Logger getLogger() {
-      return logger;
    }
 
    public EntityManager getEntityManager() {
@@ -67,7 +63,7 @@ public class JpaPersistenceServiceImpl<Id extends Serializable, T extends Abstra
       try {
          from.get(field);
       } catch (final IllegalArgumentException iae) {
-         getLogger().warn("Invalid field \"" + field + "\" for root:" + from);
+         LOGGER.warn("Invalid field \"" + field + "\" for root:" + from);
          exist = false;
       }
       return exist;

@@ -1,20 +1,27 @@
 package es.fjtorres.cpFacturas.server.service.impl;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.fjtorres.cpFacturas.common.InvoiceState;
 import es.fjtorres.cpFacturas.common.dto.InvoiceDto;
 import es.fjtorres.cpFacturas.common.dto.pagination.InvoicePageDto;
 import es.fjtorres.cpFacturas.common.exception.ExceptionUtils;
 import es.fjtorres.cpFacturas.common.pagination.OrderBy;
 import es.fjtorres.cpFacturas.server.config.ReportsConfiguration;
+import es.fjtorres.cpFacturas.server.config.ReportsConfiguration.Reports;
 import es.fjtorres.cpFacturas.server.model.Invoice;
 import es.fjtorres.cpFacturas.server.model.InvoiceLine;
 import es.fjtorres.cpFacturas.server.service.ExportResult;
@@ -28,8 +35,10 @@ import es.fjtorres.jasperReport.service.ReportServiceException;
 
 @Named
 @Transactional(readOnly = true)
-public class InvoiceServiceImpl extends AbstractEntityService<Invoice, InvoiceDto, Long> implements
-      IInvoiceService {
+public class InvoiceServiceImpl extends AbstractEntityService<Invoice, InvoiceDto, Long>
+      implements IInvoiceService {
+
+   private static final Logger LOGGER = LoggerFactory.getLogger(InvoiceServiceImpl.class);
 
    private final IReportService reportService;
 
@@ -105,21 +114,24 @@ public class InvoiceServiceImpl extends AbstractEntityService<Invoice, InvoiceDt
       final Report<InvoiceDto> pdfReport = new Report<InvoiceDto>();
       pdfReport.setData(Arrays.asList(dto));
       pdfReport.setFormat(Format.PDF);
-      pdfReport.setOutputName(dto.getVehicle().getRegistration() + "."
-            + pdfReport.getFormat().getExtension());
+      pdfReport.setOutputName(
+            dto.getVehicle().getRegistration() + "." + pdfReport.getFormat().getExtension());
       pdfReport.setTemplate(ReportsConfiguration
-            .getTemplatePath(ReportsConfiguration.TEMPLATE_INVOICES));
+            .getTemplatePath(ReportsConfiguration.Reports.INVOICE.getTemplate()));
       pdfReport.getParameters().put(ReportsConfiguration.Parameters.REPORTS_PATH,
             ReportsConfiguration.getReportsLocation());
+      pdfReport.getParameters().put(IReportService.REPORT_RESOURCE_BUNDLE,
+            ResourceBundle.getBundle(Reports.INVOICE.getI18nResourcePath(), LocaleContextHolder.getLocale()));
+      pdfReport.getParameters().put(IReportService.REPORT_LOCALE, LocaleContextHolder.getLocale());
+      pdfReport.getParameters().put("draft", InvoiceState.CREATED.equals(dto.getState()));
 
       try {
          final byte[] file = reportService.generate(pdfReport, false);
-         ExportResult result = new ExportResult(pdfReport.getOutputName(), file, pdfReport
-               .getFormat().getContentType());
+         ExportResult result = new ExportResult(pdfReport.getOutputName(), file,
+               pdfReport.getFormat().getContentType());
          return result;
-      } catch (ReportServiceException e) {
-         // TODO Auto-generated catch block
-         e.printStackTrace();
+      } catch (final ReportServiceException e) {
+         LOGGER.error("Error generating invoice report, invoice identifier: " + pId, e);
       }
       return null;
    }

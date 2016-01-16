@@ -1,12 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-07-24T18:08:03 -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="invoice" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" resourceBundle="reports/invoiceReport/invoice" whenResourceMissingType="Key" uuid="bce837ac-255c-4116-90e2-fd77a478fe1a">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2015-12-01T21:18:16 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="invoice" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" resourceBundle="invoice" whenResourceMissingType="Key" uuid="bce837ac-255c-4116-90e2-fd77a478fe1a">
 	<template><![CDATA[$P{REPORTS_PATH} + "/invoiceReport/invoiceStyle.jrtx"]]></template>
+	<subDataset name="Dataset1" uuid="137bbabb-8bbc-421c-82db-f96d2ef73436">
+		<field name="description" class="java.lang.String"/>
+		<field name="amount" class="java.math.BigDecimal"/>
+		<field name="price" class="java.math.BigDecimal"/>
+		<field name="discount" class="java.math.BigDecimal"/>
+		<field name="taxRate" class="java.math.BigDecimal"/>
+		<variable name="subtotal" class="java.math.BigDecimal">
+			<variableExpression><![CDATA[$F{discount} != null && $F{discount}.intValue() != 0? $F{amount}.multiply($F{price}).divide($F{discount}.divide(new BigDecimal(100))): $F{amount}.multiply($F{price})]]></variableExpression>
+			<initialValueExpression><![CDATA[BigDecimal.ZERO]]></initialValueExpression>
+		</variable>
+		<variable name="total" class="java.math.BigDecimal" calculation="Sum">
+			<variableExpression><![CDATA[$V{subtotal}]]></variableExpression>
+			<initialValueExpression><![CDATA[java.math.BigDecimal.ZERO]]></initialValueExpression>
+		</variable>
+	</subDataset>
 	<parameter name="REPORTS_PATH" class="java.lang.String">
 		<parameterDescription><![CDATA[Reports location]]></parameterDescription>
+		<defaultValueExpression><![CDATA["C:/desarrollo/workspaces/workspace_cpFacturas/cpFacturas/server/src/main/resources/reports"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="draft" class="java.lang.Boolean"/>
 	<field name="state" class="java.lang.Object"/>
 	<field name="vehicleRegistration" class="java.lang.String">
 		<fieldDescription><![CDATA[vehicle.registration]]></fieldDescription>
@@ -14,41 +30,48 @@
 	<field name="vehicleFuelType" class="java.lang.Object">
 		<fieldDescription><![CDATA[vehicle.fuelType]]></fieldDescription>
 	</field>
+	<field name="vehicleModel" class="java.lang.String">
+		<fieldDescription><![CDATA[vehicle.model.name]]></fieldDescription>
+	</field>
+	<field name="vehicleBrand" class="java.lang.String">
+		<fieldDescription><![CDATA[vehicle.model.brand.name]]></fieldDescription>
+	</field>
+	<field name="customerCode" class="java.lang.String">
+		<fieldDescription><![CDATA[vehicle.customer.code]]></fieldDescription>
+	</field>
+	<field name="customerType" class="java.lang.Object">
+		<fieldDescription><![CDATA[vehicle.customer.type]]></fieldDescription>
+	</field>
 	<field name="customerFirstName" class="java.lang.String">
 		<fieldDescription><![CDATA[vehicle.customer.firstName]]></fieldDescription>
 	</field>
 	<field name="customerLastName" class="java.lang.String">
 		<fieldDescription><![CDATA[vehicle.customer.lastName]]></fieldDescription>
 	</field>
-	<field name="lines" class="java.util.Collection"/>
+	<field name="lines" class="java.util.ArrayList"/>
 	<background>
-		<band splitType="Stretch"/>
+		<band height="800">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<textField>
+				<reportElement positionType="Float" x="0" y="0" width="555" height="800" forecolor="rgba(204, 204, 204, 0.4627451)" uuid="a5b26c58-7b95-4779-bc3d-4edc5f247a87">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<printWhenExpression><![CDATA[$P{draft}]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="Left">
+					<font size="40" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{message.draft}]]></textFieldExpression>
+			</textField>
+		</band>
 	</background>
 	<title>
-		<band height="50" splitType="Stretch">
+		<band splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="83" splitType="Stretch">
-			<textField>
-				<reportElement x="110" y="40" width="100" height="30" uuid="92f81d53-52ee-43c9-a094-8624375c9907"/>
-				<textFieldExpression><![CDATA[$F{vehicleRegistration}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement style="label" x="0" y="0" width="100" height="30" uuid="3b0f62c3-26bb-4eb6-8b93-5e210834e2a4">
-					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
-				</reportElement>
-				<textFieldExpression><![CDATA[$R{invoice.customer}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="110" y="0" width="190" height="30" uuid="b834c381-63c3-4105-a9f3-3e4750add587"/>
-				<textFieldExpression><![CDATA[$F{customerFirstName} + " " + $F{customerLastName}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement style="label" x="0" y="40" width="100" height="30" uuid="3174eaa0-eac2-49c7-a586-dbe82e4e5db0"/>
-				<textFieldExpression><![CDATA[$R{invoice.vehicle}]]></textFieldExpression>
-			</textField>
+		<band splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 		</band>
 	</pageHeader>
 	<columnHeader>
@@ -57,17 +80,232 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="40" splitType="Stretch">
-			<subreport>
-				<reportElement x="0" y="0" width="555" height="40" uuid="52ce885a-81cd-4edc-8901-cfd9e2d6505f">
+		<band height="221" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<componentElement>
+				<reportElement mode="Transparent" x="0" y="150" width="555" height="60" uuid="b20a0320-d4ca-41ad-9890-8cf807c81ed6">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.components.autoresize.next" value="true"/>
+					<property name="net.sf.jasperreports.export.headertoolbar.table.name" value=""/>
+					<property name="com.jaspersoft.studio.components.autoresize.proportional" value="true"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Dataset1" uuid="98534eab-6bdd-4766-8b99-024b3d4725cd">
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{lines})]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column width="205" uuid="5c08b33c-2994-4f1b-bc60-04ec04675d5f">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						<jr:columnHeader height="20" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<box padding="0"/>
+							<textField>
+								<reportElement style="DefaultCellHeader" mode="Transparent" x="0" y="0" width="205" height="20" uuid="f905f3f6-4419-4ecb-939f-de495059dbc7">
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+								</reportElement>
+								<box leftPadding="0"/>
+								<textFieldExpression><![CDATA[$R{invoice.line.description}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell height="20">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+								<reportElement style="DefaultCell" stretchType="RelativeToTallestObject" mode="Transparent" x="0" y="0" width="205" height="20" isPrintWhenDetailOverflows="true" uuid="f17511ec-dbbf-461d-b1f8-203e235a8dff"/>
+								<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="70" uuid="66ac70a3-416c-4e9a-8207-5c45c232de36">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<jr:columnHeader height="20" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<box padding="0"/>
+							<textField>
+								<reportElement style="CenterCellHeader" mode="Transparent" x="0" y="0" width="70" height="20" uuid="8d61705a-7f4f-41d3-a152-9ff319f1d051"/>
+								<box leftPadding="0"/>
+								<textFieldExpression><![CDATA[$R{invoice.line.amount}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell height="20">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField isStretchWithOverflow="true" pattern="#,##0.00#" isBlankWhenNull="true">
+								<reportElement style="CenterCell" stretchType="RelativeToTallestObject" mode="Transparent" x="0" y="0" width="70" height="20" isPrintWhenDetailOverflows="true" uuid="9d7a509d-d2ae-4156-8b5f-b8917e343e66"/>
+								<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="70" uuid="b70dd76e-a0af-4120-9107-196ee1e3ca8b">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<jr:columnHeader height="20" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<box padding="0"/>
+							<textField>
+								<reportElement style="CenterCellHeader" mode="Transparent" x="0" y="0" width="70" height="20" uuid="681f1a67-6842-45ab-a60e-a88d4cee1b4d"/>
+								<box leftPadding="0"/>
+								<textFieldExpression><![CDATA[$R{invoice.line.price}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell height="20">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField isStretchWithOverflow="true" pattern="#,##0.00#" isBlankWhenNull="true">
+								<reportElement style="CenterCell" stretchType="RelativeToTallestObject" mode="Transparent" x="0" y="0" width="70" height="20" isPrintWhenDetailOverflows="true" uuid="4d076c60-4d0d-4dee-ae6f-fb43fcec7792"/>
+								<textFieldExpression><![CDATA[$F{price}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="70" uuid="6c8339fe-d0c0-4990-a21d-3566b3ebfc6f">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<jr:columnHeader height="20" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<box padding="0"/>
+							<textField>
+								<reportElement style="CenterCellHeader" mode="Transparent" x="0" y="0" width="70" height="20" uuid="35e0395b-78e7-4a28-b390-705afb5202ad"/>
+								<box leftPadding="0"/>
+								<textFieldExpression><![CDATA[$R{invoice.line.discount}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell height="20">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField isStretchWithOverflow="true" pattern="#,##0.00#" isBlankWhenNull="true">
+								<reportElement style="CenterCell" stretchType="RelativeToTallestObject" mode="Transparent" x="0" y="0" width="70" height="20" isPrintWhenDetailOverflows="true" uuid="2cd2f05f-90cf-478e-9498-1fa34a526935"/>
+								<textFieldExpression><![CDATA[$F{discount}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="70" uuid="a572a631-2457-41f6-bffb-c13072e74979">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						<jr:tableFooter height="20" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField>
+								<reportElement style="RightCellHeader" mode="Transparent" x="0" y="0" width="70" height="20" uuid="e76a87b6-12b8-4514-a2da-e901da83441c"/>
+								<textFieldExpression><![CDATA[$R{invoice.total}]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader height="20" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<box padding="0"/>
+							<textField>
+								<reportElement style="CenterCellHeader" mode="Transparent" x="0" y="0" width="70" height="20" uuid="883cf06a-04b3-45ec-80e7-7758e3eb819d"/>
+								<box leftPadding="0"/>
+								<textFieldExpression><![CDATA[$R{invoice.line.taxRate}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell height="20">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField isStretchWithOverflow="true" pattern="#,##0.00#" isBlankWhenNull="true">
+								<reportElement style="CenterCell" stretchType="RelativeToTallestObject" mode="Transparent" x="0" y="0" width="70" height="20" isPrintWhenDetailOverflows="true" uuid="695fffda-4500-47a8-ae27-18da793c9296"/>
+								<textFieldExpression><![CDATA[$F{taxRate}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="70" uuid="75c1b50b-6bc3-4172-aae7-d99b92287d88">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
+						<jr:tableFooter height="20" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField pattern="#,##0.00#" isBlankWhenNull="true">
+								<reportElement style="CenterCellHeader" mode="Transparent" x="0" y="0" width="70" height="20" uuid="9d3fe462-14d7-4cd5-94e5-749f47e324ad"/>
+								<textFieldExpression><![CDATA[$V{total}]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:columnHeader height="20" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<box padding="0"/>
+							<textField>
+								<reportElement style="CenterCellHeader" mode="Transparent" x="0" y="0" width="70" height="20" uuid="31325215-4161-4af5-8dae-22ede815a50e"/>
+								<box leftPadding="0"/>
+								<textFieldExpression><![CDATA[$R{invoice.line.total}]]></textFieldExpression>
+							</textField>
+						</jr:columnHeader>
+						<jr:detailCell height="20">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<textField isStretchWithOverflow="true" pattern="#,##0.00#" isBlankWhenNull="true">
+								<reportElement style="CenterCell" stretchType="RelativeToTallestObject" mode="Transparent" x="0" y="0" width="70" height="20" isPrintWhenDetailOverflows="true" uuid="5248ea87-4993-4540-83a6-b84f67aa27f9"/>
+								<textFieldExpression><![CDATA[$V{subtotal}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="0" width="240" height="135" uuid="42be350e-165c-4b46-a853-f00d31e9e535">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</rectangle>
+			<textField>
+				<reportElement key="" style="label" mode="Transparent" x="5" y="10" width="60" height="20" uuid="3ec7fc73-3b17-4644-a2ab-bbef71f40218">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
-				<subreportParameter name="REPORTS_PATH">
-					<subreportParameterExpression><![CDATA[$P{REPORTS_PATH}]]></subreportParameterExpression>
-				</subreportParameter>
-				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{lines})]]></dataSourceExpression>
-				<subreportExpression><![CDATA[$P{REPORTS_PATH} + "/invoiceReport/invoiceLines.jasper"]]></subreportExpression>
-			</subreport>
+				<textFieldExpression><![CDATA[$R{invoice.customer.code} + ":"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="65" y="10" width="170" height="20" uuid="ca8eb0eb-e80f-42d3-bf2c-6c1a55969042"/>
+				<textFieldExpression><![CDATA[$F{customerCode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="65" y="35" width="170" height="20" uuid="79c80ff6-a6a8-4167-8fa3-39cc5d6e8d88"/>
+				<textFieldExpression><![CDATA[$F{customerFirstName} + " " + $F{customerLastName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement key="" style="label" mode="Transparent" x="5" y="35" width="60" height="20" uuid="1f658d89-d2fe-4ae4-b2f7-19ff67bf1233">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$R{invoice.customer.name} + ":"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="label" mode="Transparent" x="5" y="60" width="60" height="20" uuid="eed617f6-8aba-4692-b807-ae46ef8c5630">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$R{invoice.vehicle.registration} + ":"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="65" y="60" width="170" height="20" uuid="e81a316d-2a15-42a5-b02a-20b462832b42">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{vehicleRegistration}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="65" y="85" width="170" height="20" uuid="4dcdb866-117b-48d8-92b0-f1a2c9bc5d4e">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{vehicleModel}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="label" mode="Transparent" x="5" y="85" width="60" height="20" uuid="80c3ed43-7eb7-4652-b2c5-21c16291045e">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$R{invoice.vehicle.model} + ":"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="label" mode="Transparent" x="5" y="110" width="60" height="20" uuid="f6d4a71e-9e3c-4ee3-8938-523e1abcd895">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$R{invoice.vehicle.brand} + ":"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="65" y="110" width="170" height="20" uuid="42d3fb91-3386-4ea2-993b-a4a54c96f3de"/>
+				<textFieldExpression><![CDATA[$F{vehicleBrand}]]></textFieldExpression>
+			</textField>
+			<break>
+				<reportElement x="0" y="220" width="99" height="1" uuid="bbaa0178-42b4-425d-ae12-07cdd119425d"/>
+			</break>
 		</band>
 	</detail>
 	<columnFooter>

@@ -2,37 +2,24 @@
 <!DOCTYPE jasperTemplate PUBLIC "-//JasperReports//DTD Template//EN" "http://jasperreports.sourceforge.net/dtds/jaspertemplate.dtd">
 
 <jasperTemplate>
-	<style name="label" isBold="true"/>
-	<style name="DefaultCell">
-		<box padding="3">
+	<!-- TEXT -->
+	<style name="fontFamily" fontName="DejaVu Sans"/>
+	<style name="label" style="fontFamily" mode="Opaque" isBold="true"/>
+	
+	<!-- Cells -->
+	<style name="DefaultCell" style="fontFamily" mode="Opaque" hTextAlign="Left">
+		<box topPadding="3" leftPadding="3" bottomPadding="3" rightPadding="3">
 			<topPen lineWidth="1.0"/>
 			<leftPen lineWidth="1.0"/>
 			<bottomPen lineWidth="1.0"/>
 			<rightPen lineWidth="1.0"/>
 		</box>
 	</style>
-	<style name="CenterCell" hAlign="Center" vAlign="Middle">
-		<box padding="3">
-			<topPen lineWidth="1.0"/>
-			<leftPen lineWidth="1.0"/>
-			<bottomPen lineWidth="1.0"/>
-			<rightPen lineWidth="1.0"/>
-		</box>
-	</style>
-	<style name="DefaultCellHeader" isBold="true" vAlign="Middle">
-		<box padding="3">
-			<topPen lineWidth="1.0"/>
-			<leftPen lineWidth="1.0"/>
-			<bottomPen lineWidth="1.0"/>
-			<rightPen lineWidth="1.0"/>
-		</box>
-	</style>
-	<style name="CenterCellHeader" hAlign="Center" vAlign="Middle" isBold="true">
-		<box padding="3">
-			<topPen lineWidth="1.0"/>
-			<leftPen lineWidth="1.0"/>
-			<bottomPen lineWidth="1.0"/>
-			<rightPen lineWidth="1.0"/>
-		</box>
-	</style>
+	
+	<style name="CenterCell" style="DefaultCell" hTextAlign="Center" />
+	
+	<!-- Headers -->
+	<style name="DefaultCellHeader" style="DefaultCell" backcolor="#CCCCCC" vTextAlign="Middle" isBold="true"/>
+	<style name="CenterCellHeader" style="DefaultCellHeader" hTextAlign="Center"/>
+	<style name="RightCellHeader" style="DefaultCellHeader" hTextAlign="Right"/>
 </jasperTemplate>

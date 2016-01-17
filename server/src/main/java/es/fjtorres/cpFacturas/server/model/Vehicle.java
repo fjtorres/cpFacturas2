@@ -57,13 +57,13 @@ public class Vehicle extends AbstractEntity<Long> {
    private VehicleModel model;
 
    @Enumerated(EnumType.STRING)
-   @Column(name = "FUEL_TYPE", length = 25, nullable = false)
+   @Column(name = "FUEL_TYPE", length = 25)
    private FuelType fuelType;
 
-   @Column(name = "YEAR", nullable = false)
+   @Column(name = "YEAR")
    private Integer year;
 
-   @Column(name = "DOORS", nullable = false)
+   @Column(name = "DOORS")
    private Short doors;
 
    @Override

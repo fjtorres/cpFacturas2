@@ -99,11 +99,17 @@ public class InvoiceServiceImpl extends AbstractEntityService<Invoice, InvoiceDt
    @Override
    public void prePersist(Invoice pEntity) {
       // Set invoice reference on lines
-      if (pEntity != null && CollectionUtils.isNotEmpty(pEntity.getLines())) {
-         for (final InvoiceLine line : pEntity.getLines()) {
-            if (line != null) {
-               line.setInvoice(pEntity);
+      if (pEntity != null) {
+         if (CollectionUtils.isNotEmpty(pEntity.getLines())) {
+            for (final InvoiceLine line : pEntity.getLines()) {
+               if (line != null) {
+                  line.setInvoice(pEntity);
+               }
             }
+         }
+         
+         if (pEntity.isNew()) {
+            pEntity.setTaxRate(new BigDecimal(21));// FIXME Load from configuration
          }
       }
    }

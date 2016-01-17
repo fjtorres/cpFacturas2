@@ -30,7 +30,7 @@ public class ValidationServiceImplTest {
         this.testInstance = new ValidationServiceImpl();
 
         final ContactData cd = new ContactData();
-        cd.setPrimaryPhoneNumber(STR_TEST);
+        cd.setFirstPhoneNumber(STR_TEST);
         cd.setEmail(STR_VALID_EMAIL);
 
         TEST_OBJECT = new Customer();

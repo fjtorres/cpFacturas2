@@ -12,8 +12,6 @@ public class InvoiceLineDto extends AbstractDto<Long> {
 
    private BigDecimal amount;
 
-   
-
    private BigDecimal discount;
 
    private String description;

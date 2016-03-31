@@ -20,6 +20,6 @@
 	
 	<!-- Headers -->
 	<style name="DefaultCellHeader" style="DefaultCell" backcolor="#CCCCCC" vTextAlign="Middle" isBold="true"/>
-	<style name="CenterCellHeader" style="DefaultCellHeader" hTextAlign="Center"/>
-	<style name="RightCellHeader" style="DefaultCellHeader" hTextAlign="Right"/>
+	<style name="CenterCellHeader" style="DefaultCellHeader" backcolor="#CCCCCC" hTextAlign="Center"/>
+	<style name="RightCellHeader" style="DefaultCellHeader" backcolor="#CCCCCC" hTextAlign="Right"/>
 </jasperTemplate>

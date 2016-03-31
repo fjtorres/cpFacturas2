@@ -122,14 +122,17 @@ public class InvoiceServiceImpl extends AbstractEntityService<Invoice, InvoiceDt
       pdfReport.setFormat(Format.PDF);
       pdfReport.setOutputName(
             dto.getVehicle().getRegistration() + "." + pdfReport.getFormat().getExtension());
-      pdfReport.setTemplate(ReportsConfiguration
-            .getTemplatePath(ReportsConfiguration.Reports.INVOICE.getTemplate()));
+      pdfReport.setTemplate(ReportsConfiguration.getResourcePath(Reports.INVOICE.getTemplatePath()));
       pdfReport.getParameters().put(ReportsConfiguration.Parameters.REPORTS_PATH,
             ReportsConfiguration.getReportsLocation());
       pdfReport.getParameters().put(IReportService.REPORT_RESOURCE_BUNDLE,
             ResourceBundle.getBundle(Reports.INVOICE.getI18nResourcePath(), LocaleContextHolder.getLocale()));
       pdfReport.getParameters().put(IReportService.REPORT_LOCALE, LocaleContextHolder.getLocale());
       pdfReport.getParameters().put("draft", InvoiceState.CREATED.equals(dto.getState()));
+      pdfReport.getParameters().put("backgroundImage", ReportsConfiguration.getResourcePath(Reports.INVOICE.getReportPath() + "logo_background.jpg"));
+      pdfReport.getParameters().put("companyImage", ReportsConfiguration.getResourcePath(Reports.INVOICE.getReportPath() + "logo.jpg"));
+      pdfReport.getParameters().put("companyInfo", "Taller de Chapa y Pintura Raúl, C.B.\nN.I.F: E-72259641\nTlfn. y FAX: 956364705\nCallejón de la Paja, 4\n11540 - Sanlúcar de barrameda (Cádiz)");
+      pdfReport.getParameters().put("companyIBAN", "ES82 2100 8517 8102 0002 2207");
 
       try {
          final byte[] file = reportService.generate(pdfReport, false);

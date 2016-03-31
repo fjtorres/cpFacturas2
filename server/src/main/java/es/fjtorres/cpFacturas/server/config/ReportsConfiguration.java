@@ -8,22 +8,40 @@ public final class ReportsConfiguration {
 
    public static enum Reports {
       
-      INVOICE("reports/invoiceReport/invoice.jrxml", "reports/invoiceReport/invoice");
+      INVOICE("invoiceReport", "invoice.jrxml", "invoice");
       
       private final String template;
-      private final String i18nResourcePath;
+      private final String i18nResource;
+      private final String baseName;
       
-      private Reports(String template, String i18nResourcePath) {
+      private Reports(final String pBaseName, String template, String i18nResource) {
+         this.baseName = pBaseName;
          this.template = template;
-         this.i18nResourcePath = i18nResourcePath;
+         this.i18nResource = i18nResource;
       }
 
       public final String getTemplate() {
          return template;
       }
 
-      public final String getI18nResourcePath() {
-         return i18nResourcePath;
+      public final String getI18nResource() {
+         return i18nResource;
+      }
+
+      public String getBaseName() {
+         return baseName;
+      }
+      
+      public String getReportPath () {
+         return REPORTS_LOCATION + getBaseName() + "/";
+      }
+      
+      public String getTemplatePath() {
+         return getReportPath() + getTemplate();
+      }
+      
+      public String getI18nResourcePath() {
+         return getReportPath() + getI18nResource();
       }
       
    }
@@ -35,8 +53,8 @@ public final class ReportsConfiguration {
    public static final String LOCATION = ".";
    public static final String REPORTS_LOCATION = "reports/";
 
-   public static String getTemplatePath(final String template) {
-      return Paths.get(getResourceFromClassPath(template)).toString();
+   public static String getResourcePath(final String resource) {
+      return Paths.get(getResourceFromClassPath(resource)).toString();
    }
 
    public static String getReportsLocation() {

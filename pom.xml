@@ -6,7 +6,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<modules>
-		<module>gwt-client</module>
+		<!-- <module>gwt-client</module> -->
 		<module>common</module>
 		<module>server</module>
 		<module>api</module>

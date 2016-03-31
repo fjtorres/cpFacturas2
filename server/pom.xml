@@ -70,6 +70,8 @@
 	</properties>
 
 	<build>
+		<finalName>cpFacturasServer</finalName>
+	
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
@@ -103,6 +105,11 @@
 						<nonFilteredFileExtension>jrtx</nonFilteredFileExtension>
 					</nonFilteredFileExtensions>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.6</version>
 			</plugin>
 		</plugins>
 
@@ -315,14 +322,14 @@
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>4.3.7.Final</version>
 		</dependency>
-		
+
 		<!-- REPORTS -->
 		<dependency>
 			<groupId>es.fjtorres</groupId>
 			<artifactId>jasperReportService</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-		
+
 		<!-- TEST -->
 
 		<dependency>

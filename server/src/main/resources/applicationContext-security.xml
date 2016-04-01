@@ -35,8 +35,7 @@
 			method="POST" access="permitAll" />
 		<security:intercept-url pattern="/api/authentication"
 			method="GET" access="isAuthenticated()" />
-		<security:intercept-url pattern="/api/*"
-			access="isAuthenticated()" />
+		<security:intercept-url pattern="/api/**" access="isAuthenticated()" />
 		<!-- <security:intercept-url method="GET" pattern="/rest/news/**" -->
 		<!-- access="hasRole('user')" /> -->
 		<!-- <security:intercept-url method="PUT" pattern="/rest/news/**" -->

@@ -90,7 +90,7 @@
 					<stopKey>alpha</stopKey>
 					<stopPort>9099</stopPort>
 					<webApp>
-						<contextPath>/server</contextPath>
+						<contextPath>/${project.build.finalName}</contextPath>
 					</webApp>
 				</configuration>
 			</plugin>

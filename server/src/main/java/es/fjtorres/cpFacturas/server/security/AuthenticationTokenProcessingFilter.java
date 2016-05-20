@@ -17,20 +17,20 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.GenericFilterBean;
 
-import es.fjtorres.cpFacturas.server.security.service.ISecurityService;
+import es.fjtorres.cpFacturas.server.security.service.ISecurityTokenService;
 
 @Named("authenticationTokenProcessingFilter")
 public class AuthenticationTokenProcessingFilter extends GenericFilterBean {
 
    private final UserDetailsService userService;
-   private final ISecurityService securityService;
+   private final ISecurityTokenService securityTokenService;
 
    @Inject
    public AuthenticationTokenProcessingFilter(
          @Named("appUserDetailsService") final UserDetailsService userService,
-         final ISecurityService pSecurityService) {
+         final ISecurityTokenService pSecurityTokenService) {
       this.userService = userService;
-      this.securityService = pSecurityService;
+      this.securityTokenService = pSecurityTokenService;
    }
 
    @Override
@@ -40,14 +40,14 @@ public class AuthenticationTokenProcessingFilter extends GenericFilterBean {
       HttpServletRequest httpRequest = this.getAsHttpRequest(request);
 
       String authToken = this.extractAuthTokenFromRequest(httpRequest);
-      String userName = securityService.getUserNameFromToken(authToken);
+      String userName = securityTokenService.getUserNameFromToken(authToken);
 
       if (userName != null) {
 
          UserDetails userDetails = this.userService
                .loadUserByUsername(userName);
 
-         if (securityService.validateToken(authToken, userDetails)) {
+         if (securityTokenService.validateToken(authToken, userDetails)) {
 
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                   userDetails, null, userDetails.getAuthorities());

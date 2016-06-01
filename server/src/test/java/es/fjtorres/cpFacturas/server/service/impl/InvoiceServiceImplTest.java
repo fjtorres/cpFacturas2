@@ -47,10 +47,10 @@ public class InvoiceServiceImplTest {
       final Long testId = 1L;
       Invoice mockInvoice = new Invoice();
       
-      final CustomerDto mockCustomerDto = new CustomerDto();
-      mockCustomerDto.setCode("TEST_CODE");
-      mockCustomerDto.setFirstName("NOMBRE");
-      mockCustomerDto.setLastName("APELLIDOS");
+//      final CustomerDto mockCustomerDto = new CustomerDto();
+//      mockCustomerDto.setCode("TEST_CODE");
+//      mockCustomerDto.setFirstName("NOMBRE");
+//      mockCustomerDto.setLastName("APELLIDOS");
       
       final VehicleBrandDto mockBrand = new VehicleBrandDto();
       mockBrand.setName("PEUGEOT");
@@ -59,7 +59,7 @@ public class InvoiceServiceImplTest {
       mockModel.setName("307");
       
       final VehicleDto mockVehicleDto = new VehicleDto();
-      mockVehicleDto.setCustomer(mockCustomerDto);
+//      mockVehicleDto.setCustomer(mockCustomerDto);
       mockVehicleDto.setDoors(new Short("1"));
       mockVehicleDto.setFuelType(FuelType.Diesel);
       mockVehicleDto.setModel(mockModel);
@@ -77,7 +77,7 @@ public class InvoiceServiceImplTest {
       }
       
       final InvoiceDto mockInvoiceDto = new InvoiceDto();
-      mockInvoiceDto.setState(InvoiceState.GENERATED);
+      mockInvoiceDto.setState(InvoiceState.CREATED);
       mockInvoiceDto.setTaxRate(new BigDecimal(21));
       mockInvoiceDto.setVehicle(mockVehicleDto);
       mockInvoiceDto.setLines(mockLines);

@@ -108,6 +108,7 @@ public class VehicleResourceImpl extends AbstractResource implements IVehicleRes
    @Override
    @GET
    @Path("/search")
+   @Consumes(MediaType.APPLICATION_JSON)
    public Response findByText(final String pSearchText) {
       return Response.ok(getService().findByText(pSearchText)).build();
    }

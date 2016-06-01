@@ -21,7 +21,7 @@ public class CustomerDto extends AbstractDto<Long> {
 
     private ContactDataDto contactData;
 
-    private Set<VehicleDto> vehicles;
+//    private Set<VehicleDto> vehicles;
 
     public CustomerDto() {
         this.contactData = new ContactDataDto();
@@ -87,13 +87,13 @@ public class CustomerDto extends AbstractDto<Long> {
         contactData = pContactData;
     }
 
-    public Set<VehicleDto> getVehicles() {
-        return vehicles;
-    }
-
-    public void setVehicles(Set<VehicleDto> pVehicles) {
-        vehicles = pVehicles;
-    }
+//    public Set<VehicleDto> getVehicles() {
+//        return vehicles;
+//    }
+//
+//    public void setVehicles(Set<VehicleDto> pVehicles) {
+//        vehicles = pVehicles;
+//    }
 
     public CustomerType getType() {
         return type;

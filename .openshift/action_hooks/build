@@ -7,4 +7,6 @@ export MAVEN_OPTS="-Xms384m -Xmx412m"
 export JAVA_HOME=$OPENSHIFT_DATA_DIR/jdk1.8.0_20
 export PATH=$JAVA_HOME/bin:$PATH
 
+rm build.log
+
 mvn clean install -s .openshift/settings.xml -Popenshift -DskipTests=true >> build.log

@@ -47,7 +47,7 @@
 			</releases>
 		</repository>
 		<repository>
-			<id>personal-repo</id>
+			<id>personal-maven-repo</id>
 			<url>https://raw.github.com/fjtorres/mvn-repo/</url>
 			<snapshots>
 				<enabled>true</enabled>

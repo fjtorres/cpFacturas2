@@ -383,7 +383,7 @@
 
 		<!-- REPORTS -->
 		<dependency>
-			<groupId>es.fjtorres</groupId>
+			<groupId>com.github.fjtorres</groupId>
 			<artifactId>jasperReportService</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<exclusions>

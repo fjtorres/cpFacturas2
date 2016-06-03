@@ -48,7 +48,7 @@
 		</repository>
 		<repository>
 			<id>personal-maven-repo</id>
-			<url>https://raw.github.com/fjtorres/mvn-repo/</url>
+			<url>https://raw.github.com/fjtorres/mvn-repo/master/</url>
 			<snapshots>
 				<enabled>true</enabled>
 				<updatePolicy>always</updatePolicy>

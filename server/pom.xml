@@ -25,6 +25,7 @@
 				<database.type>H2</database.type>
 				<database.driver>org.h2.Driver</database.driver>
 				<!-- jdbc:h2:mem:test;user=sa;password=;DB_CLOSE_DELAY=-1;MODE=PostgreSQL;TRACE_LEVEL_SYSTEM_OUT=2 -->
+				<log.file>cpFacturas-server.log</log.file>
 			</properties>
 
 			<dependencies>
@@ -72,19 +73,12 @@
 				</property>
 			</activation>
 			<properties>
-				<jpa.schema.generation.action>drop-and-create</jpa.schema.generation.action>
-				<jpa.schema.generation.source>metadata</jpa.schema.generation.source>
-				<jpa.schema.generation.load.script>META-INF/DDL/LOAD_DATA.sql</jpa.schema.generation.load.script>
-				<jpa.showSql>false</jpa.showSql>
-				<jpa.formatSql>false</jpa.formatSql>
-				<jpa.dialect>org.hibernate.dialect.PostgreSQLDialect</jpa.dialect>
-				<database.type>POSTGRESQL</database.type>
-				<database.driver>org.postgresql.Driver</database.driver>
 				<!-- jdbc:postgresql://localhost:5432/cpfacturas?user=cpfacturas&password=cpfacturas -->
 				<!-- 
 				CREATE USER cpfacturas password 'cpfacturas';
 				CREATE DATABASE cpfacturas WITH OWNER = cpfacturas;
 				 -->
+				 <log.file>${OPENSHIFT_DATA_DIR}/logs/cpFacturas-server.log</log.file>
 			</properties>
 
 			<dependencies>

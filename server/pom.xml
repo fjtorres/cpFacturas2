@@ -72,7 +72,7 @@
 				</property>
 			</activation>
 			<properties>
-				<jpa.schema.generation.action>none</jpa.schema.generation.action>
+				<jpa.schema.generation.action>drop-and-create</jpa.schema.generation.action>
 				<jpa.schema.generation.source>metadata</jpa.schema.generation.source>
 				<jpa.schema.generation.load.script>META-INF/DDL/LOAD_DATA.sql</jpa.schema.generation.load.script>
 				<jpa.showSql>false</jpa.showSql>

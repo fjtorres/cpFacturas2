@@ -8,13 +8,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.ImportResource;
 
 import es.fjtorres.cpFacturas.server.dozer.CustomFieldMapper;
 
 @SpringBootApplication
 @ComponentScan(basePackages={"es.fjtorres.jasperReport.service", "es.fjtorres.cpFacturas.server"})
-@ImportResource("classpath:applicationContext*.xml")
 public class Application {
 
    public static void main(String[] args) {
@@ -31,5 +29,10 @@ public class Application {
       final DozerBeanMapperFactoryBean factoryBean = new DozerBeanMapperFactoryBean();
       factoryBean.setMappingFiles(context.getResources("classpath*:/dozer/*mapping.xml"));
       return factoryBean;
+   }
+   
+   @Bean(name="reportService.location")
+   public String reportLocation () {
+      return es.fjtorres.cpFacturas.server.config.ReportsConfiguration.LOCATION;
    }
 }
